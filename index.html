@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vincenzo Grimaldi — Personal Blog</title>
+<meta name="description" content="The personal side of the Grimaldi Network: life, travel, and the long arc of the work across the years. First posts arriving soon." />
+<link rel="canonical" href="https://grimaldi.ca/" />
+<style>
+  :root{
+    --ink:#161e2d;--ink-soft:#232f3e;--text:#16191f;--text-2:#414d5c;--muted:#5f6b7a;
+    --card:#f2f3f3;--card-alt:#f8f8f8;--border:#e9ebed;--link:#0972d3;--success:#037f0c;
+    --hero:linear-gradient(155deg,#f6e3c5 0%,#f0bfae 45%,#c86b8f 100%);
+    --sheet-r:40px;--r:16px;--max:1240px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Amazon Ember',Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;background:#fff;color:var(--text);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .utility{background:var(--ink);color:#fff;height:40px;display:flex;align-items:center}
+  .utility-in{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.5rem;display:flex;justify-content:flex-end;align-items:center;gap:1.2rem;font-size:.78rem}
+  .utility a{opacity:.92}.utility a:hover{opacity:1;text-decoration:underline}
+  .lang{display:inline-flex;gap:.15rem;padding:.15rem;border:1px solid rgba(255,255,255,.35);border-radius:999px}
+  .lang button{border:0;background:transparent;color:rgba(255,255,255,.85);font-size:.72rem;font-weight:600;padding:.22rem .55rem;border-radius:999px;cursor:pointer}
+  .lang button.on{background:#fff;color:var(--ink)}
+  .nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);min-height:64px;display:flex;align-items:center;z-index:9}
+  .nav-in{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .brand{display:inline-flex;align-items:center;gap:.65rem}
+  .mono{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:var(--ink);color:#fff;font-weight:800}
+  .brand b{font-size:.98rem}.brand small{display:block;font-size:.72rem;color:var(--muted)}
+  .pill{padding:.5rem 1.2rem;border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:.85rem;white-space:nowrap}
+  .pill:hover{background:var(--ink-soft)}
+  .hero{background:var(--hero);padding:4.5rem 1.5rem 7.5rem}
+  .hero-in{max-width:var(--max);margin:0 auto}
+  .hero-card{background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-radius:20px;padding:2.5rem;max-width:640px;box-shadow:0 8px 30px rgba(22,25,31,.16)}
+  .kicker{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1.18;margin:.65rem 0 1rem;font-weight:600;letter-spacing:-.015em}
+  .lead{color:var(--text-2);line-height:1.65;margin:0 0 1.5rem}
+  .cta-row{display:flex;flex-wrap:wrap;gap:.85rem}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.5rem;border-radius:999px;font-size:.92rem;font-weight:600;border:1px solid transparent}
+  .btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:var(--ink-soft)}
+  .btn-light{background:#fff;color:var(--text);border-color:var(--ink)}.btn-light:hover{background:var(--card)}
+  .sheet{background:#fff;border-radius:var(--sheet-r) var(--sheet-r) 0 0;margin-top:-3.5rem;position:relative}
+  .section{max-width:var(--max);margin:0 auto;padding:4rem 1.5rem}
+  h2{font-size:clamp(1.45rem,2.4vw,2rem);font-weight:600;letter-spacing:-.01em;margin:0 0 .5rem}
+  .intro{color:var(--text-2);line-height:1.65;max-width:680px;margin:0 0 2rem}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:.6rem}
+  .card .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6b46f2}
+  .card h3{margin:0;font-size:1.05rem}
+  .card p{margin:0;color:var(--text-2);font-size:.92rem;line-height:1.6;flex:1}
+  .status{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;font-weight:600;color:var(--text-2)}
+  .dot{width:8px;height:8px;border-radius:999px;background:var(--success)}
+  .banner{background:linear-gradient(95deg,#f6cfae,#f3b98b);border-radius:var(--r);padding:2rem 2.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem}
+  .banner h2{font-size:1.15rem;margin:0 0 .25rem}.banner p{margin:0;color:var(--ink-soft);font-size:.9rem}
+  footer{background:var(--ink);color:#fff;border-radius:var(--sheet-r) var(--sheet-r) 0 0;margin-top:3rem}
+  .foot{max-width:var(--max);margin:0 auto;padding:3rem 1.5rem 2rem}
+  .foot-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem;margin-bottom:2.5rem}
+  .foot h4{margin:0 0 1rem;font-size:.95rem}
+  .foot a{display:block;color:rgba(255,255,255,.78);font-size:.88rem;margin-bottom:.7rem}
+  .foot a:hover{color:#fff;text-decoration:underline}
+  .foot p{color:rgba(255,255,255,.78);font-size:.9rem;line-height:1.6}
+  .legal{border-top:1px solid rgba(255,255,255,.16);padding-top:1.25rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;color:rgba(255,255,255,.6);font-size:.82rem}
+  @media(max-width:900px){
+    .utility-in{justify-content:center}
+    .grid,.foot-grid{grid-template-columns:1fr}
+    .sheet,footer{border-radius:28px 28px 0 0}
+    .hero{padding:2.5rem 1.25rem 6rem}
+  }
+</style>
+</head>
+<body>
+<div class="utility">
+  <div class="utility-in">
+    <span class="lang" id="lang"></span>
+    <a href="https://igrimaldi.engineering">igrimaldi.engineering</a>
+    <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com</a>
+    <a href="https://github.com/iceccarelli" rel="noopener">GitHub</a>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/">
+      <span class="mono">VG</span>
+      <span><b>Vincenzo Grimaldi</b><small data-i18n="tagline">Hardware • Electrical Engineering</small></span>
+    </a>
+    <a class="pill" href="mailto:vincenzo@igrimaldi.engineering" data-i18n="connect">Connect</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-in">
+    <div class="hero-card">
+      <span class="kicker" data-i18n="kicker">The Grimaldi Network · Hardware Surface</span>
+      <h1 data-i18n="title">The physical layer: high-voltage systems, embedded boards, power electronics.</h1>
+      <p class="lead" data-i18n="lead">This is where the hardware work of the Grimaldi Network will live — lab notes, build logs, and continuously deployed engineering write-ups of physical systems. The first entries are being prepared now.</p>
+      <div class="cta-row">
+        <a class="btn btn-dark" href="https://igrimaldi.engineering" data-i18n="ctaSoftware">Visit the software surface</a>
+        <a class="btn btn-light" href="mailto:vincenzo@igrimaldi.engineering" data-i18n="ctaMail">Get in touch</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sheet">
+  <div class="section">
+    <span class="kicker" data-i18n="comingKicker">Launching</span>
+    <h2 data-i18n="comingTitle">What this site will cover</h2>
+    <p class="intro" data-i18n="comingIntro">Three tracks of physical engineering, documented with the same rigor as the software portfolio — every build with schematics, measurements, and honest failure notes.</p>
+    <div class="grid">
+      <div class="card"><span class="tag" data-i18n="c1tag">High Voltage</span><h3 data-i18n="c1title">High-voltage systems</h3><p data-i18n="c1body">Traction power, substation hardware, protection and measurement chains — the energy layer, up close.</p><span class="status"><span class="dot"></span><span data-i18n="soon">In preparation</span></span></div>
+      <div class="card"><span class="tag" data-i18n="c2tag">Embedded</span><h3 data-i18n="c2title">Embedded control boards</h3><p data-i18n="c2body">Deterministic controllers, RTOS firmware, signal integrity, and hardware-in-the-loop test rigs.</p><span class="status"><span class="dot"></span><span data-i18n="soon">In preparation</span></span></div>
+      <div class="card"><span class="tag" data-i18n="c3tag">Power Electronics</span><h3 data-i18n="c3title">Power electronics</h3><p data-i18n="c3body">Inverters, converters, and the switching hardware that connects renewables to real grids.</p><span class="status"><span class="dot"></span><span data-i18n="soon">In preparation</span></span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="banner">
+      <div><h2 data-i18n="bannerTitle">Want to be notified when the lab opens?</h2><p data-i18n="bannerBody">One email when the first build log ships. No list, no noise.</p></div>
+      <a class="btn btn-dark" href="mailto:vincenzo@igrimaldi.engineering?subject=Notify%20me%20—%20grimaldi.ca" data-i18n="bannerCta">Notify me</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot">
+    <div class="foot-grid">
+      <div><h4>Vincenzo Grimaldi</h4><p data-i18n="footAbout">The hardware and electrical engineering surface of the Grimaldi Network.</p></div>
+      <div><h4 data-i18n="footNet">Network</h4>
+        <a href="https://igrimaldi.engineering">igrimaldi.engineering — <span data-i18n="netSoftware">Software &amp; AI</span></a>
+        <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com — <span data-i18n="netHardware">Hardware &amp; EE</span></a>
+        <a href="https://github.com/iceccarelli" rel="noopener">GitHub — iceccarelli</a>
+      </div>
+      <div><h4 data-i18n="footContact">Contact</h4><a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering →</a></div>
+    </div>
+    <div class="legal"><span data-i18n="rights">© 2026 Vincenzo Grimaldi. All rights reserved.</span><a href="#" onclick="window.scrollTo({top:0});return false" data-i18n="top">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en:{tagline:'Personal • Blog • Life',connect:'Say hello',kicker:'The Grimaldi Network · Personal Surface',
+    title:'The person behind the engineering.',
+    lead:'grimaldi.ca is the personal all-in-one blog of the Grimaldi Network — life, travel, social updates, and the long arc of the work across the years. The first posts are being written now.',
+    ctaSoftware:'See the engineering work',ctaMail:'Say hello',comingKicker:'Arriving soon',comingTitle:'What will live here',
+    comingIntro:'Three threads of one life, told in plain words rather than datasheets.',
+    c1tag:'Blog',c1title:'Life & travel',c1body:'Frankfurt, the places in between, and what an engineer notices when the laptop is closed.',
+    c2tag:'Now',c2title:'What I\'m doing now',c2body:'A living page: current projects, current obsessions, what changed since last time.',
+    c3tag:'Archive',c3title:'The long arc',c3body:'The work across the years — how the projects, the books, and the network came to be.',
+    soon:'Being written',bannerTitle:'Want to know when the first post lands?',bannerBody:'One email, once. No list, no noise.',bannerCta:'Tell me',
+    footAbout:'The personal all-in-one blog of the Grimaldi Network.',footNet:'Network',netSoftware:'Software & AI',netHardware:'Hardware & EE',footContact:'Contact',
+    rights:'© 2026 Vincenzo Grimaldi. All rights reserved.',top:'Back to top ↑'},
+  es:{tagline:'Personal • Blog • Vida',connect:'Saluda',kicker:'La Red Grimaldi · Superficie Personal',
+    title:'La persona detrás de la ingeniería.',
+    lead:'grimaldi.ca es el blog personal todo-en-uno de la Red Grimaldi — vida, viajes, actualizaciones y el arco largo del trabajo a través de los años. Las primeras entradas se están escribiendo ahora.',
+    ctaSoftware:'Ver el trabajo de ingeniería',ctaMail:'Saluda',comingKicker:'Muy pronto',comingTitle:'Qué vivirá aquí',
+    comingIntro:'Tres hilos de una misma vida, contados con palabras llanas y no con hojas de datos.',
+    c1tag:'Blog',c1title:'Vida y viajes',c1body:'Fráncfort, los lugares intermedios y lo que un ingeniero nota cuando cierra el portátil.',
+    c2tag:'Ahora',c2title:'Qué hago ahora',c2body:'Una página viva: proyectos actuales, obsesiones actuales, qué cambió desde la última vez.',
+    c3tag:'Archivo',c3title:'El arco largo',c3body:'El trabajo a través de los años — cómo nacieron los proyectos, los libros y la red.',
+    soon:'En escritura',bannerTitle:'¿Quieres saber cuándo llega la primera entrada?',bannerBody:'Un email, una vez. Sin listas, sin ruido.',bannerCta:'Avísame',
+    footAbout:'El blog personal todo-en-uno de la Red Grimaldi.',footNet:'Red',netSoftware:'Software e IA',netHardware:'Hardware e Ing. Eléctrica',footContact:'Contacto',
+    rights:'© 2026 Vincenzo Grimaldi. Todos los derechos reservados.',top:'Volver arriba ↑'},
+  de:{tagline:'Persönlich • Blog • Leben',connect:'Hallo sagen',kicker:'Das Grimaldi-Netzwerk · Persönliche Oberfläche',
+    title:'Der Mensch hinter der Technik.',
+    lead:'grimaldi.ca ist der persönliche All-in-One-Blog des Grimaldi-Netzwerks — Leben, Reisen, Updates und der lange Bogen der Arbeit über die Jahre. Die ersten Beiträge entstehen gerade.',
+    ctaSoftware:'Zur Ingenieursarbeit',ctaMail:'Hallo sagen',comingKicker:'Bald verfügbar',comingTitle:'Was hier leben wird',
+    comingIntro:'Drei Fäden eines Lebens, erzählt in klaren Worten statt in Datenblättern.',
+    c1tag:'Blog',c1title:'Leben & Reisen',c1body:'Frankfurt, die Orte dazwischen, und was ein Ingenieur bemerkt, wenn der Laptop zu ist.',
+    c2tag:'Jetzt',c2title:'Was ich gerade tue',c2body:'Eine lebende Seite: aktuelle Projekte, aktuelle Obsessionen, was sich geändert hat.',
+    c3tag:'Archiv',c3title:'Der lange Bogen',c3body:'Die Arbeit über die Jahre — wie Projekte, Bücher und das Netzwerk entstanden sind.',
+    soon:'Wird geschrieben',bannerTitle:'Wissen, wann der erste Beitrag erscheint?',bannerBody:'Eine E-Mail, einmal. Keine Liste, kein Lärm.',bannerCta:'Sag mir Bescheid',
+    footAbout:'Der persönliche All-in-One-Blog des Grimaldi-Netzwerks.',footNet:'Netzwerk',netSoftware:'Software & KI',netHardware:'Hardware & Elektrotechnik',footContact:'Kontakt',
+    rights:'© 2026 Vincenzo Grimaldi. Alle Rechte vorbehalten.',top:'Nach oben ↑'},
+  zh:{tagline:'个人 • 博客 • 生活',connect:'打个招呼',kicker:'Grimaldi 站点网络 · 个人界面',
+    title:'工程背后的那个人。',
+    lead:'grimaldi.ca 是 Grimaldi 网络的个人一站式博客 — 生活、旅行、动态，以及多年来工作的长线脉络。首批文章正在撰写中。',
+    ctaSoftware:'查看工程作品',ctaMail:'打个招呼',comingKicker:'即将上线',comingTitle:'这里将有什么',
+    comingIntro:'同一段人生的三条线索，用平实的语言而非数据手册讲述。',
+    c1tag:'博客',c1title:'生活与旅行',c1body:'法兰克福、途中的地方，以及一位工程师合上电脑后所注意到的一切。',
+    c2tag:'当下',c2title:'我现在在做什么',c2body:'一个活页面：当前的项目、当前的痴迷，以及上次以来的变化。',
+    c3tag:'档案',c3title:'长线脉络',c3body:'多年来的工作 — 项目、书籍与站点网络是如何一步步成形的。',
+    soon:'撰写中',bannerTitle:'想知道第一篇文章何时发布吗？',bannerBody:'只发一封邮件。没有列表，没有噪音。',bannerCta:'告诉我',
+    footAbout:'Grimaldi 网络的个人一站式博客。',footNet:'站点网络',netSoftware:'软件与 AI',netHardware:'硬件与电气工程',footContact:'联系',
+    rights:'© 2026 Vincenzo Grimaldi 版权所有。',top:'返回顶部 ↑'}
+};
+const LOCALES=[['en','English'],['es','Español'],['de','Deutsch'],['zh','中文']];
+function apply(loc){
+  const d=I18N[loc]||I18N.en;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k])el.textContent=d[k];});
+  document.documentElement.lang=loc==='zh'?'zh-Hans':loc;
+  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.loc===loc));
+  try{localStorage.setItem('vg-locale',loc);}catch(e){}
+}
+(function(){
+  const holder=document.getElementById('lang');
+  LOCALES.forEach(([code,label])=>{const b=document.createElement('button');b.textContent=label;b.dataset.loc=code;b.onclick=()=>apply(code);holder.appendChild(b);});
+  let loc='en';
+  try{const s=localStorage.getItem('vg-locale');if(s&&I18N[s])loc=s;else{const n=(navigator.language||'en').slice(0,2);if(I18N[n])loc=n;}}catch(e){}
+  apply(loc);
+})();
+</script>
+</body>
+</html>
