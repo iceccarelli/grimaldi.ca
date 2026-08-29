@@ -3,17 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Vincenzo Grimaldi — Personal Blog</title>
-<meta name="description" content="The personal side of the Grimaldi Network: life, travel, and the long arc of the work across the years. First posts arriving soon." />
+<title>Vincenzo Grimaldi — Personal</title>
+<meta name="description" content="The personal surface of the Grimaldi Network: the engineer behind igrimaldi.engineering — life, travel, two book manuscripts in progress, and the long arc of the work." />
 <link rel="canonical" href="https://grimaldi.ca/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<meta property="og:title" content="Vincenzo Grimaldi — Personal" />
+<meta property="og:description" content="The personal surface of the Grimaldi Network: the engineer behind igrimaldi.engineering — life, travel, two book manuscripts in progress, and the long arc of the work." />
+<meta property="og:url" content="https://grimaldi.ca/" />
+<meta property="og:type" content="website" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfilePage", "@id": "https://grimaldi.ca/#profile", "url": "https://grimaldi.ca/", "name": "Vincenzo Grimaldi — Personal", "inLanguage": "en", "mainEntity": {"@type": "Person", "@id": "https://igrimaldi.engineering/#person", "name": "Vincenzo Grimaldi", "url": "https://igrimaldi.engineering/", "jobTitle": "Physics-Informed Cyber-Physical Systems Engineer", "sameAs": ["https://github.com/iceccarelli", "https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0", "https://x.com/Vince87Grimaldi", "https://www.instagram.com/grimaldiengineering/", "https://igrimaldi.engineering/", "https://engineeringgrimaldi.com/", "https://grimaldi.ca/"]}}</script>
 <style>
   :root{
     --ink:#161e2d;--ink-soft:#232f3e;--text:#16191f;--text-2:#414d5c;--muted:#5f6b7a;
-    --card:#f2f3f3;--card-alt:#f8f8f8;--border:#e9ebed;--link:#0972d3;--success:#037f0c;
+    --card:#f2f3f3;--card-alt:#f8f8f8;--border:#e9ebed;--link:#0972d3;--violet:#6b46f2;--success:#037f0c;
     --hero:linear-gradient(155deg,#f6e3c5 0%,#f0bfae 45%,#c86b8f 100%);
     --sheet-r:40px;--r:16px;--max:1240px;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   body{margin:0;font-family:'Amazon Ember',Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;background:#fff;color:var(--text);-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
   .utility{background:var(--ink);color:#fff;height:40px;display:flex;align-items:center}
@@ -23,14 +30,16 @@
   .lang button{border:0;background:transparent;color:rgba(255,255,255,.85);font-size:.72rem;font-weight:600;padding:.22rem .55rem;border-radius:999px;cursor:pointer}
   .lang button.on{background:#fff;color:var(--ink)}
   .nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);min-height:64px;display:flex;align-items:center;z-index:9}
-  .nav-in{width:100%;max-width:var(--max);margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .nav-in{width:100%;max-width:var(--max);margin:0 auto;padding:.6rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
   .brand{display:inline-flex;align-items:center;gap:.65rem}
-  .mono{width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;background:var(--ink);color:#fff;font-weight:800}
+  .brand svg{width:38px;height:38px;flex-shrink:0}
   .brand b{font-size:.98rem}.brand small{display:block;font-size:.72rem;color:var(--muted)}
+  .nav-links{display:flex;align-items:center;gap:1.3rem;font-size:.9rem;font-weight:500}
+  .nav-links a:hover{color:var(--link)}
   .pill{padding:.5rem 1.2rem;border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:.85rem;white-space:nowrap}
   .pill:hover{background:var(--ink-soft)}
   .hero{background:var(--hero);padding:4.5rem 1.5rem 7.5rem}
-  .hero-in{max-width:var(--max);margin:0 auto}
+  .hero-in{max-width:var(--max);margin:0 auto;display:flex;gap:2.5rem;align-items:center}
   .hero-card{background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-radius:20px;padding:2.5rem;max-width:640px;box-shadow:0 8px 30px rgba(22,25,31,.16)}
   .kicker{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   h1{font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1.18;margin:.65rem 0 1rem;font-weight:600;letter-spacing:-.015em}
@@ -39,17 +48,27 @@
   .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.5rem;border-radius:999px;font-size:.92rem;font-weight:600;border:1px solid transparent}
   .btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:var(--ink-soft)}
   .btn-light{background:#fff;color:var(--text);border-color:var(--ink)}.btn-light:hover{background:var(--card)}
+  .hero-portrait{flex:none;width:280px;height:280px;border-radius:999px;overflow:hidden;border:6px solid rgba(255,255,255,.85);box-shadow:0 8px 30px rgba(22,25,31,.25)}
+  .hero-portrait img{width:100%;height:100%;object-fit:cover;display:block}
   .sheet{background:#fff;border-radius:var(--sheet-r) var(--sheet-r) 0 0;margin-top:-3.5rem;position:relative}
   .section{max-width:var(--max);margin:0 auto;padding:4rem 1.5rem}
   h2{font-size:clamp(1.45rem,2.4vw,2rem);font-weight:600;letter-spacing:-.01em;margin:0 0 .5rem}
   .intro{color:var(--text-2);line-height:1.65;max-width:680px;margin:0 0 2rem}
   .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem}
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem 1.5rem;display:flex;flex-direction:column;gap:.6rem}
-  .card .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6b46f2}
+  .card .tag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--violet)}
   .card h3{margin:0;font-size:1.05rem}
   .card p{margin:0;color:var(--text-2);font-size:.92rem;line-height:1.6;flex:1}
+  a.card{transition:transform .15s ease,box-shadow .15s ease}
+  a.card:hover{transform:translateY(-3px);box-shadow:0 1px 2px rgba(22,25,31,.06),0 4px 16px rgba(22,25,31,.08)}
+  .card .cta{font-size:.88rem;font-weight:600;color:var(--link)}
   .status{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;font-weight:600;color:var(--text-2)}
-  .dot{width:8px;height:8px;border-radius:999px;background:var(--success)}
+  .dot{width:8px;height:8px;border-radius:999px;background:var(--success);flex:none}
+  .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;counter-reset:step}
+  .step{background:var(--card-alt);border:1px solid var(--border);border-radius:var(--r);padding:1.6rem 1.5rem}
+  .step::before{counter-increment:step;content:counter(step,decimal-leading-zero);display:block;font-size:1.6rem;font-weight:800;color:var(--violet);margin-bottom:.6rem}
+  .step h3{margin:0 0 .4rem;font-size:1.02rem}
+  .step p{margin:0;color:var(--text-2);font-size:.9rem;line-height:1.6}
   .banner{background:linear-gradient(95deg,#f6cfae,#f3b98b);border-radius:var(--r);padding:2rem 2.25rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem}
   .banner h2{font-size:1.15rem;margin:0 0 .25rem}.banner p{margin:0;color:var(--ink-soft);font-size:.9rem}
   footer{background:var(--ink);color:#fff;border-radius:var(--sheet-r) var(--sheet-r) 0 0;margin-top:3rem}
@@ -59,10 +78,15 @@
   .foot a{display:block;color:rgba(255,255,255,.78);font-size:.88rem;margin-bottom:.7rem}
   .foot a:hover{color:#fff;text-decoration:underline}
   .foot p{color:rgba(255,255,255,.78);font-size:.9rem;line-height:1.6}
+  .foot-brand{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+  .foot-brand svg{width:42px;height:42px}
   .legal{border-top:1px solid rgba(255,255,255,.16);padding-top:1.25rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;color:rgba(255,255,255,.6);font-size:.82rem}
-  @media(max-width:900px){
-    .utility-in{justify-content:center}
-    .grid,.foot-grid{grid-template-columns:1fr}
+  @media(max-width:980px){
+    .utility-in{justify-content:center;flex-wrap:wrap;row-gap:.3rem}
+    .nav-links{display:none}
+    .hero-in{flex-direction:column-reverse;align-items:flex-start}
+    .hero-portrait{width:200px;height:200px}
+    .grid,.steps,.foot-grid{grid-template-columns:1fr}
     .sheet,footer{border-radius:28px 28px 0 0}
     .hero{padding:2.5rem 1.25rem 6rem}
   }
@@ -72,18 +96,49 @@
 <div class="utility">
   <div class="utility-in">
     <span class="lang" id="lang"></span>
-    <a href="https://igrimaldi.engineering">igrimaldi.engineering</a>
-    <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com</a>
-    <a href="https://github.com/iceccarelli" rel="noopener">GitHub</a>
+    <a href="https://igrimaldi.engineering" target=_blank rel=noopener>igrimaldi.engineering</a>
+    <a href="https://engineeringgrimaldi.com" target=_blank rel=noopener>engineeringgrimaldi.com</a>
+    <a href="https://igrimaldi.engineering/card" target=_blank rel=noopener>Business card</a>
+    <a href="https://github.com/iceccarelli" target=_blank rel=noopener>GitHub</a>
   </div>
 </div>
 
 <div class="nav">
   <div class="nav-in">
     <a class="brand" href="/">
-      <span class="mono">VG</span>
-      <span><b>Vincenzo Grimaldi</b><small data-i18n="tagline">Hardware • Electrical Engineering</small></span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="vgFlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7a52f4"/>
+      <stop offset="0.5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="vgSheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232f3e"/>
+      <stop offset="1" stop-color="#12192a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ink tile with subtle vertical sheen -->
+  <rect x="2" y="2" width="92" height="92" rx="22" fill="url(#vgSheen)"/>
+  <rect x="2" y="2" width="92" height="92" rx="22" fill="none" stroke="#3b465c" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- V — two round-capped strokes -->
+  <path d="M 24 28 L 37 58 L 50 28" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- G — open geometric ring with inward crossbar -->
+  <path d="M 77.3 34.7 A 16 16 0 1 0 82 46 L 69 46" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- The signature: a grid-frequency waveform in the network gradient -->
+  <path d="M 22 76 q 6.5 -9 13 0 t 13 0 t 13 0 t 13 0" fill="none" stroke="url(#vgFlow)" stroke-width="4.5" stroke-linecap="round"/>
+</svg>
+      <span><b>Vincenzo Grimaldi</b><small data-i18n="brandTag">Personal • Blog • Life</small></span>
     </a>
+    <div class="nav-links">
+      <a href="#about" data-i18n="navA">About</a>
+      <a href="#now" data-i18n="navW">Now</a>
+      <a href="#network" data-i18n="navN">Network</a>
+    </div>
     <a class="pill" href="mailto:vincenzo@igrimaldi.engineering" data-i18n="connect">Connect</a>
   </div>
 </div>
@@ -91,33 +146,54 @@
 <div class="hero">
   <div class="hero-in">
     <div class="hero-card">
-      <span class="kicker" data-i18n="kicker">The Grimaldi Network · Hardware Surface</span>
-      <h1 data-i18n="title">The physical layer: high-voltage systems, embedded boards, power electronics.</h1>
-      <p class="lead" data-i18n="lead">This is where the hardware work of the Grimaldi Network will live — lab notes, build logs, and continuously deployed engineering write-ups of physical systems. The first entries are being prepared now.</p>
+      <span class="kicker" data-i18n="kicker">The Grimaldi Network · Personal Surface</span>
+      <h1 data-i18n="title">The person behind the engineering.</h1>
+      <p class="lead" data-i18n="lead">I'm Vincenzo Grimaldi — an electrical engineer in Frankfurt working on the digitalisation of high-voltage rail infrastructure, and the builder of the Grimaldi Network. This is the personal surface: life, travel, and the long arc of the work, in plain words rather than datasheets.</p>
       <div class="cta-row">
-        <a class="btn btn-dark" href="https://igrimaldi.engineering" data-i18n="ctaSoftware">Visit the software surface</a>
-        <a class="btn btn-light" href="mailto:vincenzo@igrimaldi.engineering" data-i18n="ctaMail">Get in touch</a>
+        <a class="btn btn-dark" href="#now" data-i18n="ctaNow">What I'm doing now</a>
+        <a class="btn btn-light" href="https://igrimaldi.engineering/card" data-i18n="ctaCard">My business card</a>
       </div>
     </div>
+    <div class="hero-portrait"><img src="data:image/jpeg;base64,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" alt="Vincenzo Grimaldi" width="280" height="280"></div>
   </div>
 </div>
 
 <div class="sheet">
-  <div class="section">
-    <span class="kicker" data-i18n="comingKicker">Launching</span>
-    <h2 data-i18n="comingTitle">What this site will cover</h2>
-    <p class="intro" data-i18n="comingIntro">Three tracks of physical engineering, documented with the same rigor as the software portfolio — every build with schematics, measurements, and honest failure notes.</p>
+  <div class="section" id="about">
+    <span class="kicker" data-i18n="a_kicker">About</span>
+    <h2 data-i18n="a_title">One life, three surfaces</h2>
+    <p class="intro" data-i18n="a_intro">By day I digitise high-voltage traction assets for German rail. Around that sits everything else: software and AI systems, hardware builds, two book manuscripts in progress, and the places in between. Each surface of the network holds one part of it — this one holds the person.</p>
     <div class="grid">
-      <div class="card"><span class="tag" data-i18n="c1tag">High Voltage</span><h3 data-i18n="c1title">High-voltage systems</h3><p data-i18n="c1body">Traction power, substation hardware, protection and measurement chains — the energy layer, up close.</p><span class="status"><span class="dot"></span><span data-i18n="soon">In preparation</span></span></div>
-      <div class="card"><span class="tag" data-i18n="c2tag">Embedded</span><h3 data-i18n="c2title">Embedded control boards</h3><p data-i18n="c2body">Deterministic controllers, RTOS firmware, signal integrity, and hardware-in-the-loop test rigs.</p><span class="status"><span class="dot"></span><span data-i18n="soon">In preparation</span></span></div>
-      <div class="card"><span class="tag" data-i18n="c3tag">Power Electronics</span><h3 data-i18n="c3title">Power electronics</h3><p data-i18n="c3body">Inverters, converters, and the switching hardware that connects renewables to real grids.</p><span class="status"><span class="dot"></span><span data-i18n="soon">In preparation</span></span></div>
+      <div class="card"><span class="tag" data-i18n="ab1tag">Blog</span><h3 data-i18n="ab1title">Life &amp; travel</h3><p data-i18n="ab1body">Frankfurt, the places in between, and what an engineer notices when the laptop is closed.</p><span class="status"><span class="dot"></span><span data-i18n="writing">First posts being written</span></span></div>
+      <div class="card"><span class="tag" data-i18n="ab2tag">Books</span><h3 data-i18n="ab2title">Two manuscripts in progress</h3><p data-i18n="ab2body">Long-form work on energy systems and the future of compute — the ideas behind the engineering, argued at book length.</p><span class="status"><span class="dot"></span><span data-i18n="drafting">In revision</span></span></div>
+      <div class="card"><span class="tag" data-i18n="ab3tag">Archive</span><h3 data-i18n="ab3title">The long arc</h3><p data-i18n="ab3body">How the projects, the books and the network came to be — the record, kept honestly, over the years.</p><span class="status"><span class="dot"></span><span data-i18n="growing">Growing with the work</span></span></div>
+    </div>
+  </div>
+
+  <div class="section" id="now">
+    <span class="kicker" data-i18n="w_kicker">Now</span>
+    <h2 data-i18n="w_title">What I'm doing now</h2>
+    <div class="steps">
+      <div class="step"><h3 data-i18n="w1title">Engineering the grid</h3><p data-i18n="w1body">Digitalisation of high-voltage railway traction assets in Frankfurt — IT/OT convergence and security governance for critical infrastructure.</p></div>
+      <div class="step"><h3 data-i18n="w2title">Building the network</h3><p data-i18n="w2body">Three domains, one identity, four languages — the portfolio, the hardware lab and this page, kept consistent and continuously shipped.</p></div>
+      <div class="step"><h3 data-i18n="w3title">Writing the books</h3><p data-i18n="w3body">Two manuscripts in revision, on energy sovereignty and on where compute goes next — being rewritten the hard way: claim by claim.</p></div>
+    </div>
+  </div>
+
+  <div class="section" id="network">
+    <span class="kicker" data-i18n="n_kicker">The network</span>
+    <h2 data-i18n="n_title">Where the work lives</h2>
+    <div class="grid">
+      <a class="card" href="https://igrimaldi.engineering"><span class="tag">igrimaldi.engineering</span><h3 data-i18n="n1title">Software &amp; AI</h3><p data-i18n="n1body">The engineering portfolio: capability register, work registry, live thesis simulator.</p><span class="cta" data-i18n="open">Open →</span></a>
+      <a class="card" href="https://engineeringgrimaldi.com"><span class="tag">engineeringgrimaldi.com</span><h3 data-i18n="n2title">Hardware &amp; EE</h3><p data-i18n="n2body">The physical layer: high-voltage systems, embedded boards, power electronics build logs.</p><span class="cta" data-i18n="open2">Open →</span></a>
+      <a class="card" href="https://igrimaldi.engineering/card"><span class="tag" data-i18n="n3tag">Business card</span><h3 data-i18n="n3title">The digital card</h3><p data-i18n="n3body">Contact channels, vCard download and a shareable QR — one URL for the whole identity.</p><span class="cta" data-i18n="open3">Open →</span></a>
     </div>
   </div>
 
   <div class="section">
     <div class="banner">
-      <div><h2 data-i18n="bannerTitle">Want to be notified when the lab opens?</h2><p data-i18n="bannerBody">One email when the first build log ships. No list, no noise.</p></div>
-      <a class="btn btn-dark" href="mailto:vincenzo@igrimaldi.engineering?subject=Notify%20me%20—%20grimaldi.ca" data-i18n="bannerCta">Notify me</a>
+      <div><h2 data-i18n="bannerTitle">Want to know when the first post lands?</h2><p data-i18n="bannerBody">One email, once. No list, no noise.</p></div>
+      <a class="btn btn-dark" href="mailto:vincenzo@igrimaldi.engineering?subject=Notify%20me%20—%20grimaldi.ca" data-i18n="bannerCta">Tell me</a>
     </div>
   </div>
 </div>
@@ -125,80 +201,79 @@
 <footer>
   <div class="foot">
     <div class="foot-grid">
-      <div><h4>Vincenzo Grimaldi</h4><p data-i18n="footAbout">The hardware and electrical engineering surface of the Grimaldi Network.</p></div>
-      <div><h4 data-i18n="footNet">Network</h4>
+      <div>
+        <div class="foot-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="vgFlow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7a52f4"/>
+      <stop offset="0.5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="vgSheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232f3e"/>
+      <stop offset="1" stop-color="#12192a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ink tile with subtle vertical sheen -->
+  <rect x="2" y="2" width="92" height="92" rx="22" fill="url(#vgSheen)"/>
+  <rect x="2" y="2" width="92" height="92" rx="22" fill="none" stroke="#3b465c" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- V — two round-capped strokes -->
+  <path d="M 24 28 L 37 58 L 50 28" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- G — open geometric ring with inward crossbar -->
+  <path d="M 77.3 34.7 A 16 16 0 1 0 82 46 L 69 46" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- The signature: a grid-frequency waveform in the network gradient -->
+  <path d="M 22 76 q 6.5 -9 13 0 t 13 0 t 13 0 t 13 0" fill="none" stroke="url(#vgFlow)" stroke-width="4.5" stroke-linecap="round"/>
+</svg><b>Vincenzo Grimaldi</b></div>
+        <p data-i18n="footAbout">The personal all-in-one blog of the Grimaldi Network.</p>
+      </div>
+      <div><h4 data-i18n="footNet">The Grimaldi Network</h4>
         <a href="https://igrimaldi.engineering">igrimaldi.engineering — <span data-i18n="netSoftware">Software &amp; AI</span></a>
         <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com — <span data-i18n="netHardware">Hardware &amp; EE</span></a>
+        <a href="https://grimaldi.ca">grimaldi.ca — <span data-i18n="netPersonal">Personal</span></a>
+        <a href="https://igrimaldi.engineering/card" data-i18n="netCard">Digital business card</a>
         <a href="https://github.com/iceccarelli" rel="noopener">GitHub — iceccarelli</a>
       </div>
-      <div><h4 data-i18n="footContact">Contact</h4><a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering →</a></div>
+      <div><h4 data-i18n="footContact">Contact</h4>
+        <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering →</a>
+        <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener">LinkedIn</a>
+        <a href="https://x.com/Vince87Grimaldi" rel="noopener">X</a>
+        <a href="https://www.instagram.com/grimaldiengineering/" rel="noopener">Instagram</a>
+      </div>
     </div>
-    <div class="legal"><span data-i18n="rights">© 2026 Vincenzo Grimaldi. All rights reserved.</span><a href="#" onclick="window.scrollTo({top:0});return false" data-i18n="top">Back to top ↑</a></div>
+    <div class="legal">
+      <span data-i18n="rights">© 2026 Vincenzo Grimaldi. All rights reserved.</span>
+      <a href="#" onclick="window.scrollTo({top:0});return false" data-i18n="top">Back to top ↑</a>
+    </div>
   </div>
 </footer>
 
 <script>
-const I18N = {
-  en:{tagline:'Personal • Blog • Life',connect:'Say hello',kicker:'The Grimaldi Network · Personal Surface',
-    title:'The person behind the engineering.',
-    lead:'grimaldi.ca is the personal all-in-one blog of the Grimaldi Network — life, travel, social updates, and the long arc of the work across the years. The first posts are being written now.',
-    ctaSoftware:'See the engineering work',ctaMail:'Say hello',comingKicker:'Arriving soon',comingTitle:'What will live here',
-    comingIntro:'Three threads of one life, told in plain words rather than datasheets.',
-    c1tag:'Blog',c1title:'Life & travel',c1body:'Frankfurt, the places in between, and what an engineer notices when the laptop is closed.',
-    c2tag:'Now',c2title:'What I\'m doing now',c2body:'A living page: current projects, current obsessions, what changed since last time.',
-    c3tag:'Archive',c3title:'The long arc',c3body:'The work across the years — how the projects, the books, and the network came to be.',
-    soon:'Being written',bannerTitle:'Want to know when the first post lands?',bannerBody:'One email, once. No list, no noise.',bannerCta:'Tell me',
-    footAbout:'The personal all-in-one blog of the Grimaldi Network.',footNet:'Network',netSoftware:'Software & AI',netHardware:'Hardware & EE',footContact:'Contact',
-    rights:'© 2026 Vincenzo Grimaldi. All rights reserved.',top:'Back to top ↑'},
-  es:{tagline:'Personal • Blog • Vida',connect:'Saluda',kicker:'La Red Grimaldi · Superficie Personal',
-    title:'La persona detrás de la ingeniería.',
-    lead:'grimaldi.ca es el blog personal todo-en-uno de la Red Grimaldi — vida, viajes, actualizaciones y el arco largo del trabajo a través de los años. Las primeras entradas se están escribiendo ahora.',
-    ctaSoftware:'Ver el trabajo de ingeniería',ctaMail:'Saluda',comingKicker:'Muy pronto',comingTitle:'Qué vivirá aquí',
-    comingIntro:'Tres hilos de una misma vida, contados con palabras llanas y no con hojas de datos.',
-    c1tag:'Blog',c1title:'Vida y viajes',c1body:'Fráncfort, los lugares intermedios y lo que un ingeniero nota cuando cierra el portátil.',
-    c2tag:'Ahora',c2title:'Qué hago ahora',c2body:'Una página viva: proyectos actuales, obsesiones actuales, qué cambió desde la última vez.',
-    c3tag:'Archivo',c3title:'El arco largo',c3body:'El trabajo a través de los años — cómo nacieron los proyectos, los libros y la red.',
-    soon:'En escritura',bannerTitle:'¿Quieres saber cuándo llega la primera entrada?',bannerBody:'Un email, una vez. Sin listas, sin ruido.',bannerCta:'Avísame',
-    footAbout:'El blog personal todo-en-uno de la Red Grimaldi.',footNet:'Red',netSoftware:'Software e IA',netHardware:'Hardware e Ing. Eléctrica',footContact:'Contacto',
-    rights:'© 2026 Vincenzo Grimaldi. Todos los derechos reservados.',top:'Volver arriba ↑'},
-  de:{tagline:'Persönlich • Blog • Leben',connect:'Hallo sagen',kicker:'Das Grimaldi-Netzwerk · Persönliche Oberfläche',
-    title:'Der Mensch hinter der Technik.',
-    lead:'grimaldi.ca ist der persönliche All-in-One-Blog des Grimaldi-Netzwerks — Leben, Reisen, Updates und der lange Bogen der Arbeit über die Jahre. Die ersten Beiträge entstehen gerade.',
-    ctaSoftware:'Zur Ingenieursarbeit',ctaMail:'Hallo sagen',comingKicker:'Bald verfügbar',comingTitle:'Was hier leben wird',
-    comingIntro:'Drei Fäden eines Lebens, erzählt in klaren Worten statt in Datenblättern.',
-    c1tag:'Blog',c1title:'Leben & Reisen',c1body:'Frankfurt, die Orte dazwischen, und was ein Ingenieur bemerkt, wenn der Laptop zu ist.',
-    c2tag:'Jetzt',c2title:'Was ich gerade tue',c2body:'Eine lebende Seite: aktuelle Projekte, aktuelle Obsessionen, was sich geändert hat.',
-    c3tag:'Archiv',c3title:'Der lange Bogen',c3body:'Die Arbeit über die Jahre — wie Projekte, Bücher und das Netzwerk entstanden sind.',
-    soon:'Wird geschrieben',bannerTitle:'Wissen, wann der erste Beitrag erscheint?',bannerBody:'Eine E-Mail, einmal. Keine Liste, kein Lärm.',bannerCta:'Sag mir Bescheid',
-    footAbout:'Der persönliche All-in-One-Blog des Grimaldi-Netzwerks.',footNet:'Netzwerk',netSoftware:'Software & KI',netHardware:'Hardware & Elektrotechnik',footContact:'Kontakt',
-    rights:'© 2026 Vincenzo Grimaldi. Alle Rechte vorbehalten.',top:'Nach oben ↑'},
-  zh:{tagline:'个人 • 博客 • 生活',connect:'打个招呼',kicker:'Grimaldi 站点网络 · 个人界面',
-    title:'工程背后的那个人。',
-    lead:'grimaldi.ca 是 Grimaldi 网络的个人一站式博客 — 生活、旅行、动态，以及多年来工作的长线脉络。首批文章正在撰写中。',
-    ctaSoftware:'查看工程作品',ctaMail:'打个招呼',comingKicker:'即将上线',comingTitle:'这里将有什么',
-    comingIntro:'同一段人生的三条线索，用平实的语言而非数据手册讲述。',
-    c1tag:'博客',c1title:'生活与旅行',c1body:'法兰克福、途中的地方，以及一位工程师合上电脑后所注意到的一切。',
-    c2tag:'当下',c2title:'我现在在做什么',c2body:'一个活页面：当前的项目、当前的痴迷，以及上次以来的变化。',
-    c3tag:'档案',c3title:'长线脉络',c3body:'多年来的工作 — 项目、书籍与站点网络是如何一步步成形的。',
-    soon:'撰写中',bannerTitle:'想知道第一篇文章何时发布吗？',bannerBody:'只发一封邮件。没有列表，没有噪音。',bannerCta:'告诉我',
-    footAbout:'Grimaldi 网络的个人一站式博客。',footNet:'站点网络',netSoftware:'软件与 AI',netHardware:'硬件与电气工程',footContact:'联系',
-    rights:'© 2026 Vincenzo Grimaldi 版权所有。',top:'返回顶部 ↑'}
-};
-const LOCALES=[['en','English'],['es','Español'],['de','Deutsch'],['zh','中文']];
+const I18N = {"es": {"brandTag": "Personal • Blog • Vida", "connect": "Saluda", "kicker": "La Red Grimaldi · Superficie Personal", "title": "La persona detrás de la ingeniería.", "lead": "Soy Vincenzo Grimaldi — ingeniero eléctrico en Fráncfort, trabajo en la digitalización de la infraestructura ferroviaria de alta tensión y construyo la Red Grimaldi. Esta es la superficie personal: vida, viajes y el arco largo del trabajo, en palabras llanas y no en hojas de datos.", "ctaNow": "Qué hago ahora", "ctaCard": "Mi tarjeta de presentación", "a_kicker": "Acerca de", "a_title": "Una vida, tres superficies", "a_intro": "De día digitalizo activos de tracción de alta tensión para el ferrocarril alemán. Alrededor está todo lo demás: sistemas de software e IA, construcciones de hardware, dos manuscritos de libro en curso y los lugares intermedios. Cada superficie de la red guarda una parte — esta guarda a la persona.", "ab1tag": "Blog", "ab1title": "Vida y viajes", "ab1body": "Fráncfort, los lugares intermedios y lo que un ingeniero nota cuando cierra el portátil.", "ab2tag": "Libros", "ab2title": "Dos manuscritos en curso", "ab2body": "Trabajo de largo aliento sobre sistemas de energía y el futuro del cómputo — las ideas detrás de la ingeniería, argumentadas a escala de libro.", "ab3tag": "Archivo", "ab3title": "El arco largo", "ab3body": "Cómo nacieron los proyectos, los libros y la red — el registro, llevado con honestidad, a lo largo de los años.", "writing": "Primeras entradas en escritura", "drafting": "En revisión", "growing": "Crece con el trabajo", "w_kicker": "Ahora", "w_title": "Qué hago ahora", "w1title": "Ingeniería de la red eléctrica", "w1body": "Digitalización de activos de tracción de alta tensión en Fráncfort — convergencia IT/OT y gobernanza de seguridad para infraestructura crítica.", "w2title": "Construyendo la red", "w2body": "Tres dominios, una identidad, cuatro idiomas — el portafolio, el laboratorio de hardware y esta página, coherentes y publicados continuamente.", "w3title": "Escribiendo los libros", "w3body": "Dos manuscritos en revisión, sobre soberanía energética y sobre el futuro del cómputo — reescritos como debe ser: afirmación por afirmación.", "n_kicker": "La red", "n_title": "Dónde vive el trabajo", "n1title": "Software e IA", "n1body": "El portafolio de ingeniería: registro de capacidades, registro de trabajo, simulador en vivo.", "n2title": "Hardware e Ing. Eléctrica", "n2body": "La capa física: sistemas de alta tensión, placas embebidas, bitácoras de electrónica de potencia.", "n3tag": "Tarjeta digital", "n3title": "La tarjeta digital", "n3body": "Canales de contacto, vCard descargable y QR para compartir — una URL para toda la identidad.", "open": "Abrir →", "open2": "Abrir →", "open3": "Abrir →", "bannerTitle": "¿Quieres saber cuándo llega la primera entrada?", "bannerBody": "Un email, una vez. Sin listas, sin ruido.", "bannerCta": "Avísame", "footAbout": "El blog personal todo-en-uno de la Red Grimaldi.", "footNet": "La Red Grimaldi", "netSoftware": "Software e IA", "netHardware": "Hardware e Ing. Eléctrica", "netPersonal": "Personal", "netCard": "Tarjeta de presentación digital", "footContact": "Contacto", "rights": "© 2026 Vincenzo Grimaldi. Todos los derechos reservados.", "top": "Volver arriba ↑", "navA": "Acerca de", "navW": "Ahora", "navN": "Red"}, "de": {"brandTag": "Persönlich • Blog • Leben", "connect": "Hallo sagen", "kicker": "Das Grimaldi-Netzwerk · Persönliche Oberfläche", "title": "Der Mensch hinter der Technik.", "lead": "Ich bin Vincenzo Grimaldi — Elektroingenieur in Frankfurt, arbeite an der Digitalisierung der Hochspannungs-Bahninfrastruktur und baue das Grimaldi-Netzwerk. Dies ist die persönliche Oberfläche: Leben, Reisen und der lange Bogen der Arbeit, in klaren Worten statt in Datenblättern.", "ctaNow": "Was ich gerade tue", "ctaCard": "Meine Visitenkarte", "a_kicker": "Über mich", "a_title": "Ein Leben, drei Oberflächen", "a_intro": "Tagsüber digitalisiere ich Hochspannungs-Traktionsanlagen für die deutsche Bahn. Drumherum liegt alles andere: Software- und KI-Systeme, Hardware-Aufbauten, zwei Buchmanuskripte in Arbeit und die Orte dazwischen. Jede Oberfläche des Netzwerks trägt einen Teil — diese trägt den Menschen.", "ab1tag": "Blog", "ab1title": "Leben & Reisen", "ab1body": "Frankfurt, die Orte dazwischen, und was ein Ingenieur bemerkt, wenn der Laptop zu ist.", "ab2tag": "Bücher", "ab2title": "Zwei Manuskripte in Arbeit", "ab2body": "Langform-Arbeit über Energiesysteme und die Zukunft des Rechnens — die Ideen hinter der Technik, in Buchlänge argumentiert.", "ab3tag": "Archiv", "ab3title": "Der lange Bogen", "ab3body": "Wie Projekte, Bücher und das Netzwerk entstanden sind — das Protokoll, ehrlich geführt, über die Jahre.", "writing": "Erste Beiträge entstehen", "drafting": "In Überarbeitung", "growing": "Wächst mit der Arbeit", "w_kicker": "Jetzt", "w_title": "Was ich gerade tue", "w1title": "Das Netz digitalisieren", "w1body": "Digitalisierung von Hochspannungs-Traktionsanlagen in Frankfurt — IT/OT-Konvergenz und Sicherheits-Governance für kritische Infrastruktur.", "w2title": "Das Netzwerk bauen", "w2body": "Drei Domains, eine Identität, vier Sprachen — Portfolio, Hardware-Labor und diese Seite, konsistent und kontinuierlich veröffentlicht.", "w3title": "Die Bücher schreiben", "w3body": "Zwei Manuskripte in Überarbeitung, über Energiesouveränität und die Zukunft des Rechnens — neu geschrieben, wie es sein muss: Behauptung für Behauptung.", "n_kicker": "Das Netzwerk", "n_title": "Wo die Arbeit lebt", "n1title": "Software & KI", "n1body": "Das Engineering-Portfolio: Kompetenzregister, Arbeitsregister, Live-Simulator.", "n2title": "Hardware & Elektrotechnik", "n2body": "Die physische Schicht: Hochspannungssysteme, eingebettete Platinen, Leistungselektronik-Baujournale.", "n3tag": "Visitenkarte", "n3title": "Die digitale Karte", "n3body": "Kontaktkanäle, vCard-Download und teilbarer QR — eine URL für die ganze Identität.", "open": "Öffnen →", "open2": "Öffnen →", "open3": "Öffnen →", "bannerTitle": "Wissen, wann der erste Beitrag erscheint?", "bannerBody": "Eine E-Mail, einmal. Keine Liste, kein Lärm.", "bannerCta": "Sag mir Bescheid", "footAbout": "Der persönliche All-in-One-Blog des Grimaldi-Netzwerks.", "footNet": "Das Grimaldi-Netzwerk", "netSoftware": "Software & KI", "netHardware": "Hardware & Elektrotechnik", "netPersonal": "Persönlich", "netCard": "Digitale Visitenkarte", "footContact": "Kontakt", "rights": "© 2026 Vincenzo Grimaldi. Alle Rechte vorbehalten.", "top": "Nach oben ↑", "navA": "Über mich", "navW": "Jetzt", "navN": "Netzwerk"}, "zh": {"brandTag": "个人 • 博客 • 生活", "connect": "打个招呼", "kicker": "Grimaldi 站点网络 · 个人界面", "title": "工程背后的那个人。", "lead": "我是 Vincenzo Grimaldi — 法兰克福的电气工程师，从事高压铁路基础设施数字化，同时构建 Grimaldi 站点网络。这里是个人界面：生活、旅行，以及工作的长线脉络 — 用平实的语言，而非数据手册。", "ctaNow": "我现在在做什么", "ctaCard": "我的名片", "a_kicker": "关于", "a_title": "一段人生，三个界面", "a_intro": "白天我为德国铁路数字化高压牵引资产。围绕它的是其余一切：软件与 AI 系统、硬件搭建、两部写作中的书稿，以及途中的地方。网络的每个界面承载一部分 — 这里承载的是人。", "ab1tag": "博客", "ab1title": "生活与旅行", "ab1body": "法兰克福、途中的地方，以及一位工程师合上电脑后所注意到的一切。", "ab2tag": "书", "ab2title": "两部写作中的书稿", "ab2body": "关于能源系统与计算未来的长篇写作 — 工程背后的思想，以一本书的篇幅展开论证。", "ab3tag": "档案", "ab3title": "长线脉络", "ab3body": "项目、书与网络如何一步步成形 — 多年来诚实保存的记录。", "writing": "首批文章撰写中", "drafting": "修订中", "growing": "随工作生长", "w_kicker": "当下", "w_title": "我现在在做什么", "w1title": "数字化电网", "w1body": "在法兰克福数字化高压牵引资产 — 关键基础设施的 IT/OT 融合与安全治理。", "w2title": "构建网络", "w2body": "三个域名、一个身份、四种语言 — 作品集、硬件实验室与这个页面，保持一致并持续发布。", "w3title": "写书", "w3body": "两部书稿在修订中，关于能源主权与计算的未来 — 用最扎实的方式重写：逐条论证。", "n_kicker": "站点网络", "n_title": "工作在哪里", "n1title": "软件与 AI", "n1body": "工程作品集：能力清单、工作台账、在线论文模拟器。", "n2title": "硬件与电气工程", "n2body": "物理层：高压系统、嵌入式电路板、电力电子搭建日志。", "n3tag": "数字名片", "n3title": "数字名片", "n3body": "联系渠道、vCard 下载与可分享的二维码 — 一个 URL 承载完整身份。", "open": "打开 →", "open2": "打开 →", "open3": "打开 →", "bannerTitle": "想知道第一篇文章何时发布吗？", "bannerBody": "只发一封邮件。没有列表，没有噪音。", "bannerCta": "告诉我", "footAbout": "Grimaldi 网络的个人一站式博客。", "footNet": "Grimaldi 站点网络", "netSoftware": "软件与 AI", "netHardware": "硬件与电气工程", "netPersonal": "个人", "netCard": "数字名片", "footContact": "联系", "rights": "© 2026 Vincenzo Grimaldi 版权所有。", "top": "返回顶部 ↑", "navA": "关于", "navW": "当下", "navN": "网络"}};
+
 function apply(loc){
-  const d=I18N[loc]||I18N.en;
-  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(d[k])el.textContent=d[k];});
+  const d=I18N[loc]||null;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(!el.dataset.en) el.dataset.en=el.innerHTML;
+    if(d&&d[k]) el.textContent=d[k]; else el.innerHTML=el.dataset.en;
+  });
   document.documentElement.lang=loc==='zh'?'zh-Hans':loc;
-  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.loc===loc));
+  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.loc===loc));
   try{localStorage.setItem('vg-locale',loc);}catch(e){}
 }
 (function(){
+  const LOCALES=[['en','English'],['es','Español'],['de','Deutsch'],['zh','中文']];
   const holder=document.getElementById('lang');
   LOCALES.forEach(([code,label])=>{const b=document.createElement('button');b.textContent=label;b.dataset.loc=code;b.onclick=()=>apply(code);holder.appendChild(b);});
   let loc='en';
-  try{const s=localStorage.getItem('vg-locale');if(s&&I18N[s])loc=s;else{const n=(navigator.language||'en').slice(0,2);if(I18N[n])loc=n;}}catch(e){}
+  try{const s=localStorage.getItem('vg-locale');if(s&&(s==='en'||I18N[s]))loc=s;else{const n=(navigator.language||'en').slice(0,2);if(I18N[n]||n==='en')loc=n;}}catch(e){}
   apply(loc);
 })();
+
 </script>
 </body>
 </html>
