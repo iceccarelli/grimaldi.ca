@@ -65,6 +65,66 @@ export default function Home() {
           </ol>
         </div>
 
+        {/* BOOKS — the manuscripts, with public receipts */}
+        <div className="section" id="books">
+          <span className="kicker">{t('b_kicker')}</span>
+          <h2>{t('b_title')}</h2>
+          <p className="intro">{t('b_intro')}</p>
+          <div className="books">
+            <div className="book">
+              <h3>{t('b1_title')}</h3>
+              <p>{t('b1_body')}</p>
+              <span className="status"><span className="dot" /> {t('b_status')}</span>
+              <div className="proof">
+                <span className="proof-label">{t('b1_proof')}</span>
+                <div className="proof-chips">
+                  {Array.from({ length: 11 }, (_, i) => i + 1).map((n) => (
+                    <a
+                      key={n}
+                      href={`https://github.com/iceccarelli/Renewables_Migration_Chapter${n}_Proof_Engine`}
+                      rel="noopener noreferrer"
+                    >
+                      Ch {n}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="book">
+              <h3>{t('b2_title')}</h3>
+              <p>{t('b2_body')}</p>
+              <span className="status"><span className="dot" /> {t('b_status')}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* VENTURES — built for real businesses */}
+        <div className="section" id="ventures">
+          <span className="kicker">{t('v_kicker')}</span>
+          <h2>{t('v_title')}</h2>
+          <p className="intro">{t('v_intro')}</p>
+          <div className="grid grid-2">
+            <div className="card">
+              <span className="tag">B2B · Lima</span>
+              <h3>{t('v1_title')}</h3>
+              <p>{t('v1_body')}</p>
+              <div className="card-links">
+                <a className="cta" href="https://plastilonas-peruanas-sac.vercel.app" rel="noopener noreferrer">{t('v_open')}</a>
+                <a className="cta" href="https://github.com/iceccarelli/Plastilonas-Peruanas-SAC" rel="noopener noreferrer">{t('v_source')}</a>
+              </div>
+            </div>
+            <div className="card">
+              <span className="tag">Flooring · Canada</span>
+              <h3>{t('v2_title')}</h3>
+              <p>{t('v2_body')}</p>
+              <div className="card-links">
+                <a className="cta" href="https://ecowoods.ca" rel="noopener noreferrer">{t('v_open')}</a>
+                <a className="cta" href="https://github.com/iceccarelli/ecowoods-app" rel="noopener noreferrer">{t('v_source')}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* NOW */}
         <div className="section" id="now">
           <span className="kicker">{t('w_kicker')}</span>
