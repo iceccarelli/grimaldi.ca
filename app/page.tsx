@@ -2,10 +2,12 @@
 
 import Image from 'next/image';
 import SkyCanvas from '@/components/SkyCanvas';
+import Rail from '@/components/Rail';
+import { liveDeployments, railUi } from '@/lib/dynamic';
 import { useI18n } from '@/lib/i18n';
 
 export default function Home() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   return (
     <main>
@@ -123,6 +125,30 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* AROUND THE NETWORK — everything live, in one cascading rail */}
+        <div className="section" id="live">
+          <span className="kicker">{railUi.liveKicker[locale]}</span>
+          <h2>{railUi.liveTitle[locale]}</h2>
+          <p className="intro">{railUi.liveIntro[locale]}</p>
+          <Rail ariaLabel={railUi.liveKicker[locale]} prevLabel={railUi.prev[locale]} nextLabel={railUi.next[locale]}>
+            {liveDeployments.map((deployment) => (
+              <a
+                className="card rail-card deploy-card"
+                key={deployment.id}
+                href={deployment.href}
+                {...(deployment.href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+              >
+                <span className="deploy-live">
+                  <span className="dot" /> {railUi.liveBadge[locale]}
+                </span>
+                <h3>{deployment.title[locale]}</h3>
+                <p>{deployment.desc[locale]}</p>
+                <span className="deploy-host">{deployment.host}</span>
+              </a>
+            ))}
+          </Rail>
         </div>
 
         {/* NOW */}
