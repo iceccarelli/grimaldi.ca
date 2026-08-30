@@ -97,7 +97,8 @@
   "skip": "Skip to content",
   "navPrimary": "Primary",
   "menuOpen": "Open menu",
-  "menuClose": "Close menu"
+  "menuClose": "Close menu",
+  "navT": "Topics"
  },
  "es": {
   "brandTag": "Personal • Blog • Vida",
@@ -197,7 +198,8 @@
   "skip": "Ir al contenido",
   "navPrimary": "Principal",
   "menuOpen": "Abrir menú",
-  "menuClose": "Cerrar menú"
+  "menuClose": "Cerrar menú",
+  "navT": "Temas"
  },
  "de": {
   "brandTag": "Persönlich • Blog • Leben",
@@ -297,7 +299,8 @@
   "skip": "Zum Inhalt springen",
   "navPrimary": "Hauptnavigation",
   "menuOpen": "Menü öffnen",
-  "menuClose": "Menü schließen"
+  "menuClose": "Menü schließen",
+  "navT": "Themen"
  },
  "zh": {
   "brandTag": "个人 • 博客 • 生活",
@@ -397,6 +400,7 @@
   "skip": "跳到主要内容",
   "navPrimary": "主导航",
   "menuOpen": "打开菜单",
-  "menuClose": "关闭菜单"
+  "menuClose": "关闭菜单",
+  "navT": "专题"
  }
 }

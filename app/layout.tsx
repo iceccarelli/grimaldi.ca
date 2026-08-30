@@ -16,7 +16,6 @@ export const metadata: Metadata = {
     template: `%s · ${PERSON.legalName}`,
   },
   description: SITE_DESCRIPTION,
-  alternates: { canonical: '/' },
   robots: { index: true, follow: true },
   openGraph: {
     title: SITE_TITLE,
@@ -33,6 +32,14 @@ export const metadata: Metadata = {
         alt: `${PERSON.legalName} — ${PERSON.jobTitle}`,
       },
     ],
+  },
+  alternates: {
+    canonical: '/',
+    types: {
+      'application/rss+xml': `${SITE_URL}/feed.xml`,
+      'application/atom+xml': `${SITE_URL}/atom.xml`,
+      'application/feed+json': `${SITE_URL}/feed.json`,
+    },
   },
   twitter: {
     card: 'summary_large_image',

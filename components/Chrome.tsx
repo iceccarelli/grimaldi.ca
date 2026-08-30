@@ -9,6 +9,7 @@ import { locales, useI18n } from '@/lib/i18n';
 const NAV: { href: string; key: string }[] = [
   { href: '/#about', key: 'navA' },
   { href: '/#journey', key: 'jKicker' },
+  { href: '/topics/', key: 'navT' },
   { href: '/books/', key: 'navB' },
   { href: '/now/', key: 'navW' },
   { href: '/#network', key: 'navN' },

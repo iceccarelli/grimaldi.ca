@@ -66,6 +66,23 @@ jobs:
           print('og.png 1200x630 OK')
           PY
 
+      # The draft rule is the site's integrity guarantee. Assert it, don't trust it.
+      - name: Assert draft topics never reach crawlers
+        run: |
+          set -e
+          npx --yes tsx --version >/dev/null 2>&1 || true
+          node -e "
+            const fs = require('fs');
+            const files = fs.readdirSync('content/topics').filter(f => f !== 'index.ts');
+            const drafts = files.filter(f => /status:\s*'draft'/.test(fs.readFileSync('content/topics/' + f, 'utf8')));
+            const slugs = drafts.map(f => (fs.readFileSync('content/topics/' + f, 'utf8').match(/slug:\s*'([^']+)'/) || [])[1]).filter(Boolean);
+            if (!slugs.length) { console.log('No draft topics.'); process.exit(0); }
+            const sitemap = fs.readFileSync('.next/server/app/sitemap.xml.body', 'utf8');
+            const bad = slugs.filter(s => sitemap.includes(s));
+            if (bad.length) { console.error('::error::Draft topic(s) leaked into the sitemap: ' + bad.join(', ')); process.exit(1); }
+            console.log('Draft topics absent from sitemap: ' + slugs.join(', '));
+          "
+
       - name: Lighthouse CI
         run: |
           npm i -g @lhci/cli@0.14.x

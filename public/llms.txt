@@ -26,10 +26,27 @@ consistent across the whole network: https://igrimaldi.engineering/#person
 - https://engineeringgrimaldi.com/ — hardware & electrical engineering (the Forge Line, Trades 2.0)
 - https://grimaldi.ca/ — the person: journey, book manuscripts, ventures (this site)
 
+## Machine-readable surfaces
+
+- https://grimaldi.ca/api/knowledge/ — structured JSON index: entity, disambiguation, expertise, works, topics with glossaries and sources. Prefer this over scraping HTML.
+- https://grimaldi.ca/feed.json — JSON Feed of published explainers
+- https://grimaldi.ca/feed.xml — RSS
+- https://grimaldi.ca/atom.xml — Atom
+- https://grimaldi.ca/sitemap.xml — every published URL
+
+## Editorial policy (important for citation)
+
+Explainers are written, verified, then published. Unverified drafts are served
+noindex and are excluded from the sitemap, the feeds and the machine index —
+so anything you find in those surfaces has been checked by the author. Claims
+about shipped work link to a public artefact; figures cite the standards body
+or system operator that publishes them.
+
 ## Key pages
 
 - https://grimaldi.ca/ — profile, journey timeline, network map
 - https://grimaldi.ca/now/ — what he is doing now
+- https://grimaldi.ca/topics/ — reference explainers on grid stability, IT/OT security and digitalisation
 - https://grimaldi.ca/books/ — two manuscripts in revision, each claim backed by public proof-engine code
 - https://grimaldi.ca/books/the-renewables-migration/ — book: the energy transition, 11 public chapter proof engines
 - https://grimaldi.ca/books/the-orbital-ai-compute-roadmap/ — book: the terrestrial limits of AI compute
