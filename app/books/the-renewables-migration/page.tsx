@@ -61,6 +61,11 @@ export default function RenewablesMigrationPage() {
                 </a>
               ))}
             </div>
+            <p style={{ marginTop: '1rem' }}>
+              <a className="cta" href="/books/the-renewables-migration/proof-engines/">
+                What each engine computes →
+              </a>
+            </p>
           </div>
 
           <div className="banner" style={{ marginTop: '2.5rem' }}>

@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/now/', 0.8, 'weekly'),
     entry('/books/', 0.8, 'monthly'),
     entry('/books/the-renewables-migration/', 0.7, 'monthly'),
+    entry('/books/the-renewables-migration/proof-engines/', 0.7, 'monthly'),
     entry('/books/the-orbital-ai-compute-roadmap/', 0.7, 'monthly'),
     entry('/contact/', 0.9, 'yearly'),
     entry('/imprint/', 0.2, 'yearly'),
