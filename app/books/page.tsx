@@ -1,15 +1,22 @@
 import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbs } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Books',
   description:
     'Two book manuscripts by Vincenzo Ceccarelli Grimaldi — The Renewables Migration and The Orbital AI Compute Roadmap — each load-bearing claim backed by public, runnable proof-engine code.',
   alternates: { canonical: '/books/' },
+  openGraph: {
+    images: [{ url: '/og-books.png', width: 1200, height: 630, alt: 'The books, with public receipts — two manuscripts by Vincenzo Ceccarelli Grimaldi' }],
+  },
+  twitter: { card: 'summary_large_image', images: ['/og-books.png'] },
 };
 
 export default function BooksPage() {
   return (
     <main>
+      <JsonLd data={breadcrumbs([{ name: 'Books', path: '/books/' }])} />
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">The books</span>

@@ -1,17 +1,25 @@
 import type { Metadata } from 'next';
 import ContactForm from '@/components/ContactForm';
 import { CAL_URL, PERSON } from '@/lib/site';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbs, contactPage } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Contact',
   description:
     'Contact Vincenzo Ceccarelli Grimaldi — electrical engineer in Frankfurt. Hiring, advisory, press and the books. Form, call booking and direct channels.',
   alternates: { canonical: '/contact/' },
+  openGraph: {
+    images: [{ url: '/og-contact.png', width: 1200, height: 630, alt: 'Contact Vincenzo Ceccarelli Grimaldi' }],
+  },
+  twitter: { card: 'summary_large_image', images: ['/og-contact.png'] },
 };
 
 export default function ContactPage() {
   return (
     <main>
+      <JsonLd data={contactPage()} />
+      <JsonLd data={breadcrumbs([{ name: 'Contact', path: '/contact/' }])} />
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Contact</span>

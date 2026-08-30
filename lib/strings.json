@@ -93,7 +93,11 @@
   "ctaContact": "Work with me",
   "wlPh": "you@example.com",
   "wlOk": "You’re on the list — one email when it lands.",
-  "wlErr": "That didn’t go through — try the contact page."
+  "wlErr": "That didn’t go through — try the contact page.",
+  "skip": "Skip to content",
+  "navPrimary": "Primary",
+  "menuOpen": "Open menu",
+  "menuClose": "Close menu"
  },
  "es": {
   "brandTag": "Personal • Blog • Vida",
@@ -189,7 +193,11 @@
   "ctaContact": "Trabaja conmigo",
   "wlPh": "tu@ejemplo.com",
   "wlOk": "Estás en la lista — un correo cuando llegue.",
-  "wlErr": "No se envió — prueba la página de contacto."
+  "wlErr": "No se envió — prueba la página de contacto.",
+  "skip": "Ir al contenido",
+  "navPrimary": "Principal",
+  "menuOpen": "Abrir menú",
+  "menuClose": "Cerrar menú"
  },
  "de": {
   "brandTag": "Persönlich • Blog • Leben",
@@ -285,7 +293,11 @@
   "ctaContact": "Zusammenarbeiten",
   "wlPh": "sie@beispiel.de",
   "wlOk": "Sie stehen auf der Liste — eine E-Mail, wenn es so weit ist.",
-  "wlErr": "Hat nicht geklappt — bitte die Kontaktseite nutzen."
+  "wlErr": "Hat nicht geklappt — bitte die Kontaktseite nutzen.",
+  "skip": "Zum Inhalt springen",
+  "navPrimary": "Hauptnavigation",
+  "menuOpen": "Menü öffnen",
+  "menuClose": "Menü schließen"
  },
  "zh": {
   "brandTag": "个人 • 博客 • 生活",
@@ -381,6 +393,10 @@
   "ctaContact": "与我合作",
   "wlPh": "you@example.com",
   "wlOk": "已加入列表 — 发布时您会收到一封邮件。",
-  "wlErr": "提交失败 — 请使用联系页面。"
+  "wlErr": "提交失败 — 请使用联系页面。",
+  "skip": "跳到主要内容",
+  "navPrimary": "主导航",
+  "menuOpen": "打开菜单",
+  "menuClose": "关闭菜单"
  }
 }

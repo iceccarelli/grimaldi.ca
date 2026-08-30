@@ -1,16 +1,37 @@
 import type { Metadata } from 'next';
 import WaitlistForm from '@/components/WaitlistForm';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbs, manuscript } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'The Renewables Migration',
   description:
     'The Renewables Migration — a book manuscript on how the energy transition actually gets built, by Vincenzo Ceccarelli Grimaldi. Eleven public chapter proof-engine repositories make every load-bearing number re-runnable.',
   alternates: { canonical: '/books/the-renewables-migration/' },
+  openGraph: {
+    images: [{ url: '/og-renewables.png', width: 1200, height: 630, alt: 'The Renewables Migration — manuscript in revision, with 11 public proof engines' }],
+  },
+  twitter: { card: 'summary_large_image', images: ['/og-renewables.png'] },
 };
 
 export default function RenewablesMigrationPage() {
   return (
     <main>
+      <JsonLd
+        data={manuscript({
+          path: '/books/the-renewables-migration/',
+          name: 'The Renewables Migration',
+          about: 'Energy transition, electrical grid engineering, power systems',
+          description:
+            'How the energy transition actually gets built: the cost of trading fuel imports for hardware imports, the physics of 50 Hz, and what it takes to give the grid a brain. Each chapter ships a public proof-engine repository that recomputes its load-bearing numbers from source data.',
+          proofRepos: Array.from({ length: 11 }, (_, i) =>
+            `https://github.com/iceccarelli/Renewables_Migration_Chapter${i + 1}_Proof_Engine`),
+        })}
+      />
+      <JsonLd data={breadcrumbs([
+        { name: 'Books', path: '/books/' },
+        { name: 'The Renewables Migration', path: '/books/the-renewables-migration/' },
+      ])} />
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Manuscript · in revision</span>

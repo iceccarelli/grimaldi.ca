@@ -1,10 +1,16 @@
 import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import { breadcrumbs } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Now',
   description:
     'What Vincenzo Ceccarelli Grimaldi is doing now: digitalising high-voltage railway traction assets in Frankfurt, building the Grimaldi Network, and revising two book manuscripts.',
   alternates: { canonical: '/now/' },
+  openGraph: {
+    images: [{ url: '/og-now.png', width: 1200, height: 630, alt: 'What Vincenzo Ceccarelli Grimaldi is doing now' }],
+  },
+  twitter: { card: 'summary_large_image', images: ['/og-now.png'] },
 };
 
 const UPDATED = 'August 2026';
@@ -12,6 +18,7 @@ const UPDATED = 'August 2026';
 export default function NowPage() {
   return (
     <main>
+      <JsonLd data={breadcrumbs([{ name: 'Now', path: '/now/' }])} />
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Now · updated {UPDATED}</span>

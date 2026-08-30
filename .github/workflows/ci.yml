@@ -17,6 +17,29 @@ jobs:
           node-version: 20
           cache: npm
 
+
+      # A secret reached this public repo once. It does not happen twice.
+      - name: Secret guard
+        run: |
+          set -e
+          if git ls-files --error-unmatch '.env' '.env.local' '.env.production' 2>/dev/null; then
+            echo "::error::An environment file is tracked in git. Run: git rm --cached <file>"
+            exit 1
+          fi
+          if git ls-files | grep -E '^\.env' ; then
+            echo "::error::A dotenv file is tracked in git."
+            exit 1
+          fi
+          if git ls-files | grep -E '\.patch$' ; then
+            echo "::error::A .patch artifact is committed. Patches are applied, not stored."
+            exit 1
+          fi
+          if git grep -nIE '(re_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}|VERCEL_OIDC_TOKEN=ey|-----BEGIN [A-Z ]*PRIVATE KEY-----)' -- . ':!.github/workflows/ci.yml'; then
+            echo "::error::A credential-shaped string is committed."
+            exit 1
+          fi
+          echo "No tracked secrets, dotenv files or patch artifacts."
+
       - name: Install (locked)
         run: npm ci
 
