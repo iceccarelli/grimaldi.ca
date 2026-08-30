@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import SkyCanvas from '@/components/SkyCanvas';
 import Rail from '@/components/Rail';
+import WaitlistForm from '@/components/WaitlistForm';
 import { liveDeployments, railUi } from '@/lib/dynamic';
 import { useI18n } from '@/lib/i18n';
 
@@ -20,12 +21,12 @@ export default function Home() {
             <h1>{t('title')}</h1>
             <p className="lead">{t('lead')}</p>
             <div className="cta-row">
-              <a className="btn btn-dark" href="#now">{t('ctaNow')}</a>
-              <a className="btn btn-line" href="https://igrimaldi.engineering/card">{t('ctaCard')}</a>
+              <a className="btn btn-dark" href="/contact/">{t('ctaContact')}</a>
+              <a className="btn btn-line" href="/now/">{t('ctaNow')}</a>
             </div>
           </div>
           <div className="hero-portrait">
-            <Image src="/headshot.jpg" alt="Vincenzo Grimaldi" width={280} height={280} priority unoptimized />
+            <Image src="/headshot.jpg" alt="Vincenzo Ceccarelli Grimaldi" width={280} height={280} priority unoptimized />
           </div>
         </div>
       </section>
@@ -42,9 +43,13 @@ export default function Home() {
                 <span className="tag">{t(`${c}tag`)}</span>
                 <h3>{t(`${c}title`)}</h3>
                 <p>{t(`${c}body`)}</p>
-                <span className="status">
-                  <span className="dot" /> {t(i === 0 ? 'writing' : i === 1 ? 'drafting' : 'growing')}
-                </span>
+                {/* No promise-shelves: the "first posts being written" status is
+                    hidden until a published post URL exists. */}
+                {i !== 0 && (
+                  <span className="status">
+                    <span className="dot" /> {t(i === 1 ? 'drafting' : 'growing')}
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -74,7 +79,7 @@ export default function Home() {
           <p className="intro">{t('b_intro')}</p>
           <div className="books">
             <div className="book">
-              <h3>{t('b1_title')}</h3>
+              <h3><a href="/books/the-renewables-migration/">{t('b1_title')} →</a></h3>
               <p>{t('b1_body')}</p>
               <span className="status"><span className="dot" /> {t('b_status')}</span>
               <div className="proof">
@@ -93,7 +98,7 @@ export default function Home() {
               </div>
             </div>
             <div className="book">
-              <h3>{t('b2_title')}</h3>
+              <h3><a href="/books/the-orbital-ai-compute-roadmap/">{t('b2_title')} →</a></h3>
               <p>{t('b2_body')}</p>
               <span className="status"><span className="dot" /> {t('b_status')}</span>
             </div>
@@ -198,9 +203,12 @@ export default function Home() {
               <h2>{t('bannerTitle')}</h2>
               <p>{t('bannerBody')}</p>
             </div>
-            <a className="btn btn-dark" href="mailto:vincenzo@igrimaldi.engineering?subject=Notify%20me%20—%20grimaldi.ca">
-              {t('bannerCta')}
-            </a>
+            <WaitlistForm
+              placeholder={t('wlPh')}
+              button={t('bannerCta')}
+              ok={t('wlOk')}
+              err={t('wlErr')}
+            />
           </div>
         </div>
       </div>

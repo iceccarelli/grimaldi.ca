@@ -30,18 +30,18 @@ export default function Chrome({ children }: { children: ReactNode }) {
           <a className="brand" href="/">
             <BrandMark size={38} />
             <span>
-              <b>Vincenzo Grimaldi</b>
+              <b>Vincenzo Ceccarelli Grimaldi</b>
               <small>{t('brandTag')}</small>
             </span>
           </a>
           <div className="nav-links">
-            <a href="#about">{t('navA')}</a>
-            <a href="#journey">{t('jKicker')}</a>
-            <a href="#books">{t('navB')}</a>
-            <a href="#now">{t('navW')}</a>
-            <a href="#network">{t('navN')}</a>
+            <a href="/#about">{t('navA')}</a>
+            <a href="/#journey">{t('jKicker')}</a>
+            <a href="/books/">{t('navB')}</a>
+            <a href="/now/">{t('navW')}</a>
+            <a href="/#network">{t('navN')}</a>
           </div>
-          <a className="pill" href="mailto:vincenzo@igrimaldi.engineering">{t('connect')}</a>
+          <a className="pill" href="/contact/">{t('connect')}</a>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
         <div className="foot">
           <div className="foot-grid">
             <div>
-              <div className="foot-brand"><BrandMark size={42} /><b>Vincenzo Grimaldi</b></div>
+              <div className="foot-brand"><BrandMark size={42} /><b>Vincenzo Ceccarelli Grimaldi</b></div>
               <p>{t('footAbout')}</p>
             </div>
             <div>
@@ -64,7 +64,8 @@ export default function Chrome({ children }: { children: ReactNode }) {
             </div>
             <div>
               <h4>{t('footContact')}</h4>
-              <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering →</a>
+              <a href="/contact/">{t('connect')} →</a>
+              <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering</a>
               <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener noreferrer">LinkedIn</a>
               <a href="https://x.com/Vince87Grimaldi" rel="noopener noreferrer">X</a>
               <a href="https://www.instagram.com/grimaldiengineering/" rel="noopener noreferrer">Instagram</a>
@@ -72,6 +73,11 @@ export default function Chrome({ children }: { children: ReactNode }) {
           </div>
           <div className="legal">
             <span>{t('rights')}</span>
+            <span className="legal-links">
+              <a href="/imprint/">Imprint</a>
+              <a href="/privacy/">Privacy</a>
+              <a href="/contact/">{t('connect')}</a>
+            </span>
             <a href="#top">{t('top')}</a>
           </div>
         </div>
