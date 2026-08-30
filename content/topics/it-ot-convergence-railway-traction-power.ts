@@ -7,7 +7,7 @@ import type { Topic } from '../types';
  */
 const topic: Topic = {
   slug: 'it-ot-convergence-railway-traction-power',
-  status: 'published',
+  status: 'draft',
   title: 'IT/OT convergence in railway traction power',
   description:
     'Why connecting railway traction power control systems to enterprise IT inverts the usual security priorities, and what the governing standards actually require.',
