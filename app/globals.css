@@ -272,3 +272,6 @@ footer { background: var(--ink); color: #f6efe4; border-radius: var(--sheet-r) v
 .legal-links a:hover { text-decoration: underline; }
 .book h3 a:hover, .status + .proof a:hover { color: var(--terra); }
 @media (max-width: 980px) { .contact-grid, .form-row { grid-template-columns: 1fr; } }
+
+/* Honeypot — off-screen, zero-size, never focusable. Bots fill it; humans can't. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; opacity: 0; }

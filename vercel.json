@@ -1,10 +1,9 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "out",
+  "framework": "nextjs",
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.grimaldi.ca" }],
+      "has": [{ "type": "host", "value": "^www\\.grimaldi\\.ca$" }],
       "destination": "https://grimaldi.ca/:path*",
       "permanent": true
     }
@@ -32,6 +31,10 @@
     {
       "source": "/(robots\\.txt|sitemap\\.xml|llms\\.txt)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
     }
   ]
 }

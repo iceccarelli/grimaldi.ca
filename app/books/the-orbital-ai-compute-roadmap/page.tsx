@@ -27,6 +27,7 @@ export default function OrbitalRoadmapPage() {
               <p>One email when the manuscript ships. No noise before that.</p>
             </div>
             <WaitlistForm
+              list="orbital-roadmap"
               placeholder="you@example.com"
               button="Join the waitlist"
               ok="You’re on the list."

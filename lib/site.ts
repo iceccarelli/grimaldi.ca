@@ -4,13 +4,7 @@
  * Every surface (metadata, JSON-LD, sitemap, forms) reads from here so the
  * legal name, the canonical host and the contact channels can never drift.
  *
- * CONVERSION ENDPOINTS — action required (see 0–48h checklist):
- *  - FORM_ENDPOINT: create a free form at https://formspree.io → paste the
- *    endpoint ("https://formspree.io/f/xxxxxxxx"). Until then the contact
- *    form degrades to a prefilled email draft — wire it immediately.
- *  - CAL_URL: create https://cal.com event (Europe/Berlin) → paste the link.
- *  - NEWSLETTER_ACTION: create a https://buttondown.com list → paste
- *    "https://buttondown.com/api/emails/embed-subscribe/<username>".
+ * Conversion endpoints are first-party API routes — see the block below.
  */
 
 export const SITE_URL = 'https://grimaldi.ca';
@@ -39,10 +33,22 @@ export const SITE_TITLE =
 export const SITE_DESCRIPTION =
   'Vincenzo Ceccarelli Grimaldi is an electrical engineer in Frankfurt working on the digitalisation of high-voltage rail infrastructure — the personal surface of the Grimaldi Network: the journey, two book manuscripts with public proof engines, and the ventures.';
 
-/* ── Conversion endpoints (REPLACE before relying on them) ─────────── */
-export const FORM_ENDPOINT = 'https://formspree.io/f/REPLACE_ME';
-export const CAL_URL = ''; // e.g. 'https://cal.com/vincenzo-ceccarelli-grimaldi/intro'
-export const NEWSLETTER_ACTION = ''; // Buttondown embed-subscribe URL
+/* ── Conversion endpoints — FIRST PARTY ─────────────────────────────
+ * The contact form and the book waitlists post to this site's own API
+ * routes. No Formspree, no Buttondown, no vendor account required.
+ *
+ * One environment variable arms the whole layer (Vercel → Settings →
+ * Environment Variables, all environments):
+ *
+ *   RESEND_API_KEY   required — https://resend.com, free tier, 60 seconds
+ *   CONTACT_TO       optional — override the destination inbox
+ *   CONTACT_FROM     optional — verified sender once your domain is added
+ *
+ * Until RESEND_API_KEY exists the routes answer 503 and the forms tell the
+ * visitor to email directly. Honest failure, never a silent drop.
+ */
+export const CONTACT_ENDPOINT = '/api/contact/'; // trailing slash is REQUIRED: trailingSlash:true 308-redirects the bare path, and a 308 on POST drops the body in some clients
+export const SUBSCRIBE_ENDPOINT = '/api/subscribe/';
 
-export const formConfigured = () => !FORM_ENDPOINT.includes('REPLACE_ME');
-export const newsletterConfigured = () => NEWSLETTER_ACTION.length > 0;
+/** Booking: paste a Cal.com link (Europe/Berlin) to promote it to a hero CTA. */
+export const CAL_URL = '';

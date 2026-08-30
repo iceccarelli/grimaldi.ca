@@ -3,15 +3,16 @@
 /**
  * ContactForm — the primary conversion path.
  *
- * Posts JSON to FORM_ENDPOINT (Formspree). Until the endpoint is configured
- * in lib/site.ts, submission degrades to a prefilled email draft so no lead
- * is ever dropped — but wire the real endpoint immediately (0–48h checklist).
+ * Posts JSON to this site's own /api/contact route. No third-party form
+ * vendor. Includes a hidden honeypot field ("company") that bots fill and
+ * humans never see. Failure states are explicit: a 503 means the mail
+ * transport is not configured yet and the visitor is told to email directly.
  */
 
 import { useState, type FormEvent } from 'react';
-import { FORM_ENDPOINT, PERSON, formConfigured } from '@/lib/site';
+import { CONTACT_ENDPOINT, PERSON } from '@/lib/site';
 
-type Status = 'idle' | 'sending' | 'sent' | 'error';
+type Status = 'idle' | 'sending' | 'sent' | 'error' | 'unconfigured';
 
 const CONTEXTS = [
   ['hiring', 'Hiring / role'],
@@ -28,30 +29,26 @@ export default function ContactForm() {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    const payload = {
-      name: String(data.get('name') ?? ''),
-      email: String(data.get('email') ?? ''),
-      context: String(data.get('context') ?? 'other'),
-      message: String(data.get('message') ?? ''),
-    };
-
-    if (!formConfigured()) {
-      // Graceful degradation until Formspree is wired: open a prefilled draft.
-      const subject = encodeURIComponent(`[grimaldi.ca · ${payload.context}] ${payload.name}`);
-      const body = encodeURIComponent(`${payload.message}\n\n— ${payload.name} <${payload.email}>`);
-      window.location.href = `mailto:${PERSON.email}?subject=${subject}&body=${body}`;
-      return;
-    }
-
     setStatus('sending');
+
     try {
-      const res = await fetch(FORM_ENDPOINT, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: String(data.get('name') ?? ''),
+          email: String(data.get('email') ?? ''),
+          context: String(data.get('context') ?? 'other'),
+          message: String(data.get('message') ?? ''),
+          company: String(data.get('company') ?? ''),
+        }),
       });
-      setStatus(res.ok ? 'sent' : 'error');
-      if (res.ok) form.reset();
+      if (res.ok) {
+        form.reset();
+        setStatus('sent');
+      } else {
+        setStatus(res.status === 503 ? 'unconfigured' : 'error');
+      }
     } catch {
       setStatus('error');
     }
@@ -61,13 +58,16 @@ export default function ContactForm() {
     return (
       <div className="form-ok" role="status">
         <h3>Received.</h3>
-        <p>Your message is in. I read everything and reply from {PERSON.email} — usually within two working days (Europe/Berlin).</p>
+        <p>
+          Your message is in. I read everything and reply from {PERSON.email} — usually within
+          two working days (Europe/Berlin).
+        </p>
       </div>
     );
   }
 
   return (
-    <form className="contact-form" onSubmit={onSubmit}>
+    <form className="contact-form" onSubmit={onSubmit} noValidate={false}>
       <div className="form-row">
         <label>
           Name
@@ -88,14 +88,30 @@ export default function ContactForm() {
       </label>
       <label>
         Message
-        <textarea name="message" required rows={6} placeholder="What are you building, hiring for, or writing about?" />
+        <textarea name="message" required minLength={10} rows={6} placeholder="What are you building, hiring for, or writing about?" />
       </label>
+
+      {/* Honeypot — hidden from humans and assistive tech, irresistible to bots. */}
+      <div className="hp" aria-hidden="true">
+        <label>
+          Company
+          <input name="company" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
       <button className="btn btn-dark" type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? 'Sending…' : 'Send message'}
       </button>
+
       {status === 'error' && (
         <p className="form-err" role="alert">
-          The form backend didn’t answer. Email me directly: <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a>
+          That didn’t go through. Email me directly: <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a>
+        </p>
+      )}
+      {status === 'unconfigured' && (
+        <p className="form-err" role="alert">
+          The mail transport isn’t live yet. Email me directly:{' '}
+          <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a>
         </p>
       )}
     </form>

@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Build + performance gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install (locked)
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+      # Crawl infrastructure is load-bearing: fail the build if it regresses.
+      - name: Assert crawl + identity surfaces exist
+        run: |
+          set -e
+          test -f public/llms.txt
+          test -f public/og.png
+          test -f public/favicon.ico
+          test -f public/.well-known/security.txt
+          test -f app/robots.ts
+          test -f app/sitemap.ts
+          python3 - <<'PY'
+          from PIL import Image
+          w, h = Image.open('public/og.png').size
+          assert (w, h) == (1200, 630), f'og.png must be 1200x630, got {w}x{h}'
+          print('og.png 1200x630 OK')
+          PY
+
+      - name: Lighthouse CI
+        run: |
+          npm i -g @lhci/cli@0.14.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

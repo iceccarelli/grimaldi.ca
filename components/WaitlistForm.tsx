@@ -1,22 +1,24 @@
 'use client';
 
 /**
- * WaitlistForm — email capture for the books/blog waitlist.
+ * WaitlistForm — email capture for the books and the first post.
  *
- * Posts to the Buttondown embed-subscribe endpoint configured in lib/site.ts.
- * Until NEWSLETTER_ACTION is set, it routes the visitor to /contact/ instead
- * of silently failing — never a dead mailto.
+ * Posts to this site's own /api/subscribe route with a list key, so the
+ * Renewables Migration list and the Orbital Roadmap list stay distinguishable
+ * from day one. Honeypot included. No newsletter vendor account required.
  */
 
 import { useState, type FormEvent } from 'react';
-import { NEWSLETTER_ACTION, newsletterConfigured } from '@/lib/site';
+import { SUBSCRIBE_ENDPOINT } from '@/lib/site';
 
 export default function WaitlistForm({
+  list = 'general',
   placeholder,
   button,
   ok,
   err,
 }: {
+  list?: 'renewables-migration' | 'orbital-roadmap' | 'general';
   placeholder: string;
   button: string;
   ok: string;
@@ -26,15 +28,18 @@ export default function WaitlistForm({
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const email = String(new FormData(e.currentTarget).get('email') ?? '');
-    if (!newsletterConfigured()) {
-      window.location.href = `/contact/?waitlist=${encodeURIComponent(email)}`;
-      return;
-    }
+    const data = new FormData(e.currentTarget);
     setStatus('sending');
     try {
-      const body = new URLSearchParams({ email });
-      const res = await fetch(NEWSLETTER_ACTION, { method: 'POST', body });
+      const res = await fetch(SUBSCRIBE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: String(data.get('email') ?? ''),
+          company: String(data.get('company') ?? ''),
+          list,
+        }),
+      });
       setStatus(res.ok ? 'sent' : 'error');
     } catch {
       setStatus('error');
@@ -46,6 +51,9 @@ export default function WaitlistForm({
   return (
     <form className="wl-form" onSubmit={onSubmit}>
       <input name="email" type="email" required placeholder={placeholder} autoComplete="email" aria-label={placeholder} />
+      <div className="hp" aria-hidden="true">
+        <input name="company" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <button className="btn btn-dark" type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? '…' : button}
       </button>

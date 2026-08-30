@@ -1,14 +1,19 @@
-/** Static export: every page prerenders to plain HTML in out/, so crawlers
- *  and AI agents read the full site with zero JavaScript.
+/** Next.js on Vercel — NOT a static export.
  *
- *  trailingSlash: each route lands in out/<route>/index.html — Vercel serves
- *  /now/ directly with no rewrite ambiguity, and canonical URLs are stable.
+ *  Why: `output: 'export'` forbade route handlers, which forced the contact
+ *  form and the book waitlist onto third-party SaaS endpoints. Standard Next
+ *  on Vercel still prerenders every page in this app to static HTML at build
+ *  time (verify: `npm run build` must mark every route ○ Static), so the
+ *  crawler-correct invariant is unchanged — and /api/* becomes possible.
  *
- *  NOTE: headers() is IGNORED under `output: 'export'` — all response
- *  headers (security, caching) live in vercel.json. Do not add them here.
+ *  trailingSlash keeps canonical URLs stable across the v6 sitemap.
+ *
+ *  NOTE: response headers still live in vercel.json, not here, so that the
+ *  security header set is defined in exactly one place for the whole domain.
  */
 module.exports = {
-  output: 'export',
   trailingSlash: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
   images: { unoptimized: true },
 };

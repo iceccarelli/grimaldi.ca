@@ -48,6 +48,7 @@ export default function RenewablesMigrationPage() {
               <p>One email when the manuscript ships. No noise before that.</p>
             </div>
             <WaitlistForm
+              list="renewables-migration"
               placeholder="you@example.com"
               button="Join the waitlist"
               ok="You’re on the list."
