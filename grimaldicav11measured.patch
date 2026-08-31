@@ -1,0 +1,653 @@
+diff --git a/app/books/page.tsx b/app/books/page.tsx
+index 8c6340d..e47183c 100644
+--- a/app/books/page.tsx
++++ b/app/books/page.tsx
+@@ -20,7 +20,7 @@ export default function BooksPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">The books</span>
+-          <h2>Two manuscripts — with public receipts</h2>
++          <h1 className="page-title">Two manuscripts — with public receipts</h1>
+           <p className="intro">
+             Long-form writing held to the same standard as the engineering: every load-bearing
+             claim gets a proof. Both manuscripts are honestly in revision — not yet on sale —
+diff --git a/app/books/the-orbital-ai-compute-roadmap/page.tsx b/app/books/the-orbital-ai-compute-roadmap/page.tsx
+index 8d8d0eb..5cb42d3 100644
+--- a/app/books/the-orbital-ai-compute-roadmap/page.tsx
++++ b/app/books/the-orbital-ai-compute-roadmap/page.tsx
+@@ -33,7 +33,7 @@ export default function OrbitalRoadmapPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">Manuscript · in revision</span>
+-          <h2>The Orbital AI Compute Roadmap</h2>
++          <h1 className="page-title">The Orbital AI Compute Roadmap</h1>
+           <p className="intro">
+             The terrestrial trilemma of AI compute — inertia, copper, heat — and the honest
+             case for what comes after. In revision; every load-bearing claim is being given a
+diff --git a/app/books/the-renewables-migration/page.tsx b/app/books/the-renewables-migration/page.tsx
+index 79aa0b0..5ce805a 100644
+--- a/app/books/the-renewables-migration/page.tsx
++++ b/app/books/the-renewables-migration/page.tsx
+@@ -35,7 +35,7 @@ export default function RenewablesMigrationPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">Manuscript · in revision</span>
+-          <h2>The Renewables Migration</h2>
++          <h1 className="page-title">The Renewables Migration</h1>
+           <p className="intro">
+             Germany traded fuel imports for hardware imports — the €-trillion receipt, the
+             physics of 50 Hz, and what it takes to give the grid a brain. The manuscript is in
+diff --git a/app/books/the-renewables-migration/proof-engines/page.tsx b/app/books/the-renewables-migration/proof-engines/page.tsx
+index dd76fde..206934a 100644
+--- a/app/books/the-renewables-migration/proof-engines/page.tsx
++++ b/app/books/the-renewables-migration/proof-engines/page.tsx
+@@ -55,7 +55,7 @@ export default async function ProofEnginesPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">The Renewables Migration · verification</span>
+-          <h2>Don’t trust the book — run it</h2>
++          <h1 className="page-title">Don’t trust the book — run it</h1>
+           <p className="intro">
+             Every chapter of The Renewables Migration ships with a public repository that
+             recomputes that chapter’s load-bearing figures from source data. A reader who doubts
+diff --git a/app/contact/page.tsx b/app/contact/page.tsx
+index bd54a8d..8c20412 100644
+--- a/app/contact/page.tsx
++++ b/app/contact/page.tsx
+@@ -23,7 +23,7 @@ export default function ContactPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">Contact</span>
+-          <h2>Start a conversation</h2>
++          <h1 className="page-title">Start a conversation</h1>
+           <p className="intro">
+             Hiring, advisory on grid digitalisation and IT/OT security, press and podcasts, or the
+             books — pick the lane and write. I reply from {PERSON.email}, usually within two
+@@ -34,7 +34,7 @@ export default function ContactPage() {
+             <ContactForm />
+ 
+             <aside className="contact-aside">
+-              <h3>Prefer a call?</h3>
++              <h2 className="aside-h">Prefer a call?</h2>
+               {CAL_URL ? (
+                 <p>
+                   <a className="btn btn-line" href={CAL_URL} rel="noopener noreferrer">
+@@ -47,13 +47,13 @@ export default function ContactPage() {
+                   (Europe/Berlin) in the message and I’ll send a slot.
+                 </p>
+               )}
+-              <h3>Direct channels</h3>
++              <h2 className="aside-h">Direct channels</h2>
+               <p>
+                 <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener noreferrer">LinkedIn →</a><br />
+                 <a href="https://github.com/iceccarelli" rel="noopener noreferrer">GitHub →</a><br />
+                 <a href="https://igrimaldi.engineering/card" rel="noopener noreferrer">Digital business card →</a>
+               </p>
+-              <h3>For press</h3>
++              <h2 className="aside-h">For press</h2>
+               <p>
+                 Every claim on this site that you might quote has a public receipt — code,
+                 repository or live deployment — linked next to it.
+diff --git a/app/globals.css b/app/globals.css
+index 9942b5b..ea46851 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -12,10 +12,12 @@
+   --border: #e7ddcc;
+   --border-strong: #d5c7b0;
+   --ink: #2b2420;
+-  --text-2: #5c5248;
+-  --muted: #8a7d6e;
+-  --terra: #c0563a;
+-  --rose: #c86b8f;
++  --text-2: #5c5248;          /* 7.62:1 on white */
++  --muted: #726758;           /* 5.13:1 on paper — was #8a7d6e at 3.72:1 (FAIL) */
++  --terra: #a8452c;           /* 5.49:1 on paper, 5.61:1 for white on it — was #c0563a at 4.21:1 (FAIL) */
++  --terra-glow: #c0563a;      /* decorative only: gradients, shadows, never text */
++  --rose: #c86b8f;            /* decorative only: timeline gradient, step numerals */
++  --rose-ink: #a44a70;        /* 5.54:1 on white — for tag text */
+   --gold: #b98a2f;
+   --sheet-r: 40px;
+   --r: 16px;
+@@ -36,12 +38,12 @@ a { color: inherit; text-decoration: none; }
+ ::selection { background: rgba(192, 86, 58, 0.2); }
+ 
+ /* ── Chrome ─────────────────────────────────────────────────────────── */
+-.utility { background: var(--ink); color: #f6efe4; height: 40px; display: flex; align-items: center; }
+-.utility-in { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: flex-end; align-items: center; gap: 1.2rem; font-size: .78rem; }
+-.utility a { opacity: .9; }
++.utility { background: var(--ink); color: #f6efe4; min-height: 40px; display: flex; align-items: center; padding: .3rem 0; }
++.utility-in { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: flex-end; align-items: center; gap: .4rem 1.2rem; font-size: .78rem; flex-wrap: wrap; }
++.utility a { opacity: .9; display: inline-flex; align-items: center; min-height: 24px; padding: .15rem 0; }
+ .utility a:hover { opacity: 1; text-decoration: underline; }
+ .lang { display: inline-flex; gap: .15rem; padding: .15rem; border: 1px solid rgba(246, 239, 228, 0.4); border-radius: 999px; }
+-.lang button { border: 0; background: transparent; color: rgba(246, 239, 228, 0.85); font-size: .72rem; font-weight: 600; padding: .22rem .55rem; border-radius: 999px; cursor: pointer; }
++.lang button { border: 0; background: transparent; color: rgba(246, 239, 228, 0.92); font-size: .72rem; font-weight: 600; padding: .35rem .6rem; min-height: 24px; border-radius: 999px; cursor: pointer; }
+ .lang button.on { background: #f6efe4; color: var(--ink); }
+ 
+ .nav { position: sticky; top: 0; background: rgba(250, 246, 239, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); min-height: 64px; display: flex; align-items: center; z-index: 9; }
+@@ -74,12 +76,13 @@ h1 { font-family: var(--serif); font-size: clamp(2.1rem, 3.8vw, 3rem); line-heig
+ /* ── Sheet + sections ───────────────────────────────────────────────── */
+ .sheet { background: var(--paper); border-radius: var(--sheet-r) var(--sheet-r) 0 0; margin-top: -3.5rem; position: relative; }
+ .section { max-width: var(--max); margin: 0 auto; padding: 4rem 1.5rem; }
++h1.page-title { font-family: var(--serif); font-size: clamp(1.55rem, 2.6vw, 2.15rem); font-weight: 600; letter-spacing: -.01em; margin: .4rem 0 .5rem; line-height: 1.2; }
+ h2 { font-family: var(--serif); font-size: clamp(1.55rem, 2.6vw, 2.15rem); font-weight: 600; letter-spacing: -.01em; margin: .4rem 0 .5rem; }
+ .intro { color: var(--text-2); line-height: 1.75; max-width: 700px; margin: 0 0 2rem; }
+ 
+ .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+ .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.6rem 1.5rem; display: flex; flex-direction: column; gap: .6rem; box-shadow: 0 1px 2px rgba(43, 36, 32, 0.04); }
+-.card .tag { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--rose); }
++.card .tag { font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--rose-ink); }
+ .card h3 { margin: 0; font-size: 1.08rem; font-family: var(--serif); }
+ .card p { margin: 0; color: var(--text-2); font-size: .93rem; line-height: 1.7; flex: 1; }
+ .card-link { transition: transform .15s ease, box-shadow .15s ease; }
+@@ -112,7 +115,7 @@ h2 { font-family: var(--serif); font-size: clamp(1.55rem, 2.6vw, 2.15rem); font-
+ footer { background: var(--ink); color: #f6efe4; border-radius: var(--sheet-r) var(--sheet-r) 0 0; margin-top: 3rem; }
+ .foot { max-width: var(--max); margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+ .foot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; margin-bottom: 2.5rem; }
+-.foot h4 { margin: 0 0 1rem; font-size: .95rem; font-family: var(--serif); }
++.foot h4, .foot .foot-h { margin: 0 0 1rem; font-size: .95rem; font-family: var(--serif); font-weight: 600; letter-spacing: 0; }
+ .foot a { display: block; color: rgba(246, 239, 228, 0.78); font-size: .88rem; margin-bottom: .7rem; }
+ .foot a:hover { color: #fff; text-decoration: underline; }
+ .foot p { color: rgba(246, 239, 228, 0.78); font-size: .9rem; line-height: 1.65; }
+@@ -121,7 +124,7 @@ footer { background: var(--ink); color: #f6efe4; border-radius: var(--sheet-r) v
+ .legal { border-top: 1px solid rgba(246, 239, 228, 0.2); padding-top: 1.25rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; color: rgba(246, 239, 228, 0.6); font-size: .82rem; }
+ 
+ @media (max-width: 980px) {
+-  .utility-in { justify-content: center; flex-wrap: wrap; row-gap: .3rem; }
++  .utility-in { justify-content: center; flex-wrap: wrap; row-gap: .15rem; column-gap: 1rem; }
+   .nav-links { display: none; }   /* replaced by the .mnav drawer, not dropped */
+   .nav-toggle { display: grid; }
+   .nav .pill { padding: .45rem .95rem; font-size: .8rem; }
+@@ -185,7 +188,7 @@ footer { background: var(--ink); color: #f6efe4; border-radius: var(--sheet-r) v
+ .ask-launcher {
+   position: fixed; right: 1.4rem; bottom: 1.4rem; z-index: 90;
+   width: 54px; height: 54px; border-radius: 16px; border: 1px solid var(--border-strong);
+-  background: linear-gradient(135deg, #c0563a 0%, #a34630 100%);
++  background: linear-gradient(135deg, var(--terra-glow) 0%, #93361f 100%);
+   color: #fff7ee; cursor: pointer; display: grid; place-items: center;
+   box-shadow: 0 8px 24px rgba(192, 86, 58, 0.4);
+   transition: transform .15s ease, box-shadow .15s ease;
+@@ -198,7 +201,7 @@ footer { background: var(--ink); color: #f6efe4; border-radius: var(--sheet-r) v
+   background: var(--card); border: 1px solid var(--border-strong);
+   box-shadow: 0 24px 60px rgba(43, 36, 32, 0.3);
+ }
+-.ask-head { background: linear-gradient(135deg, #c0563a 0%, #9c4029 100%); color: #fff7ee; padding: 1rem 1.1rem .9rem; }
++.ask-head { background: linear-gradient(135deg, var(--terra-glow) 0%, #8f3221 100%); color: #fff7ee; padding: 1rem 1.1rem .9rem; }
+ .ask-head-row { display: flex; align-items: center; gap: .55rem; }
+ .ask-head strong { font-size: 1.05rem; letter-spacing: -0.01em; font-family: var(--serif); }
+ .ask-badge { font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; background: rgba(255, 247, 238, 0.22); }
+@@ -254,7 +257,7 @@ footer { background: var(--ink); color: #f6efe4; border-radius: var(--sheet-r) v
+ .form-ok { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem 1.6rem; }
+ .form-ok h3 { margin: 0 0 .4rem; font-family: var(--serif); }
+ .form-ok p { margin: 0; color: var(--text-2); line-height: 1.7; }
+-.contact-aside h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .4rem; }
++.contact-aside h3, .contact-aside .aside-h { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; margin: 0 0 .4rem; letter-spacing: 0; }
+ .contact-aside p { color: var(--text-2); font-size: .92rem; line-height: 1.8; margin: 0 0 1.4rem; }
+ .contact-aside a { color: var(--terra); font-weight: 600; }
+ .wl-form { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
+diff --git a/app/imprint/page.tsx b/app/imprint/page.tsx
+index b61031f..c1ebbd2 100644
+--- a/app/imprint/page.tsx
++++ b/app/imprint/page.tsx
+@@ -14,7 +14,7 @@ export default function ImprintPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section legal-page">
+           <span className="kicker">Legal</span>
+-          <h2>Imprint / Impressum</h2>
++          <h1 className="page-title">Imprint / Impressum</h1>
+ 
+           <h3>Angaben gemäß § 5 DDG</h3>
+           <p>
+diff --git a/app/not-found.tsx b/app/not-found.tsx
+index 58b67b1..addd63b 100644
+--- a/app/not-found.tsx
++++ b/app/not-found.tsx
+@@ -11,7 +11,7 @@ export default function NotFound() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section" style={{ minHeight: '48vh' }}>
+           <span className="kicker">404</span>
+-          <h2>This page of the story doesn’t exist.</h2>
++          <h1 className="page-title">This page of the story doesn’t exist.</h1>
+           <p className="intro">
+             The address may have changed, or it never was. Everything real is one hop away.
+           </p>
+diff --git a/app/now/page.tsx b/app/now/page.tsx
+index a1c57e4..21dc6ca 100644
+--- a/app/now/page.tsx
++++ b/app/now/page.tsx
+@@ -22,7 +22,7 @@ export default function NowPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">Now · updated {UPDATED}</span>
+-          <h2>What I’m doing now</h2>
++          <h1 className="page-title">What I’m doing now</h1>
+           <p className="intro">
+             A living page, in the spirit of nownow.com pages: what actually has my attention,
+             updated as it changes — not a static bio.
+diff --git a/app/privacy/page.tsx b/app/privacy/page.tsx
+index 9a2969e..53870d3 100644
+--- a/app/privacy/page.tsx
++++ b/app/privacy/page.tsx
+@@ -14,7 +14,7 @@ export default function PrivacyPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section legal-page">
+           <span className="kicker">Legal</span>
+-          <h2>Privacy / Datenschutz</h2>
++          <h1 className="page-title">Privacy / Datenschutz</h1>
+ 
+           <h3>Controller</h3>
+           <p>
+diff --git a/app/topics/[slug]/page.tsx b/app/topics/[slug]/page.tsx
+index 1354a3f..3594d3c 100644
+--- a/app/topics/[slug]/page.tsx
++++ b/app/topics/[slug]/page.tsx
+@@ -117,7 +117,7 @@ export default function TopicPage({ params }: Params) {
+           <span className="kicker">
+             Topic · {readingMinutes(topic)} min read · updated {topic.updated}
+           </span>
+-          <h2>{topic.title}</h2>
++          <h1 className="page-title">{topic.title}</h1>
+           <p className="topic-standfirst">{topic.standfirst}</p>
+ 
+           {topic.status === 'draft' && (
+diff --git a/app/topics/page.tsx b/app/topics/page.tsx
+index 8cceee5..a697751 100644
+--- a/app/topics/page.tsx
++++ b/app/topics/page.tsx
+@@ -42,7 +42,7 @@ export default function TopicsPage() {
+       <div className="sheet" style={{ marginTop: 0 }}>
+         <div className="section">
+           <span className="kicker">Topics</span>
+-          <h2>The engineering, explained</h2>
++          <h1 className="page-title">The engineering, explained</h1>
+           <p className="intro">
+             Reference explainers on the systems this work touches: power system stability, grid
+             digitalisation and the security of industrial control networks. Written to be cited —
+@@ -68,7 +68,7 @@ export default function TopicsPage() {
+ 
+           {published.length === 0 && (
+             <div className="card" style={{ maxWidth: 760 }}>
+-              <h3>Nothing published yet</h3>
++              <h2>Nothing published yet</h2>
+               <p>
+                 {drafts.length} explainer{drafts.length === 1 ? ' is' : 's are'} written and awaiting
+                 review. Nothing appears here, in the sitemap or in the feeds until it has been
+diff --git a/components/Ask.tsx b/components/Ask.tsx
+index 5fd220b..235cc46 100644
+--- a/components/Ask.tsx
++++ b/components/Ask.tsx
+@@ -14,9 +14,9 @@ type Message =
+   | { from: 'visitor'; text: string }
+   | { from: 'guide'; text: string; links: { label: string; href: string }[] };
+ 
+-export default function Ask() {
++export default function Ask({ initialOpen = false }: { initialOpen?: boolean } = {}) {
+   const { locale } = useI18n();
+-  const [open, setOpen] = useState(false);
++  const [open, setOpen] = useState(initialOpen);
+   const [input, setInput] = useState('');
+   const [messages, setMessages] = useState<Message[]>([]);
+   const threadRef = useRef<HTMLDivElement>(null);
+diff --git a/components/AskLazy.tsx b/components/AskLazy.tsx
+index 13975e1..75f50ed 100644
+--- a/components/AskLazy.tsx
++++ b/components/AskLazy.tsx
+@@ -1,14 +1,39 @@
+ 'use client';
+ 
+ import dynamic from 'next/dynamic';
++import { useState } from 'react';
++import { askUi } from '@/lib/dynamic';
++import { useI18n } from '@/lib/i18n';
+ 
+ /**
+- * The concierge is a convenience, never the content. Loading it lazily and
+- * client-only keeps its bundle out of the critical path, so it cannot
+- * contribute to LCP or blocking time on first paint.
++ * The concierge is a convenience, never the content — so it costs nothing
++ * until someone asks for it.
++ *
++ * Measured: importing Ask eagerly (even with ssr:false) still pulled its
++ * chunk and hydration into every page load. This renders only the launcher
++ * button — a few bytes of markup — and imports the real component on the
++ * first click. Every visitor who never opens the concierge never downloads,
++ * parses or hydrates it.
+  */
+ const Ask = dynamic(() => import('./Ask'), { ssr: false, loading: () => null });
+ 
+ export default function AskLazy() {
+-  return <Ask />;
++  const { locale } = useI18n();
++  const [armed, setArmed] = useState(false);
++
++  if (armed) return <Ask initialOpen />;
++
++  return (
++    <button
++      type="button"
++      className="ask-launcher"
++      onClick={() => setArmed(true)}
++      aria-expanded={false}
++      aria-label={askUi.launcher[locale]}
++    >
++      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
++        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
++      </svg>
++    </button>
++  );
+ }
+diff --git a/components/Chrome.tsx b/components/Chrome.tsx
+index f1d8de8..6a48104 100644
+--- a/components/Chrome.tsx
++++ b/components/Chrome.tsx
+@@ -116,7 +116,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
+               <p>{t('footAbout')}</p>
+             </div>
+             <div>
+-              <h4>{t('footNet')}</h4>
++              <h2 className="foot-h">{t('footNet')}</h2>
+               <a href="https://igrimaldi.engineering">igrimaldi.engineering — {t('netSoftware')}</a>
+               <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com — {t('netHardware')}</a>
+               <a href="https://grimaldi.ca">grimaldi.ca — {t('netPersonal')}</a>
+@@ -124,7 +124,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
+               <a href="https://github.com/iceccarelli" rel="noopener noreferrer">GitHub — iceccarelli</a>
+             </div>
+             <div>
+-              <h4>{t('footContact')}</h4>
++              <h2 className="foot-h">{t('footContact')}</h2>
+               <a href="/contact/">{t('connect')} →</a>
+               <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering</a>
+               <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener noreferrer">LinkedIn</a>
+diff --git a/components/SkyCanvas.tsx b/components/SkyCanvas.tsx
+index 1d33267..89dcd1b 100644
+--- a/components/SkyCanvas.tsx
++++ b/components/SkyCanvas.tsx
+@@ -4,10 +4,24 @@ import { useEffect, useRef } from 'react';
+ 
+ /**
+  * The signature of the personal surface: a slow, warm generative sky.
+- * A sun disc drifts with the visitor's local time of day, soft cloud bands
+- * breathe across the gradient — quiet motion, no data, no dashboards.
+- * The engineering lives elsewhere; this page is the person.
++ *
++ * PERFORMANCE CONTRACT (measured, not assumed). The first version ran an
++ * unthrottled requestAnimationFrame loop at 2x device resolution, rebuilding
++ * four gradients per frame, forever — 3.9 s of main-thread work and 300 ms TBT
++ * on a desktop Lighthouse run, and a battery drain on phones. A decorative sky
++ * is not allowed to cost that. So:
++ *
++ *   - the loop runs at ~12 fps, not 60. It is a drifting sky; nobody can tell.
++ *   - it stops entirely when the hero scrolls out of view (IntersectionObserver)
++ *   - it stops entirely when the tab is hidden (visibilitychange)
++ *   - the sky gradient is rebuilt only on resize, not per frame
++ *   - device pixel ratio is capped at 1.5
++ *   - prefers-reduced-motion draws one frame and never loops
+  */
++const TARGET_FPS = 12;
++const FRAME_MS = 1000 / TARGET_FPS;
++const MAX_DPR = 1.5;
++
+ export default function SkyCanvas() {
+   const ref = useRef<HTMLCanvasElement>(null);
+ 
+@@ -17,67 +31,112 @@ export default function SkyCanvas() {
+     const ctx = canvas.getContext('2d');
+     if (!ctx) return;
+ 
++    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
++
+     let raf = 0;
++    let running = false;
++    let visible = true;
++    let onScreen = true;
++    let last = 0;
++    let sky: CanvasGradient | null = null;
++
+     const resize = () => {
+-      canvas.width = canvas.offsetWidth * 2;
+-      canvas.height = canvas.offsetHeight * 2;
++      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
++      canvas.width = Math.max(1, Math.floor(canvas.offsetWidth * dpr));
++      canvas.height = Math.max(1, Math.floor(canvas.offsetHeight * dpr));
++      // Cache the sky: it depends only on height, so rebuilding it per frame
++      // was pure waste.
++      sky = ctx.createLinearGradient(0, 0, 0, canvas.height);
++      sky.addColorStop(0, 'rgba(246, 227, 197, 1)');
++      sky.addColorStop(0.55, 'rgba(240, 191, 174, 1)');
++      sky.addColorStop(1, 'rgba(200, 107, 143, 1)');
++      paint(performance.now());
+     };
+-    resize();
+-    window.addEventListener('resize', resize);
+ 
+-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+-
+-    const draw = (now: number) => {
+-      const w = canvas.width;
+-      const h = canvas.height;
++    function paint(now: number) {
++      const w = canvas!.width;
++      const h = canvas!.height;
+       const tm = reduced ? 0 : now / 1000;
+ 
+-      // Sun height follows local time: high at noon, low at the edges of day.
+       const hours = new Date().getHours() + new Date().getMinutes() / 60;
+-      const daylight = Math.max(0, Math.sin(((hours - 6) / 12) * Math.PI)); // 0 night … 1 noon
++      const daylight = Math.max(0, Math.sin(((hours - 6) / 12) * Math.PI));
+       const sunY = h * (0.72 - 0.42 * daylight);
+       const sunX = w * (0.18 + 0.64 * Math.min(1, Math.max(0, (hours - 6) / 12)));
+ 
+-      // Sky gradient, warmer near the horizon.
+-      const sky = ctx.createLinearGradient(0, 0, 0, h);
+-      sky.addColorStop(0, `rgba(246, 227, 197, 1)`);
+-      sky.addColorStop(0.55, `rgba(240, 191, 174, 1)`);
+-      sky.addColorStop(1, `rgba(200, 107, 143, 1)`);
+-      ctx.fillStyle = sky;
+-      ctx.fillRect(0, 0, w, h);
++      ctx!.fillStyle = sky ?? 'rgba(240, 191, 174, 1)';
++      ctx!.fillRect(0, 0, w, h);
+ 
+-      // Sun with soft bloom.
+-      const bloom = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, h * 0.5);
++      const bloom = ctx!.createRadialGradient(sunX, sunY, 0, sunX, sunY, h * 0.5);
+       bloom.addColorStop(0, 'rgba(255, 243, 214, 0.95)');
+       bloom.addColorStop(0.18, 'rgba(255, 214, 156, 0.55)');
+       bloom.addColorStop(1, 'rgba(255, 214, 156, 0)');
+-      ctx.fillStyle = bloom;
+-      ctx.fillRect(0, 0, w, h);
+-      ctx.beginPath();
+-      ctx.arc(sunX, sunY, h * 0.055, 0, Math.PI * 2);
+-      ctx.fillStyle = 'rgba(255, 248, 231, 0.98)';
+-      ctx.fill();
+-
+-      // Breathing cloud bands.
++      ctx!.fillStyle = bloom;
++      ctx!.fillRect(0, 0, w, h);
++      ctx!.beginPath();
++      ctx!.arc(sunX, sunY, h * 0.055, 0, Math.PI * 2);
++      ctx!.fillStyle = 'rgba(255, 248, 231, 0.98)';
++      ctx!.fill();
++
+       for (let i = 0; i < 4; i++) {
+         const y = h * (0.3 + i * 0.16) + Math.sin(tm * 0.12 + i * 1.7) * h * 0.012;
+         const drift = ((tm * (6 + i * 2.5)) % (w * 1.4)) - w * 0.2;
+-        const grad = ctx.createLinearGradient(0, y - 30, 0, y + 30);
++        const grad = ctx!.createLinearGradient(0, y - 30, 0, y + 30);
+         grad.addColorStop(0, 'rgba(255,255,255,0)');
+         grad.addColorStop(0.5, `rgba(255, 250, 243, ${0.16 - i * 0.025})`);
+         grad.addColorStop(1, 'rgba(255,255,255,0)');
+-        ctx.fillStyle = grad;
+-        ctx.beginPath();
+-        ctx.ellipse(drift, y, w * 0.32, h * 0.045, 0, 0, Math.PI * 2);
+-        ctx.fill();
++        ctx!.fillStyle = grad;
++        ctx!.beginPath();
++        ctx!.ellipse(drift, y, w * 0.32, h * 0.045, 0, 0, Math.PI * 2);
++        ctx!.fill();
+       }
++    }
+ 
+-      if (!reduced) raf = requestAnimationFrame(draw);
++    const loop = (now: number) => {
++      if (!running) return;
++      if (now - last >= FRAME_MS) {
++        last = now;
++        paint(now);
++      }
++      raf = requestAnimationFrame(loop);
+     };
+-    raf = requestAnimationFrame(draw);
+-    return () => {
++
++    const start = () => {
++      if (running || reduced || !visible || !onScreen) return;
++      running = true;
++      last = 0;
++      raf = requestAnimationFrame(loop);
++    };
++    const stop = () => {
++      running = false;
+       cancelAnimationFrame(raf);
++    };
++
++    resize();
++    window.addEventListener('resize', resize);
++
++    const onVisibility = () => {
++      visible = document.visibilityState === 'visible';
++      visible ? start() : stop();
++    };
++    document.addEventListener('visibilitychange', onVisibility);
++
++    // Off-screen heroes do not need to animate.
++    const io = new IntersectionObserver(
++      ([entry]) => {
++        onScreen = entry.isIntersecting;
++        onScreen ? start() : stop();
++      },
++      { threshold: 0 },
++    );
++    io.observe(canvas);
++
++    start();
++
++    return () => {
++      stop();
++      io.disconnect();
+       window.removeEventListener('resize', resize);
++      document.removeEventListener('visibilitychange', onVisibility);
+     };
+   }, []);
+ 
+diff --git a/lighthouserc.json b/lighthouserc.json
+index 6ff1f94..74b467b 100644
+--- a/lighthouserc.json
++++ b/lighthouserc.json
+@@ -5,23 +5,78 @@
+       "startServerReadyPattern": "Ready in|started server on",
+       "url": [
+         "http://localhost:3000/",
++        "http://localhost:3000/topics/",
+         "http://localhost:3000/contact/",
+-        "http://localhost:3000/books/"
++        "http://localhost:3000/books/the-renewables-migration/proof-engines/"
+       ],
+-      "numberOfRuns": 2,
+-      "settings": { "preset": "desktop" }
++      "numberOfRuns": 3
+     },
+     "assert": {
+       "assertions": {
+-        "categories:performance": ["error", { "minScore": 0.85 }],
+-        "categories:seo": ["error", { "minScore": 0.95 }],
+-        "categories:accessibility": ["error", { "minScore": 0.9 }],
+-        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+-        "largest-contentful-paint": ["error", { "maxNumericValue": 2500 }],
+-        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.1 }],
+-        "total-blocking-time": ["warn", { "maxNumericValue": 200 }]
++        "categories:accessibility": [
++          "error",
++          {
++            "minScore": 1.0
++          }
++        ],
++        "categories:seo": [
++          "error",
++          {
++            "minScore": 0.95
++          }
++        ],
++        "categories:best-practices": [
++          "error",
++          {
++            "minScore": 0.95
++          }
++        ],
++        "categories:performance": [
++          "error",
++          {
++            "minScore": 0.9
++          }
++        ],
++        "target-size": [
++          "error",
++          {
++            "minScore": 1.0
++          }
++        ],
++        "color-contrast": [
++          "error",
++          {
++            "minScore": 1.0
++          }
++        ],
++        "heading-order": [
++          "error",
++          {
++            "minScore": 1.0
++          }
++        ],
++        "cumulative-layout-shift": [
++          "error",
++          {
++            "maxNumericValue": 0.1
++          }
++        ],
++        "largest-contentful-paint": [
++          "error",
++          {
++            "maxNumericValue": 2500
++          }
++        ],
++        "total-blocking-time": [
++          "warn",
++          {
++            "maxNumericValue": 200
++          }
++        ]
+       }
+     },
+-    "upload": { "target": "temporary-public-storage" }
++    "upload": {
++      "target": "temporary-public-storage"
++    }
+   }
+ }
+diff --git a/package.json b/package.json
+index 9fe80cf..9772dc4 100644
+--- a/package.json
++++ b/package.json
+@@ -20,5 +20,11 @@
+     "@types/react": "^18",
+     "@types/react-dom": "^18",
+     "typescript": "^5.6.3"
+-  }
++  },
++  "browserslist": [
++    "chrome >= 111",
++    "edge >= 111",
++    "firefox >= 111",
++    "safari >= 16.4"
++  ]
+ }
