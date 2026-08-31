@@ -1,0 +1,151 @@
+diff --git a/content/topics/index.ts b/content/topics/index.ts
+index ba60b2c..9c42939 100644
+--- a/content/topics/index.ts
++++ b/content/topics/index.ts
+@@ -7,8 +7,9 @@
+ import type { Topic } from '../types';
+ import itOt from './it-ot-convergence-railway-traction-power';
+ import inertia from './grid-inertia-and-the-50-hz-constraint';
++import powerBound from './why-ai-is-power-bound-not-gpu-bound';
+ 
+-export const allTopics: Topic[] = [inertia, itOt];
++export const allTopics: Topic[] = [powerBound, inertia, itOt];
+ 
+ /** Only reviewed work is exposed to crawlers, feeds and agents. */
+ export const publishedTopics = (): Topic[] =>
+diff --git a/content/topics/why-ai-is-power-bound-not-gpu-bound.ts b/content/topics/why-ai-is-power-bound-not-gpu-bound.ts
+new file mode 100644
+index 0000000..5dd2389
+--- /dev/null
++++ b/content/topics/why-ai-is-power-bound-not-gpu-bound.ts
+@@ -0,0 +1,130 @@
++import type { Topic } from '../types';
++
++/**
++ * STATUS: draft.
++ *
++ * Every figure below is sourced to the IEA, the WEF, the EEI or a named
++ * secondary. The author must check each one against the primary document
++ * before publishing — this page's whole value is that its numbers are right.
++ * Two figures are explicitly flagged in the text as needing confirmation.
++ */
++const topic: Topic = {
++  slug: 'why-ai-is-power-bound-not-gpu-bound',
++  status: 'draft',
++  title: 'Why AI is power-bound, not GPU-bound',
++  description:
++    'Trillions of dollars are trying to become megawatts. The conversion is rate-limited by transformers, interconnection queues and physics — not by chips.',
++  updated: '2026-08-30',
++  subjects: [
++    'AI compute infrastructure',
++    'Grid connection',
++    'Electricity networks',
++    'Energy investment',
++    'Power system engineering',
++  ],
++  standfirst:
++    'The scarce input in artificial intelligence is no longer silicon, and it has not been capital for some time. It is an energised connection to a power grid — and that is an engineering problem with a delivery time measured in years.',
++  blocks: [
++    {
++      kind: 'p',
++      text:
++        'The public argument about the limits of artificial intelligence is conducted almost entirely in the vocabulary of semiconductors: fabrication capacity, export controls, accelerator supply. That argument is a generation out of date. The constraint moved. It now sits in high-voltage equipment factories, in interconnection queues at transmission operators, and in the substations that stand between a signed lease and a running cluster.',
++    },
++    {
++      kind: 'p',
++      text:
++        'The evidence is arithmetic rather than opinion. A hyperscale data centre is planned and constructed in roughly two to three years. Connecting a new facility of that size to the power grid takes four to ten. Nothing about buying more chips changes the second number.',
++    },
++    { kind: 'h', text: 'Capital is not the scarce input' },
++    {
++      kind: 'p',
++      text:
++        'Global energy investment reached approximately 3.4 trillion US dollars in 2026, a record, with close to sixty per cent of it directed at electricity — generation, grids, storage and electrification. Grid infrastructure alone accounted for around 550 billion dollars in that year. In the United States, electric company capital expenditure rose from 204.1 billion dollars in 2025 to a projected 238.8 billion in 2026, the fourteenth consecutive record year.',
++    },
++    {
++      kind: 'p',
++      text:
++        'These are not the figures of a sector starved of money. They are the figures of a sector whose money is queuing.',
++    },
++    {
++      kind: 'figure',
++      caption: 'The conversion pipeline from capital to energised megawatts',
++      rows: [
++        ['Capital', 'Abundant. Record energy investment, fourteen consecutive record years of US utility capex.'],
++        ['Equipment', 'Constrained. Tier-1 high-voltage transformer lead times of 48–60 months, with some lines quoting 2031.'],
++        ['Interconnection', 'Constrained. More than 2,500 GW of projects stalled in grid connection queues worldwide.'],
++        ['Energised megawatts', 'The actually scarce good — and the only one that runs a model.'],
++      ],
++    },
++    { kind: 'h', text: 'Why a transformer takes five years' },
++    {
++      kind: 'p',
++      text:
++        'A large power transformer is not a component that can be surged. Grain-oriented electrical steel, the material its core is wound from, is produced by a small number of mills and its sourcing alone adds twelve to eighteen months. Winding, tanking, oil processing and factory acceptance testing are slow by nature and slower still when every utility on the continent is ordering simultaneously. Tier-1 global suppliers currently quote forty-eight to sixty months; some lines are quoting delivery in 2031. European second-tier manufacturers are faster, at roughly eighteen to thirty-two months, which is why procurement strategy has quietly become a competitive variable.',
++    },
++    {
++      kind: 'note',
++      text:
++        'Lead-time figures vary by voltage class, specification and buyer relationship, and they have moved substantially year to year. Treat the ranges above as the shape of the constraint and confirm current quotes against suppliers directly before relying on them commercially.',
++    },
++    { kind: 'h', text: 'The cadence mismatch' },
++    {
++      kind: 'p',
++      text:
++        'Frontier training compute has been doubling roughly every five to six months. A transformer ordered against a Tier-1 lead time arrives after that doubling has occurred somewhere between eight and twelve times. The physical layer and the compute layer are not merely moving at different speeds; they are moving at speeds that differ by orders of magnitude, and no amount of capital compresses the slower one.',
++    },
++    {
++      kind: 'p',
++      text:
++        'This is why the strategic question for AI infrastructure has stopped being "can we buy the accelerators" and become "do we control an interconnection". Grid-connection uncertainty now rivals technology risk in the underwriting of these projects, and by 2030 roughly one in ten new transmission connection requests globally is expected to come from a data centre.',
++    },
++    { kind: 'h', text: 'What actually relieves it' },
++    {
++      kind: 'list',
++      items: [
++        'Interconnection process reform: much of the queue is study and cost-allocation latency rather than physical construction. Process is faster to change than steel.',
++        'Flexible and interruptible connection products: a study of Dutch transmission networks suggested that "emergency lane" interruptible connections could unlock five to fifteen per cent of additional capacity in congested areas without building anything new.',
++        'Locating load where the grid already is: siting against existing capacity rather than against land price is an engineering decision that most site-selection processes still treat as a real-estate one.',
++        'Behind-the-meter and co-located generation: fast to deploy, but it displaces the interconnection problem rather than solving it, and it imports a different set of grid-stability obligations.',
++        'Grid-forming inverter capability: as synchronous generation is displaced, the ability of converter-based resources to establish rather than follow the grid reference becomes the ceiling on how far that displacement can run.',
++      ],
++    },
++    {
++      kind: 'p',
++      text:
++        'Only the last of these is a semiconductor problem, and it is not the semiconductor problem anybody is arguing about.',
++    },
++    { kind: 'h', text: 'The conclusion an engineer draws' },
++    {
++      kind: 'p',
++      text:
++        'Demand is not in question. Global electricity demand is projected to grow around 3.6 per cent annually through 2030, roughly fifty per cent faster than the previous decade, and in the United States approximately half of that growth is data centres. The question is throughput: how quickly committed capital becomes energised capacity.',
++    },
++    {
++      kind: 'p',
++      text:
++        'That conversion rate is set by people who understand high-voltage assets, interconnection process and the security governance of the control systems that operate them. It is an unglamorous discipline that has spent a decade being described as legacy infrastructure. It is now the rate limiter on the most capitalised technology programme in the world.',
++    },
++  ],
++  glossary: [
++    { term: 'Interconnection queue', definition: 'The ordered set of generation or load projects awaiting the studies, cost allocation and construction required before a transmission operator will connect them to the network.' },
++    { term: 'Energised capacity', definition: 'Grid capacity that is physically connected and available to serve load — as distinct from capacity that is contracted, permitted or under construction.' },
++    { term: 'Grain-oriented electrical steel (GOES)', definition: 'Silicon steel with a crystal structure aligned to the rolling direction, used for transformer cores. Produced by few mills worldwide and a persistent bottleneck in transformer lead times.' },
++    { term: 'Behind-the-meter generation', definition: 'Generation sited on the customer side of the utility meter, serving load directly rather than through the public network.' },
++    { term: 'Interruptible connection', definition: 'A grid connection agreement under which the connected party accepts curtailment during congestion, allowing the operator to allocate capacity that firm connections could not use.' },
++  ],
++  sources: [
++    { publisher: 'International Energy Agency', title: 'World Energy Investment 2026', url: 'https://www.iea.org/reports/world-energy-investment-2026' },
++    { publisher: 'International Energy Agency', title: 'Electricity 2026 — executive summary', url: 'https://www.iea.org/reports/electricity-2026/executive-summary' },
++    { publisher: 'World Economic Forum', title: 'Is power grid connectivity the strategic bottleneck for AI?', url: 'https://www.weforum.org/stories/2026/05/electricity-data-grid-connectivity-strategic-bottleneck-ai-transformation/' },
++    { publisher: 'Edison Electric Institute', title: 'Electric companies to invest $1.4 trillion to support customers and power growth', url: 'https://www.electricperspectives.com/capital-expenditures-grid-investment/' },
++    { publisher: 'GridReadiness', title: 'HV transformer lead times 2026: EU vs US (secondary source — confirm with suppliers)', url: 'https://www.gridreadiness.com/blog/power-transformer-lead-times-ai-data-center-2026.html' },
++  ],
++  related: [
++    { label: 'Grid inertia and the 50 Hz constraint', href: '/topics/grid-inertia-and-the-50-hz-constraint/' },
++    { label: 'The Orbital AI Compute Roadmap', href: '/books/the-orbital-ai-compute-roadmap/' },
++    { label: 'The Renewables Migration', href: '/books/the-renewables-migration/' },
++  ],
++};
++
++export default topic;
