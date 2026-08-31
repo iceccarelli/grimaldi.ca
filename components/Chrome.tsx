@@ -116,7 +116,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
               <p>{t('footAbout')}</p>
             </div>
             <div>
-              <h4>{t('footNet')}</h4>
+              <h2 className="foot-h">{t('footNet')}</h2>
               <a href="https://igrimaldi.engineering">igrimaldi.engineering — {t('netSoftware')}</a>
               <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com — {t('netHardware')}</a>
               <a href="https://grimaldi.ca">grimaldi.ca — {t('netPersonal')}</a>
@@ -124,7 +124,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
               <a href="https://github.com/iceccarelli" rel="noopener noreferrer">GitHub — iceccarelli</a>
             </div>
             <div>
-              <h4>{t('footContact')}</h4>
+              <h2 className="foot-h">{t('footContact')}</h2>
               <a href="/contact/">{t('connect')} →</a>
               <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering</a>
               <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener noreferrer">LinkedIn</a>

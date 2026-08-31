@@ -22,7 +22,7 @@ export default function NowPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Now · updated {UPDATED}</span>
-          <h2>What I’m doing now</h2>
+          <h1 className="page-title">What I’m doing now</h1>
           <p className="intro">
             A living page, in the spirit of nownow.com pages: what actually has my attention,
             updated as it changes — not a static bio.

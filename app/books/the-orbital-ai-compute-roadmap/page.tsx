@@ -33,7 +33,7 @@ export default function OrbitalRoadmapPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Manuscript · in revision</span>
-          <h2>The Orbital AI Compute Roadmap</h2>
+          <h1 className="page-title">The Orbital AI Compute Roadmap</h1>
           <p className="intro">
             The terrestrial trilemma of AI compute — inertia, copper, heat — and the honest
             case for what comes after. In revision; every load-bearing claim is being given a

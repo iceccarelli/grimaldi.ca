@@ -14,9 +14,9 @@ type Message =
   | { from: 'visitor'; text: string }
   | { from: 'guide'; text: string; links: { label: string; href: string }[] };
 
-export default function Ask() {
+export default function Ask({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const { locale } = useI18n();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initialOpen);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const threadRef = useRef<HTMLDivElement>(null);

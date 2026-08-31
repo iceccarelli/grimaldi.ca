@@ -14,7 +14,7 @@ export default function PrivacyPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section legal-page">
           <span className="kicker">Legal</span>
-          <h2>Privacy / Datenschutz</h2>
+          <h1 className="page-title">Privacy / Datenschutz</h1>
 
           <h3>Controller</h3>
           <p>

@@ -42,7 +42,7 @@ export default function TopicsPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Topics</span>
-          <h2>The engineering, explained</h2>
+          <h1 className="page-title">The engineering, explained</h1>
           <p className="intro">
             Reference explainers on the systems this work touches: power system stability, grid
             digitalisation and the security of industrial control networks. Written to be cited —
@@ -68,7 +68,7 @@ export default function TopicsPage() {
 
           {published.length === 0 && (
             <div className="card" style={{ maxWidth: 760 }}>
-              <h3>Nothing published yet</h3>
+              <h2>Nothing published yet</h2>
               <p>
                 {drafts.length} explainer{drafts.length === 1 ? ' is' : 's are'} written and awaiting
                 review. Nothing appears here, in the sitemap or in the feeds until it has been

@@ -11,7 +11,7 @@ export default function NotFound() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section" style={{ minHeight: '48vh' }}>
           <span className="kicker">404</span>
-          <h2>This page of the story doesn’t exist.</h2>
+          <h1 className="page-title">This page of the story doesn’t exist.</h1>
           <p className="intro">
             The address may have changed, or it never was. Everything real is one hop away.
           </p>

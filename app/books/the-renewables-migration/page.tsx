@@ -35,7 +35,7 @@ export default function RenewablesMigrationPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">Manuscript · in revision</span>
-          <h2>The Renewables Migration</h2>
+          <h1 className="page-title">The Renewables Migration</h1>
           <p className="intro">
             Germany traded fuel imports for hardware imports — the €-trillion receipt, the
             physics of 50 Hz, and what it takes to give the grid a brain. The manuscript is in

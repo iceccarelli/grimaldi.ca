@@ -20,7 +20,7 @@ export default function BooksPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">The books</span>
-          <h2>Two manuscripts — with public receipts</h2>
+          <h1 className="page-title">Two manuscripts — with public receipts</h1>
           <p className="intro">
             Long-form writing held to the same standard as the engineering: every load-bearing
             claim gets a proof. Both manuscripts are honestly in revision — not yet on sale —

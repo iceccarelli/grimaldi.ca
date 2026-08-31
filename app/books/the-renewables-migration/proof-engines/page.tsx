@@ -55,7 +55,7 @@ export default async function ProofEnginesPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section">
           <span className="kicker">The Renewables Migration · verification</span>
-          <h2>Don’t trust the book — run it</h2>
+          <h1 className="page-title">Don’t trust the book — run it</h1>
           <p className="intro">
             Every chapter of The Renewables Migration ships with a public repository that
             recomputes that chapter’s load-bearing figures from source data. A reader who doubts

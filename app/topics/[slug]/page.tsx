@@ -117,7 +117,7 @@ export default function TopicPage({ params }: Params) {
           <span className="kicker">
             Topic · {readingMinutes(topic)} min read · updated {topic.updated}
           </span>
-          <h2>{topic.title}</h2>
+          <h1 className="page-title">{topic.title}</h1>
           <p className="topic-standfirst">{topic.standfirst}</p>
 
           {topic.status === 'draft' && (

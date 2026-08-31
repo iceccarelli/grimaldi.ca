@@ -14,7 +14,7 @@ export default function ImprintPage() {
       <div className="sheet" style={{ marginTop: 0 }}>
         <div className="section legal-page">
           <span className="kicker">Legal</span>
-          <h2>Imprint / Impressum</h2>
+          <h1 className="page-title">Imprint / Impressum</h1>
 
           <h3>Angaben gemäß § 5 DDG</h3>
           <p>
