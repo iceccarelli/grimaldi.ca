@@ -6,8 +6,9 @@ import Rail from '@/components/Rail';
 import WaitlistForm from '@/components/WaitlistForm';
 import { liveDeployments, railUi } from '@/lib/dynamic';
 import { useI18n } from '@/lib/i18n';
+import type { ReactNode } from 'react';
 
-export default function HomeSections() {
+export default function HomeSections({ topicsShelf }: { topicsShelf?: ReactNode }) {
   const { t, locale } = useI18n();
 
   return (
@@ -54,6 +55,9 @@ export default function HomeSections() {
             ))}
           </div>
         </div>
+
+        {/* TOPICS — server-rendered shelf; absent until something is published */}
+        {topicsShelf}
 
         {/* JOURNEY — the arc, told as a timeline */}
         <div className="section" id="journey">

@@ -1,4 +1,5 @@
 import HomeSections from '@/components/HomeSections';
+import TopicsShelf from '@/components/TopicsShelf';
 import JsonLd from '@/components/JsonLd';
 import { personRef } from '@/lib/schema';
 import { PERSON, SITE_URL } from '@/lib/site';
@@ -24,7 +25,7 @@ export default function Home() {
   return (
     <>
       <JsonLd data={profilePage} />
-      <HomeSections />
+      <HomeSections topicsShelf={<TopicsShelf />} />
     </>
   );
 }

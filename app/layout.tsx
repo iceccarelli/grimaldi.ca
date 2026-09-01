@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { LanguageProvider } from '@/lib/i18n';
 import Chrome from '@/components/Chrome';
 import AskLazy from '@/components/AskLazy';
-import { PERSON, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site';
+import { PERSON, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, VERIFY_BING, VERIFY_GOOGLE } from '@/lib/site';
 import { webSite } from '@/lib/schema';
 import './globals.css';
 
@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   robots: { index: true, follow: true },
+  ...(VERIFY_GOOGLE || VERIFY_BING
+    ? {
+        verification: {
+          ...(VERIFY_GOOGLE ? { google: VERIFY_GOOGLE } : {}),
+          ...(VERIFY_BING ? { other: { 'msvalidate.01': VERIFY_BING } } : {}),
+        },
+      }
+    : {}),
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,

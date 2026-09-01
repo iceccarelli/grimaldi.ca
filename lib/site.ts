@@ -50,5 +50,13 @@ export const SITE_DESCRIPTION =
 export const CONTACT_ENDPOINT = '/api/contact/'; // trailing slash is REQUIRED: trailingSlash:true 308-redirects the bare path, and a 308 on POST drops the body in some clients
 export const SUBSCRIBE_ENDPOINT = '/api/subscribe/';
 
+/**
+ * Search engine ownership verification. Paste the token from the HTML-tag
+ * method — Search Console → Add property → HTML tag → copy the content value
+ * only (not the whole meta tag). Bing accepts import from Google.
+ */
+export const VERIFY_GOOGLE = '';
+export const VERIFY_BING = '';
+
 /** Booking: paste a Cal.com link (Europe/Berlin) to promote it to a hero CTA. */
 export const CAL_URL = '';
