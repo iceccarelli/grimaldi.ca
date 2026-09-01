@@ -1,0 +1,205 @@
+diff --git a/app/layout.tsx b/app/layout.tsx
+index c11dd86..bd863dd 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
+ import { LanguageProvider } from '@/lib/i18n';
+ import Chrome from '@/components/Chrome';
+ import AskLazy from '@/components/AskLazy';
+-import { PERSON, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/site';
++import { PERSON, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, VERIFY_BING, VERIFY_GOOGLE } from '@/lib/site';
+ import { webSite } from '@/lib/schema';
+ import './globals.css';
+ 
+@@ -17,6 +17,14 @@ export const metadata: Metadata = {
+   },
+   description: SITE_DESCRIPTION,
+   robots: { index: true, follow: true },
++  ...(VERIFY_GOOGLE || VERIFY_BING
++    ? {
++        verification: {
++          ...(VERIFY_GOOGLE ? { google: VERIFY_GOOGLE } : {}),
++          ...(VERIFY_BING ? { other: { 'msvalidate.01': VERIFY_BING } } : {}),
++        },
++      }
++    : {}),
+   openGraph: {
+     title: SITE_TITLE,
+     description: SITE_DESCRIPTION,
+diff --git a/app/page.tsx b/app/page.tsx
+index 6343c37..13310b3 100644
+--- a/app/page.tsx
++++ b/app/page.tsx
+@@ -1,4 +1,5 @@
+ import HomeSections from '@/components/HomeSections';
++import TopicsShelf from '@/components/TopicsShelf';
+ import JsonLd from '@/components/JsonLd';
+ import { personRef } from '@/lib/schema';
+ import { PERSON, SITE_URL } from '@/lib/site';
+@@ -24,7 +25,7 @@ export default function Home() {
+   return (
+     <>
+       <JsonLd data={profilePage} />
+-      <HomeSections />
++      <HomeSections topicsShelf={<TopicsShelf />} />
+     </>
+   );
+ }
+diff --git a/components/HomeSections.tsx b/components/HomeSections.tsx
+index 7fc5922..b681c28 100644
+--- a/components/HomeSections.tsx
++++ b/components/HomeSections.tsx
+@@ -6,8 +6,9 @@ import Rail from '@/components/Rail';
+ import WaitlistForm from '@/components/WaitlistForm';
+ import { liveDeployments, railUi } from '@/lib/dynamic';
+ import { useI18n } from '@/lib/i18n';
++import type { ReactNode } from 'react';
+ 
+-export default function HomeSections() {
++export default function HomeSections({ topicsShelf }: { topicsShelf?: ReactNode }) {
+   const { t, locale } = useI18n();
+ 
+   return (
+@@ -55,6 +56,9 @@ export default function HomeSections() {
+           </div>
+         </div>
+ 
++        {/* TOPICS — server-rendered shelf; absent until something is published */}
++        {topicsShelf}
++
+         {/* JOURNEY — the arc, told as a timeline */}
+         <div className="section" id="journey">
+           <span className="kicker">{t('jKicker')}</span>
+diff --git a/components/TopicsShelf.tsx b/components/TopicsShelf.tsx
+new file mode 100644
+index 0000000..b6cebca
+--- /dev/null
++++ b/components/TopicsShelf.tsx
+@@ -0,0 +1,53 @@
++import { publishedTopics } from '@/content/topics';
++import { readingMinutes } from '@/content/types';
++
++/**
++ * TopicsShelf — the knowledge layer, surfaced on the homepage.
++ *
++ * A visitor arriving from LinkedIn or a search result lands on `/`. Before
++ * this, the homepage said nothing about the explainers at all: the only route
++ * to the site's most valuable content was the nav bar. That is a conversion
++ * defect, not a design preference.
++ *
++ * Server component, rendered by the page shell and passed into the client
++ * sections as a prop — so the topic text never enters the client bundle.
++ *
++ * Renders NOTHING when no topic is published. No empty shelf, no promise of
++ * writing that does not exist; the section appears by itself the moment a
++ * topic's status flips to 'published'.
++ */
++export default function TopicsShelf() {
++  const topics = publishedTopics();
++  if (topics.length === 0) return null;
++
++  return (
++    <div className="section" id="topics">
++      <span className="kicker">The engineering, explained</span>
++      <h2>Reference explainers</h2>
++      <p className="intro">
++        Long-form technical writing on the systems this work touches — power system stability,
++        grid digitalisation, and the security of industrial control networks. Every claim carries
++        its source, and nothing is published before it has been checked.
++      </p>
++      <div className="topic-list">
++        {topics.slice(0, 4).map((t) => (
++          <a className="topic-row" key={t.slug} href={`/topics/${t.slug}/`}>
++            <div>
++              <h3>{t.title}</h3>
++              <p>{t.description}</p>
++              <div className="topic-chips">
++                {t.subjects.slice(0, 3).map((s) => <span key={s}>{s}</span>)}
++              </div>
++            </div>
++            <span className="topic-meta">{readingMinutes(t)} min · {t.updated}</span>
++          </a>
++        ))}
++      </div>
++      {topics.length > 4 && (
++        <p style={{ marginTop: '1.4rem' }}>
++          <a className="cta" href="/topics/">All {topics.length} explainers →</a>
++        </p>
++      )}
++    </div>
++  );
++}
+diff --git a/lib/site.ts b/lib/site.ts
+index 9b740ea..5fb65f3 100644
+--- a/lib/site.ts
++++ b/lib/site.ts
+@@ -50,5 +50,13 @@ export const SITE_DESCRIPTION =
+ export const CONTACT_ENDPOINT = '/api/contact/'; // trailing slash is REQUIRED: trailingSlash:true 308-redirects the bare path, and a 308 on POST drops the body in some clients
+ export const SUBSCRIBE_ENDPOINT = '/api/subscribe/';
+ 
++/**
++ * Search engine ownership verification. Paste the token from the HTML-tag
++ * method — Search Console → Add property → HTML tag → copy the content value
++ * only (not the whole meta tag). Bing accepts import from Google.
++ */
++export const VERIFY_GOOGLE = '';
++export const VERIFY_BING = '';
++
+ /** Booking: paste a Cal.com link (Europe/Berlin) to promote it to a hero CTA. */
+ export const CAL_URL = '';
+diff --git a/lib/strings.json b/lib/strings.json
+index 6dec0ed..6927c1f 100644
+--- a/lib/strings.json
++++ b/lib/strings.json
+@@ -13,9 +13,9 @@
+   "a_kicker": "About",
+   "a_title": "One life, three surfaces",
+   "a_intro": "By day I digitise high-voltage traction assets for German rail. Around that sits everything else: software and AI systems, hardware builds, two book manuscripts in progress, and the places in between. Each surface of the network holds one part of it — this one holds the person.",
+-  "ab1tag": "Blog",
+-  "ab1title": "Life & travel",
+-  "ab1body": "Frankfurt, the places in between, and what an engineer notices when the laptop is closed.",
++  "ab1tag": "Topics",
++  "ab1title": "Reference explainers",
++  "ab1body": "Power system stability, grid digitalisation and industrial control security — written to be cited, every claim sourced.",
+   "writing": "First posts being written",
+   "ab2tag": "Books",
+   "ab2title": "Two manuscripts in progress",
+@@ -111,9 +111,9 @@
+   "a_kicker": "Acerca de",
+   "a_title": "Una vida, tres superficies",
+   "a_intro": "De día digitalizo activos de tracción de alta tensión para el ferrocarril alemán. Alrededor está todo lo demás: sistemas de software e IA, construcciones de hardware, dos manuscritos de libro en curso y los lugares intermedios. Cada superficie de la red guarda una parte — esta guarda a la persona.",
+-  "ab1tag": "Blog",
+-  "ab1title": "Vida y viajes",
+-  "ab1body": "Fráncfort, los lugares intermedios y lo que un ingeniero nota cuando cierra el portátil.",
++  "ab1tag": "Temas",
++  "ab1title": "Explicaciones de referencia",
++  "ab1body": "Estabilidad del sistema eléctrico, digitalización de la red y seguridad del control industrial — escritas para ser citadas, con fuente en cada afirmación.",
+   "ab2tag": "Libros",
+   "ab2title": "Dos manuscritos en curso",
+   "ab2body": "Trabajo de largo aliento sobre sistemas de energía y el futuro del cómputo — las ideas detrás de la ingeniería, argumentadas a escala de libro.",
+@@ -212,9 +212,9 @@
+   "a_kicker": "Über mich",
+   "a_title": "Ein Leben, drei Oberflächen",
+   "a_intro": "Tagsüber digitalisiere ich Hochspannungs-Traktionsanlagen für die deutsche Bahn. Drumherum liegt alles andere: Software- und KI-Systeme, Hardware-Aufbauten, zwei Buchmanuskripte in Arbeit und die Orte dazwischen. Jede Oberfläche des Netzwerks trägt einen Teil — diese trägt den Menschen.",
+-  "ab1tag": "Blog",
+-  "ab1title": "Leben & Reisen",
+-  "ab1body": "Frankfurt, die Orte dazwischen, und was ein Ingenieur bemerkt, wenn der Laptop zu ist.",
++  "ab1tag": "Themen",
++  "ab1title": "Referenz-Erklärungen",
++  "ab1body": "Netzstabilität, Netzdigitalisierung und Sicherheit industrieller Steuerungssysteme — zitierfähig geschrieben, jede Aussage belegt.",
+   "ab2tag": "Bücher",
+   "ab2title": "Zwei Manuskripte in Arbeit",
+   "ab2body": "Langform-Arbeit über Energiesysteme und die Zukunft des Rechnens — die Ideen hinter der Technik, in Buchlänge argumentiert.",
+@@ -313,9 +313,9 @@
+   "a_kicker": "关于",
+   "a_title": "一段人生，三个界面",
+   "a_intro": "白天我为德国铁路数字化高压牵引资产。围绕它的是其余一切：软件与 AI 系统、硬件搭建、两部写作中的书稿，以及途中的地方。网络的每个界面承载一部分 — 这里承载的是人。",
+-  "ab1tag": "博客",
+-  "ab1title": "生活与旅行",
+-  "ab1body": "法兰克福、途中的地方，以及一位工程师合上电脑后所注意到的一切。",
++  "ab1tag": "专题",
++  "ab1title": "参考解读",
++  "ab1body": "电力系统稳定性、电网数字化与工业控制安全 — 为被引用而写，每项论断均有出处。",
+   "ab2tag": "书",
+   "ab2title": "两部写作中的书稿",
+   "ab2body": "关于能源系统与计算未来的长篇写作 — 工程背后的思想，以一本书的篇幅展开论证。",
