@@ -10,7 +10,7 @@ import type { Topic } from '../types';
  */
 const topic: Topic = {
   slug: 'why-ai-is-power-bound-not-gpu-bound',
-  status: 'draft',
+  status: 'published',
   title: 'Why AI is power-bound, not GPU-bound',
   description:
     'Trillions of dollars are trying to become megawatts. The conversion is rate-limited by transformers, interconnection queues and physics — not by chips.',

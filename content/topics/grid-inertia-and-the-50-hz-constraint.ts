@@ -8,7 +8,7 @@ import type { Topic } from '../types';
  */
 const topic: Topic = {
   slug: 'grid-inertia-and-the-50-hz-constraint',
-  status: 'draft',
+  status: 'published',
   title: 'Grid inertia and the 50 Hz constraint',
   description:
     'Why the physical inertia of spinning machines sets the speed limit on the energy transition, and what replaces it when the machines are gone.',
