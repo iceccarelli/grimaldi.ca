@@ -7,8 +7,9 @@
 import type { Topic } from '../types';
 import itOt from './it-ot-convergence-railway-traction-power';
 import inertia from './grid-inertia-and-the-50-hz-constraint';
+import powerBound from './why-ai-is-power-bound-not-gpu-bound';
 
-export const allTopics: Topic[] = [inertia, itOt];
+export const allTopics: Topic[] = [powerBound, inertia, itOt];
 
 /** Only reviewed work is exposed to crawlers, feeds and agents. */
 export const publishedTopics = (): Topic[] =>
