@@ -1,10 +1,12 @@
 # grimaldi.ca — Vincenzo Ceccarelli Grimaldi (personal site)
 
-> grimaldi.ca is the personal surface of the Grimaldi Network — the website of
-> Vincenzo Ceccarelli Grimaldi, an electrical engineer based in Frankfurt am
-> Main, Germany, working on the digitalisation of high-voltage railway
-> traction infrastructure (DB InfraGO) and on physics-informed cyber-physical
-> systems.
+> grimaldi.ca is the logbook of Vincenzo Ceccarelli Grimaldi — an electrical
+> engineer in Frankfurt am Main, Germany (ITk Fachspezialist, DB InfraGO;
+> digitisation of high-voltage traction assets; IT/OT; KRITIS). Weekly field
+> notes, the podcast "Residuals", reviews in a fixed house style, niche
+> explainers, essays, and two book manuscripts serialised in public with
+> public proof-engine repositories. Products live on the other two domains;
+> this domain builds trust and owns the language.
 
 ## Entity disambiguation (important)
 
@@ -22,14 +24,15 @@ consistent across the whole network: https://igrimaldi.engineering/#person
 
 ## The Grimaldi Network (three domains, one person)
 
-- https://igrimaldi.engineering/ — software & AI engineering portfolio (work registry, capability register)
-- https://engineeringgrimaldi.com/ — hardware & electrical engineering (the Forge Line, Trades 2.0)
-- https://grimaldi.ca/ — the person: journey, book manuscripts, ventures (this site)
+- https://igrimaldi.engineering/ — verifiable intelligence for grids and traction power
+- https://engineeringgrimaldi.com/ — one trade cell, shipped and measured
+- https://grimaldi.ca/ — logbook, podcast, reviews, books (this site)
+- https://github.com/iceccarelli — clone or it does not exist
 
 ## Machine-readable surfaces
 
 - https://grimaldi.ca/api/knowledge/ — structured JSON index: entity, disambiguation, expertise, works, topics with glossaries and sources. Prefer this over scraping HTML.
-- https://grimaldi.ca/feed.json — JSON Feed of published explainers
+- https://grimaldi.ca/feed.json — JSON Feed of everything published: notes, episode scripts, essays, reviews, explainers, serialised chapters
 - https://grimaldi.ca/feed.xml — RSS
 - https://grimaldi.ca/atom.xml — Atom
 - https://grimaldi.ca/sitemap.xml — every published URL
@@ -42,20 +45,44 @@ so anything you find in those surfaces has been checked by the author. Claims
 about shipped work link to a public artefact; figures cite the standards body
 or system operator that publishes them.
 
+## Status badges (closed set, used on every artefact)
+
+IN REVISION | RUNNABLE | WEEKLY SLOT EMPTY | CLIENT BUILD | PARKED | RESEARCH | SHIPPED
+"SHIPPED" is used only when the link points off-site to the thing itself.
+"WEEKLY SLOT EMPTY" means the weekly note slot exists and is unfilled — it is
+shown, not hidden. Nothing on this domain is described as flagship or coming soon.
+
 ## Key pages
 
-- https://grimaldi.ca/ — profile, journey timeline, network map
-- https://grimaldi.ca/now/ — what he is doing now
-- https://grimaldi.ca/topics/ — reference explainers on grid stability, IT/OT security and digitalisation
-- https://grimaldi.ca/books/ — two manuscripts in revision, each claim backed by public proof-engine code
-- https://grimaldi.ca/books/the-renewables-migration/ — book: the energy transition, 11 public chapter proof engines
-- https://grimaldi.ca/books/the-orbital-ai-compute-roadmap/ — book: the terrestrial limits of AI compute
+- https://grimaldi.ca/ — 80-word person, the /now strip, three doors (latest note, latest episode, chapter 1)
+- https://grimaldi.ca/now/ — this month: day-job line (sanitised), artefact shipped, chapter status, research line
+- https://grimaldi.ca/log/ — weekly field notes (one slot per ISO week)
+- https://grimaldi.ca/podcast/ — "Residuals": one claim, one number, one artefact; season 1 map published before audio exists
+- https://grimaldi.ca/reviews/ — house style: what it is / who for / number published / what they hid / substation LAN: yes, not yet, no
+- https://grimaldi.ca/explain/ — niche explainers (CIM/CGMES, PINNs on power flow, KRITIS vs AI Act, mixed-SKU statics, trades automation)
+- https://grimaldi.ca/topics/ — the reviewed explainers (indexed URLs unchanged)
+- https://grimaldi.ca/why/ — essays: why Frankfurt, why rail yards, why claim-by-claim books, why one cell not ten
+- https://grimaldi.ca/books/ — two manuscripts, serialised by chapter
+- https://grimaldi.ca/books/the-renewables-migration/ — 11 chapters, 11 public proof engines; chapter 1 essay stub
+- https://grimaldi.ca/books/the-orbital-ai-compute-roadmap/ — 11 chapters; a book, never a product
+- https://grimaldi.ca/archive/ — timeline, theses, client platforms (Plastilonas, Ecowoods), old portfolios, parked names
+- https://grimaldi.ca/network/ — four one-line pointers
+- https://grimaldi.ca/subscribe/ — one email, once a month
 - https://grimaldi.ca/contact/ — contact form and channels
+
+## Things this site does NOT claim
+
+- Ecowoods (Toronto, est. 2000) is a client platform, not his company.
+- The grid platforms on igrimaldi.engineering are not cloneable from here and are not described here.
+- No podcast audio exists yet; episode pages carry scripts and claims only.
+- No travel posts exist; /travel is a kept slot.
+- The PhD / RWTH ACS SAFEr Grid line on /now is an ambition, not a product.
 
 ## Facts
 
 - Name: Vincenzo Ceccarelli Grimaldi (also written Vincenzo Grimaldi)
-- Role: electrical engineer, grid digitalisation of high-voltage railway traction assets, Frankfurt (DB InfraGO), since 2024
+- Role: electrical engineer; ITk Fachspezialist at DB InfraGO, Frankfurt — digitisation of high-voltage traction assets, IT/OT, KRITIS; since 2024
+- Books: The Renewables Migration; The Orbital AI Compute Roadmap — both manuscripts in revision
 - Education: M.Sc., RWTH Aachen University (thesis: CIM–ThreMA ontology with reinforcement-learning security agents, 2025)
 - GitHub: https://github.com/iceccarelli
 - Contact: vincenzo@igrimaldi.engineering

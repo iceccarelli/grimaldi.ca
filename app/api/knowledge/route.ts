@@ -1,4 +1,9 @@
 import { publishedTopics } from '@/content/topics';
+import { publishedNotes } from '@/content/log';
+import { publishedEpisodes, SERIES } from '@/content/podcast';
+import { publishedEssays } from '@/content/why';
+import { books, serialisedChapters } from '@/content/books';
+import { nowLines, NOW_UPDATED } from '@/content/now';
 import { readingMinutes, wordCount } from '@/content/types';
 import { PERSON, SITE_URL } from '@/lib/site';
 
@@ -53,10 +58,44 @@ export function GET() {
       },
 
       network: [
-        { domain: 'grimaldi.ca', role: 'the person: journey, books, topics, ventures' },
-        { domain: 'igrimaldi.engineering', role: 'software and AI engineering portfolio' },
-        { domain: 'engineeringgrimaldi.com', role: 'hardware and electrical engineering' },
+        { domain: 'grimaldi.ca', role: 'logbook, podcast, reviews, books' },
+        { domain: 'igrimaldi.engineering', role: 'verifiable intelligence for grids and traction power' },
+        { domain: 'engineeringgrimaldi.com', role: 'one trade cell, shipped and measured' },
+        { domain: 'github.com/iceccarelli', role: 'clone or it does not exist' },
       ],
+
+      now: { updated: NOW_UPDATED, lines: nowLines.map((l) => ({ label: l.label, text: l.text, badge: l.badge ?? null })) },
+
+      badges: ['IN REVISION', 'RUNNABLE', 'WEEKLY SLOT EMPTY', 'CLIENT BUILD', 'PARKED', 'RESEARCH', 'SHIPPED'],
+
+      notes: publishedNotes().map((n) => ({
+        url: `${SITE_URL}/log/${n.slug}/`,
+        title: n.title,
+        summary: n.description,
+        date: n.date,
+        badge: n.badge,
+        artefact: n.artefact ?? null,
+      })),
+
+      podcast: {
+        series: SERIES.name,
+        format: SERIES.tagline,
+        url: `${SITE_URL}/podcast/`,
+        audioAvailable: publishedEpisodes().some((e) => Boolean(e.audio)),
+        episodes: publishedEpisodes().map((e) => ({
+          url: `${SITE_URL}/podcast/${e.slug}/`,
+          number: e.number,
+          title: e.title,
+          claim: e.claim,
+          figure: e.figure,
+          artefact: e.artefact,
+          badge: e.badge,
+          hasScript: e.script.length > 0,
+          audio: e.audio ?? null,
+        })),
+      },
+
+      essays: publishedEssays().map((n) => ({ url: `${SITE_URL}/why/${n.slug}/`, title: n.title, summary: n.description, badge: n.badge })),
 
       expertise: [
         'Digitalisation of high-voltage railway traction power assets',
@@ -65,22 +104,16 @@ export function GET() {
         'Physics-informed cyber-physical systems',
       ],
 
-      works: [
-        {
-          type: 'Book',
-          status: 'manuscript in revision',
-          title: 'The Renewables Migration',
-          url: `${SITE_URL}/books/the-renewables-migration/`,
-          verification:
-            'Eleven public chapter proof-engine repositories recompute the load-bearing figures from source data.',
-        },
-        {
-          type: 'Book',
-          status: 'manuscript in revision',
-          title: 'The Orbital AI Compute Roadmap',
-          url: `${SITE_URL}/books/the-orbital-ai-compute-roadmap/`,
-        },
-      ],
+      works: books.map((b) => ({
+        type: 'Book',
+        status: 'manuscript in revision — serialised in public',
+        title: b.title,
+        url: `${SITE_URL}/books/${b.slug}/`,
+        chapters: b.chapters.length,
+        serialised: serialisedChapters(b).map((c) => `${SITE_URL}/books/${b.slug}/chapter-${c.number}/`),
+        proofEngines: b.chapters.filter((c) => c.engine).map((c) => c.engine),
+        note: b.slug === 'the-orbital-ai-compute-roadmap' ? 'A book. Not a product on any domain of the network.' : undefined,
+      })),
 
       topics: topics.map((t) => ({
         url: `${SITE_URL}/topics/${t.slug}/`,

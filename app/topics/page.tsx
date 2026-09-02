@@ -47,6 +47,8 @@ export default function TopicsPage() {
             Reference explainers on the systems this work touches: power system stability, grid
             digitalisation and the security of industrial control networks. Written to be cited —
             every claim carries its source, and nothing is published before it has been checked.
+            The full index, including the niche explainers still being written, is at{' '}
+            <a href="/explain/" style={{ color: 'var(--terra)', fontWeight: 600 }}>/explain</a>.
           </p>
 
           {published.length > 0 && (

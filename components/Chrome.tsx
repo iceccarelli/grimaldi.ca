@@ -2,17 +2,20 @@
 
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import BrandMark from './BrandMark';
+import NetworkFooter from './NetworkFooter';
 import { locales, useI18n } from '@/lib/i18n';
 
 /** One source of truth for primary navigation — desktop bar and mobile drawer
  *  render the same list, so they can never drift apart. */
 const NAV: { href: string; key: string }[] = [
-  { href: '/#about', key: 'navA' },
-  { href: '/#journey', key: 'jKicker' },
-  { href: '/topics/', key: 'navT' },
+  { href: '/log/', key: 'navLog' },
+  { href: '/podcast/', key: 'navPod' },
+  { href: '/reviews/', key: 'navRev' },
+  { href: '/explain/', key: 'navExp' },
+  { href: '/why/', key: 'navWhy' },
   { href: '/books/', key: 'navB' },
+  { href: '/archive/', key: 'navArc' },
   { href: '/now/', key: 'navW' },
-  { href: '/#network', key: 'navN' },
 ];
 
 export default function Chrome({ children }: { children: ReactNode }) {
@@ -49,9 +52,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
               </button>
             ))}
           </span>
-          <a href="https://igrimaldi.engineering">igrimaldi.engineering</a>
-          <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com</a>
-          <a href="https://igrimaldi.engineering/card">{t('netCard')}</a>
+          <a href="/feed.xml">RSS</a>
           <a href="https://github.com/iceccarelli" rel="noopener noreferrer">GitHub</a>
         </div>
       </div>
@@ -73,7 +74,7 @@ export default function Chrome({ children }: { children: ReactNode }) {
           </div>
 
           <div className="nav-right">
-            <a className="pill" href="/contact/">{t('connect')}</a>
+            <a className="pill" href="/subscribe/">{t('navSub')}</a>
             <button
               type="button"
               className="nav-toggle"
@@ -95,7 +96,8 @@ export default function Chrome({ children }: { children: ReactNode }) {
             {NAV.map((item) => (
               <a key={item.href} href={item.href} onClick={close}>{t(item.key)}</a>
             ))}
-            <a className="mnav-cta" href="/contact/" onClick={close}>{t('connect')} →</a>
+            <a href="/travel/" onClick={close}>Travel</a>
+            <a className="mnav-cta" href="/subscribe/" onClick={close}>{t('navSub')} →</a>
           </nav>
           <div className="mnav-net">
             <a href="https://igrimaldi.engineering">igrimaldi.engineering</a>
@@ -112,24 +114,18 @@ export default function Chrome({ children }: { children: ReactNode }) {
         <div className="foot">
           <div className="foot-grid">
             <div>
-              <div className="foot-brand"><BrandMark size={42} /><b>Vincenzo Ceccarelli Grimaldi</b></div>
+              <div className="foot-brand"><BrandMark size={36} /><b>Vincenzo Ceccarelli Grimaldi</b></div>
               <p>{t('footAbout')}</p>
+              <p className="foot-contact">
+                <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering</a>
+                <a href="/contact/">{t('connect')}</a>
+                <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://x.com/Vince87Grimaldi" rel="noopener noreferrer">X</a>
+              </p>
             </div>
             <div>
               <h2 className="foot-h">{t('footNet')}</h2>
-              <a href="https://igrimaldi.engineering">igrimaldi.engineering — {t('netSoftware')}</a>
-              <a href="https://engineeringgrimaldi.com">engineeringgrimaldi.com — {t('netHardware')}</a>
-              <a href="https://grimaldi.ca">grimaldi.ca — {t('netPersonal')}</a>
-              <a href="https://igrimaldi.engineering/card">{t('netCard')}</a>
-              <a href="https://github.com/iceccarelli" rel="noopener noreferrer">GitHub — iceccarelli</a>
-            </div>
-            <div>
-              <h2 className="foot-h">{t('footContact')}</h2>
-              <a href="/contact/">{t('connect')} →</a>
-              <a href="mailto:vincenzo@igrimaldi.engineering">vincenzo@igrimaldi.engineering</a>
-              <a href="https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://x.com/Vince87Grimaldi" rel="noopener noreferrer">X</a>
-              <a href="https://www.instagram.com/grimaldiengineering/" rel="noopener noreferrer">Instagram</a>
+              <NetworkFooter />
             </div>
           </div>
           <div className="legal">
@@ -137,7 +133,8 @@ export default function Chrome({ children }: { children: ReactNode }) {
             <span className="legal-links">
               <a href="/imprint/">Imprint</a>
               <a href="/privacy/">Privacy</a>
-              <a href="/contact/">{t('connect')}</a>
+              <a href="/subscribe/">{t('navSub')}</a>
+              <a href="/feed.xml">RSS</a>
             </span>
             <a href="#top">{t('top')}</a>
           </div>

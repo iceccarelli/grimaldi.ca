@@ -1,59 +1,53 @@
 import type { Metadata } from 'next';
-import JsonLd from '@/components/JsonLd';
-import { breadcrumbs } from '@/lib/schema';
+import PageShell from '@/components/PageShell';
+import Badge from '@/components/Badge';
+import { books } from '@/content/books';
 
 export const metadata: Metadata = {
   title: 'Books',
   description:
-    'Two book manuscripts by Vincenzo Ceccarelli Grimaldi — The Renewables Migration and The Orbital AI Compute Roadmap — each load-bearing claim backed by public, runnable proof-engine code.',
+    'Two book manuscripts by Vincenzo Ceccarelli Grimaldi — The Renewables Migration and The Orbital AI Compute Roadmap — serialised chapter by chapter, each load-bearing claim backed by public proof-engine code where one exists.',
   alternates: { canonical: '/books/' },
   openGraph: {
-    images: [{ url: '/og-books.png', width: 1200, height: 630, alt: 'The books, with public receipts — two manuscripts by Vincenzo Ceccarelli Grimaldi' }],
+    images: [{ url: '/og-books.png', width: 1200, height: 630, alt: 'Two manuscripts, serialised in public' }],
   },
   twitter: { card: 'summary_large_image', images: ['/og-books.png'] },
 };
 
 export default function BooksPage() {
   return (
-    <main>
-      <JsonLd data={breadcrumbs([{ name: 'Books', path: '/books/' }])} />
-      <div className="sheet" style={{ marginTop: 0 }}>
-        <div className="section">
-          <span className="kicker">The books</span>
-          <h1 className="page-title">Two manuscripts — with public receipts</h1>
-          <p className="intro">
-            Long-form writing held to the same standard as the engineering: every load-bearing
-            claim gets a proof. Both manuscripts are honestly in revision — not yet on sale —
-            and the receipts are already public.
-          </p>
-
-          <div className="books">
-            <div className="book">
-              <h3><a href="/books/the-renewables-migration/">The Renewables Migration →</a></h3>
-              <p>
-                Germany traded fuel imports for hardware imports — the €-trillion receipt, the
-                physics of 50 Hz, and what it takes to give the grid a brain. Eleven public
-                proof-engine repositories, one per chapter, recompute the book’s load-bearing
-                numbers from source data.
+    <PageShell
+      trail={[{ name: 'Books', path: '/books/' }]}
+      kicker="Books · in public"
+      title="Two manuscripts, serialised"
+      standfirst="Held to the same standard as the engineering: every load-bearing claim gets a proof. Neither is on sale. Both are being rewritten claim by claim, and the chapters appear here as they clear."
+    >
+      <div className="books">
+        {books.map((b) => {
+          const engines = b.chapters.filter((c) => c.engine).length;
+          const serialised = b.chapters.filter((c) => c.blocks.length > 0).length;
+          return (
+            <div className="book" key={b.slug}>
+              <h2><a href={`/books/${b.slug}/`}>{b.title} →</a></h2>
+              <p>{b.standfirst}</p>
+              <p className="meta-line">
+                <Badge kind={b.badge} />
+                <span>{b.chapters.length} chapters</span>
+                <span>{serialised} serialised</span>
+                <span>{engines ? `${engines} proof engines` : 'no engines yet'}</span>
               </p>
-              <span className="status"><span className="dot" /> In revision — join the waitlist on the book page</span>
+              {serialised > 0 && (
+                <a className="cta" href={`/books/${b.slug}/chapter-1/`}>Read chapter 1 →</a>
+              )}
             </div>
-            <div className="book">
-              <h3><a href="/books/the-orbital-ai-compute-roadmap/">The Orbital AI Compute Roadmap →</a></h3>
-              <p>
-                The terrestrial trilemma of AI compute — inertia, copper, heat — and the honest
-                case for what comes after.
-              </p>
-              <span className="status"><span className="dot" /> In revision</span>
-            </div>
-          </div>
-
-          <div className="cta-row" style={{ marginTop: '2.5rem' }}>
-            <a className="btn btn-dark" href="/contact/">Talk about the books</a>
-            <a className="btn btn-line" href="https://github.com/iceccarelli" rel="noopener noreferrer">All public code</a>
-          </div>
-        </div>
+          );
+        })}
       </div>
-    </main>
+      <p className="quiet" style={{ marginTop: '2rem' }}>
+        The proof engines are indexed from here and from the archive — not from any product page.
+        The Orbital AI Compute Roadmap is a book; it is not, and will not become, a product on any
+        domain of this network.
+      </p>
+    </PageShell>
   );
 }

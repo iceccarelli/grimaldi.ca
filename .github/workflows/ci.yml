@@ -83,6 +83,27 @@ jobs:
             console.log('Draft topics absent from sitemap: ' + slugs.join(', '));
           "
 
+      # v14: every URL in the sitemap must be an indexable page. Stubs, unwritten
+      # chapters and the kept-empty /travel/ slot are noindex by construction —
+      # this proves none of them leaked into the sitemap.
+      - name: Assert sitemap contains no noindex page
+        run: |
+          node -e "
+            const fs = require('fs');
+            const sm = fs.readFileSync('.next/server/app/sitemap.xml.body', 'utf8');
+            const locs = [...sm.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => new URL(m[1]).pathname);
+            const bad = [];
+            for (const p of locs) {
+              const f = '.next/server/app' + (p === '/' ? '/index' : p.replace(/\/$/, '')) + '.html';
+              if (!fs.existsSync(f)) continue; // route handlers, ISR
+              const html = fs.readFileSync(f, 'utf8');
+              if (/name=\"robots\" content=\"noindex/.test(html)) bad.push(p);
+            }
+            if (sm.includes('/travel/')) bad.push('/travel/ (kept slot must stay out)');
+            if (bad.length) { console.error('::error::noindex page(s) in sitemap: ' + bad.join(', ')); process.exit(1); }
+            console.log('Sitemap: ' + locs.length + ' URLs, all indexable.');
+          "
+
       - name: Lighthouse CI
         run: |
           npm i -g @lhci/cli@0.14.x

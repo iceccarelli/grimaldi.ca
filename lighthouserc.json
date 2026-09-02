@@ -5,7 +5,9 @@
       "startServerReadyPattern": "Ready in|started server on",
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/topics/",
+        "http://localhost:3000/log/",
+        "http://localhost:3000/podcast/",
+        "http://localhost:3000/books/the-renewables-migration/chapter-1/",
         "http://localhost:3000/contact/",
         "http://localhost:3000/books/the-renewables-migration/proof-engines/"
       ],
