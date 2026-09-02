@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <main>
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section legal-page">
           <span className="kicker">Legal</span>
           <h1 className="page-title">Privacy / Datenschutz</h1>

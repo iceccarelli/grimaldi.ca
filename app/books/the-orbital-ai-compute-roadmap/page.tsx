@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import WaitlistForm from '@/components/WaitlistForm';
 import JsonLd from '@/components/JsonLd';
 import { breadcrumbs, manuscript } from '@/lib/schema';
 
@@ -30,7 +29,7 @@ export default function OrbitalRoadmapPage() {
         { name: 'Books', path: '/books/' },
         { name: 'The Orbital AI Compute Roadmap', path: '/books/the-orbital-ai-compute-roadmap/' },
       ])} />
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section">
           <span className="kicker">Manuscript · in revision</span>
           <h1 className="page-title">The Orbital AI Compute Roadmap</h1>
@@ -40,23 +39,14 @@ export default function OrbitalRoadmapPage() {
             public receipt before the manuscript ships.
           </p>
 
-          <div className="banner" style={{ marginTop: '2.5rem' }}>
-            <div>
-              <h2>Be first to read it</h2>
-              <p>One email when the manuscript ships. No noise before that.</p>
-            </div>
-            <WaitlistForm
-              list="orbital-roadmap"
-              placeholder="you@example.com"
-              button="Join the waitlist"
-              ok="You’re on the list."
-              err="That didn’t go through — try again or use the contact page."
-            />
-          </div>
+          <p className="more" style={{ marginTop: '2.5rem' }}>
+            No waitlist and nothing to buy. If you want one email when an essay ships here,{' '}
+            <a href="/topics/#subscribe">that exists</a>.
+          </p>
 
-          <div className="cta-row" style={{ marginTop: '2.5rem' }}>
-            <a className="btn btn-line" href="/books/the-renewables-migration/">The other manuscript →</a>
-          </div>
+          <p className="more">
+            <a href="/books/the-renewables-migration/">The other manuscript →</a>
+          </p>
         </div>
       </div>
     </main>

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import WaitlistForm from '@/components/WaitlistForm';
 import JsonLd from '@/components/JsonLd';
 import { breadcrumbs, manuscript } from '@/lib/schema';
 
@@ -32,17 +31,17 @@ export default function RenewablesMigrationPage() {
         { name: 'Books', path: '/books/' },
         { name: 'The Renewables Migration', path: '/books/the-renewables-migration/' },
       ])} />
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section">
           <span className="kicker">Manuscript · in revision</span>
           <h1 className="page-title">The Renewables Migration</h1>
           <p className="intro">
-            Germany traded fuel imports for hardware imports — the €-trillion receipt, the
+            Germany traded fuel imports for hardware imports — the size of that bill, the
             physics of 50 Hz, and what it takes to give the grid a brain. The manuscript is in
             revision, being rewritten claim by claim.
           </p>
 
-          <h3 style={{ fontFamily: 'var(--serif)' }}>Don’t trust the book — run it</h3>
+          <h2 className="sub">Don’t trust the book — run it</h2>
           <p className="intro">
             Each chapter ships with a public proof-engine repository that recomputes that
             chapter’s load-bearing numbers from source data. Readers don’t have to take the
@@ -68,19 +67,10 @@ export default function RenewablesMigrationPage() {
             </p>
           </div>
 
-          <div className="banner" style={{ marginTop: '2.5rem' }}>
-            <div>
-              <h2>Be first to read it</h2>
-              <p>One email when the manuscript ships. No noise before that.</p>
-            </div>
-            <WaitlistForm
-              list="renewables-migration"
-              placeholder="you@example.com"
-              button="Join the waitlist"
-              ok="You’re on the list."
-              err="That didn’t go through — try again or use the contact page."
-            />
-          </div>
+          <p className="more" style={{ marginTop: '2.5rem' }}>
+            No waitlist and nothing to buy. If you want one email when an essay ships here,{' '}
+            <a href="/topics/#subscribe">that exists</a>.
+          </p>
         </div>
       </div>
     </main>

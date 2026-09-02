@@ -49,13 +49,15 @@ export function GET() {
           'Grimaldi Wealth or any Canadian financial-services firm',
         ],
         note:
-          'A single engineer based in Frankfurt am Main, Germany. The .ca domain is a personal choice and does not indicate a Canadian organisation.',
+          'A single engineer based in Frankfurt am Main, Germany, with ties to Toronto and the Greater Toronto Area. The .ca domain is personal and does not indicate a Canadian organisation.',
       },
 
-      network: [
-        { domain: 'grimaldi.ca', role: 'the person: journey, books, topics, ventures' },
-        { domain: 'igrimaldi.engineering', role: 'software and AI engineering portfolio' },
-        { domain: 'engineeringgrimaldi.com', role: 'hardware and electrical engineering' },
+      sites: [
+        { domain: 'grimaldi.ca', role: 'the person: now, explainers, book manuscripts, links to the other sites; nothing for sale' },
+        { domain: 'igrimaldi.engineering', role: 'engineering notebook' },
+        { domain: 'engineeringgrimaldi.com', role: 'palletizing software company' },
+        { domain: 'ecowoods.ca', role: 'Toronto hardwood contractor' },
+        { domain: 'greenhardwood.ca', role: 'Green Hardwood Ltd., Toronto — hardwood flooring, custom stairs and railings' },
       ],
 
       expertise: [
@@ -98,7 +100,7 @@ export function GET() {
         drafts:
           'Explainers are written, then verified, then published. Unverified drafts are served noindex and never appear in this index, the sitemap or the feeds.',
         claims:
-          'Claims about shipped work link to a public artefact — a repository or a live deployment. Figures cite the standards body or system operator that publishes them.',
+          'Claims about shipped work link to a public artefact — a repository or a live site. Figures cite the standards body or system operator that publishes them.',
       },
 
       feeds: {

@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * ContactForm — the primary conversion path.
+ * ContactForm — the way to write to me.
  *
  * Posts JSON to this site's own /api/contact route. No third-party form
  * vendor. Includes a hidden honeypot field ("company") that bots fill and
@@ -15,9 +15,9 @@ import { CONTACT_ENDPOINT, PERSON } from '@/lib/site';
 type Status = 'idle' | 'sending' | 'sent' | 'error' | 'unconfigured';
 
 const CONTEXTS = [
-  ['hiring', 'Hiring / role'],
-  ['advisory', 'Advisory / consulting'],
+  ['writing', 'Something I wrote'],
   ['book', 'The books'],
+  ['engineering', 'Engineering / work'],
   ['press', 'Press / podcast'],
   ['other', 'Something else'],
 ] as const;
@@ -80,7 +80,7 @@ export default function ContactForm() {
       </div>
       <label>
         What is this about?
-        <select name="context" defaultValue="hiring" required>
+        <select name="context" defaultValue="other" required>
           {CONTEXTS.map(([value, label]) => (
             <option key={value} value={value}>{label}</option>
           ))}
@@ -88,7 +88,7 @@ export default function ContactForm() {
       </label>
       <label>
         Message
-        <textarea name="message" required minLength={10} rows={6} placeholder="What are you building, hiring for, or writing about?" />
+        <textarea name="message" required minLength={10} rows={6} placeholder="What would you like to talk about?" />
       </label>
 
       {/* Honeypot — hidden from humans and assistive tech, irresistible to bots. */}

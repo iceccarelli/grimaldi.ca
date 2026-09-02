@@ -27,14 +27,37 @@ export const PERSON = {
   ],
 } as const;
 
-export const SITE_TITLE =
-  'Vincenzo Ceccarelli Grimaldi — Electrical Engineer, Frankfurt | Grid Digitalisation & Physics-Informed Systems';
+export const SITE_TITLE = 'Vincenzo Ceccarelli Grimaldi — electrical engineer, Frankfurt';
 
 export const SITE_DESCRIPTION =
-  'Vincenzo Ceccarelli Grimaldi is an electrical engineer in Frankfurt working on the digitalisation of high-voltage rail infrastructure — the personal surface of the Grimaldi Network: the journey, two book manuscripts with public proof engines, and the ventures.';
+  'Personal site of Vincenzo Ceccarelli Grimaldi, an electrical engineer in Frankfurt with ties to Toronto. Explainers on grids, power and compute, two book manuscripts in revision, and links to the other sites. Nothing for sale here.';
+
+/**
+ * The doors. This site is a hallway: each entry names another site and says
+ * in a few words what a visitor will find there. Text links only — no tiles,
+ * no product copy, nothing absorbed from the sites themselves.
+ */
+export const DOORS = [
+  { href: 'https://engineeringgrimaldi.com', label: 'engineeringgrimaldi.com', what: 'palletizing software company' },
+  { href: 'https://igrimaldi.engineering', label: 'igrimaldi.engineering', what: 'engineering notebook' },
+  {
+    href: 'https://ecowoods.ca',
+    label: 'ecowoods.ca',
+    what: 'Toronto hardwood contractor (its job-management app is the open ecowoods-app repository)',
+  },
+] as const;
+
+/** Footer order, fixed. */
+export const FOOTER_SITES = [
+  { href: 'https://engineeringgrimaldi.com', label: 'engineeringgrimaldi.com' },
+  { href: 'https://igrimaldi.engineering', label: 'igrimaldi.engineering' },
+  { href: 'https://ecowoods.ca', label: 'ecowoods.ca' },
+  { href: 'https://greenhardwood.ca', label: 'greenhardwood.ca' },
+  { href: 'https://github.com/iceccarelli', label: 'GitHub' },
+] as const;
 
 /* ── Conversion endpoints — FIRST PARTY ─────────────────────────────
- * The contact form and the book waitlists post to this site's own API
+ * The contact form and the one-email subscribe post to this site's own API
  * routes. No Formspree, no Buttondown, no vendor account required.
  *
  * One environment variable arms the whole layer (Vercel → Settings →

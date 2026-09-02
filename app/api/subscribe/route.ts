@@ -4,7 +4,11 @@ import { clean, isEmail, sendMail } from '@/lib/mail';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const LISTS = new Set(['renewables-migration', 'orbital-roadmap', 'general']);
+/**
+ * One list. The form promises one email when an essay ships, nothing else —
+ * the `list` field is accepted for compatibility and always resolves to it.
+ */
+const LISTS = new Set(['general']);
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -23,9 +27,9 @@ export async function POST(request: Request) {
   if (!isEmail(email)) return NextResponse.json({ error: 'invalid_email' }, { status: 422 });
 
   const result = await sendMail({
-    subject: `[grimaldi.ca · waitlist:${list}] ${email}`,
+    subject: `[grimaldi.ca · subscribe:${list}] ${email}`,
     replyTo: email,
-    text: [`Waitlist: ${list}`, `Email:    ${email}`, `Source:   grimaldi.ca`].join('\n'),
+    text: [`Subscribe: ${list}`, `Email:    ${email}`, `Source:   grimaldi.ca`].join('\n'),
   });
 
   if (!result.ok) {

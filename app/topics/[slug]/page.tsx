@@ -112,7 +112,7 @@ export default function TopicPage({ params }: Params) {
         { name: topic.title, path: `/topics/${topic.slug}/` },
       ])} />
 
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <article className="section topic">
           <span className="kicker">
             Topic · {readingMinutes(topic)} min read · updated {topic.updated}

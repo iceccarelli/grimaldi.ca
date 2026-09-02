@@ -52,7 +52,7 @@ export default async function ProofEnginesPage() {
         { name: 'Proof engines', path: '/books/the-renewables-migration/proof-engines/' },
       ])} />
 
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section">
           <span className="kicker">The Renewables Migration · verification</span>
           <h1 className="page-title">Don’t trust the book — run it</h1>

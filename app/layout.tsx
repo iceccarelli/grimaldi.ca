@@ -4,7 +4,6 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { LanguageProvider } from '@/lib/i18n';
 import Chrome from '@/components/Chrome';
-import AskLazy from '@/components/AskLazy';
 import { PERSON, SITE_DESCRIPTION, SITE_TITLE, SITE_URL, VERIFY_BING, VERIFY_GOOGLE } from '@/lib/site';
 import { webSite } from '@/lib/schema';
 import './globals.css';
@@ -58,9 +57,9 @@ export const metadata: Metadata = {
 };
 
 /**
- * Sitewide node only. The Person is the network-wide entity — the SAME @id is
- * emitted by igrimaldi.engineering and engineeringgrimaldi.com, so the three
- * domains resolve to one person rather than three. Page-specific nodes
+ * Sitewide node only. The Person @id is shared with igrimaldi.engineering and
+ * engineeringgrimaldi.com, so search engines resolve the domains to one person
+ * rather than three. Page-specific nodes
  * (ProfilePage, ContactPage, Book, BreadcrumbList) live on their own pages;
  * emitting ProfilePage from here made /contact/ and /privacy/ claim to be
  * profile pages too, which is a contradictory signal.
@@ -93,7 +92,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <LanguageProvider>
           <Chrome>{children}</Chrome>
-          <AskLazy />
         </LanguageProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSite) }} />

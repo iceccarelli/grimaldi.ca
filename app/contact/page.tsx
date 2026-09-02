@@ -7,7 +7,7 @@ import { breadcrumbs, contactPage } from '@/lib/schema';
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Contact Vincenzo Ceccarelli Grimaldi — electrical engineer in Frankfurt. Hiring, advisory, press and the books. Form, call booking and direct channels.',
+    'Contact Vincenzo Ceccarelli Grimaldi — electrical engineer in Frankfurt. The writing, the books, engineering, press. A form and direct channels.',
   alternates: { canonical: '/contact/' },
   openGraph: {
     images: [{ url: '/og-contact.png', width: 1200, height: 630, alt: 'Contact Vincenzo Ceccarelli Grimaldi' }],
@@ -20,14 +20,13 @@ export default function ContactPage() {
     <main>
       <JsonLd data={contactPage()} />
       <JsonLd data={breadcrumbs([{ name: 'Contact', path: '/contact/' }])} />
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section">
           <span className="kicker">Contact</span>
           <h1 className="page-title">Start a conversation</h1>
           <p className="intro">
-            Hiring, advisory on grid digitalisation and IT/OT security, press and podcasts, or the
-            books — pick the lane and write. I reply from {PERSON.email}, usually within two
-            working days (Europe/Berlin).
+            Something I wrote, the books, engineering, press — pick the lane and write. I reply
+            from {PERSON.email}, usually within two working days (Europe/Berlin).
           </p>
 
           <div className="contact-grid">
@@ -37,9 +36,7 @@ export default function ContactPage() {
               <h2 className="aside-h">Prefer a call?</h2>
               {CAL_URL ? (
                 <p>
-                  <a className="btn btn-line" href={CAL_URL} rel="noopener noreferrer">
-                    Book a slot (Europe/Berlin)
-                  </a>
+                  <a href={CAL_URL} rel="noopener noreferrer">Book a slot (Europe/Berlin) →</a>
                 </p>
               ) : (
                 <p>
@@ -55,8 +52,8 @@ export default function ContactPage() {
               </p>
               <h2 className="aside-h">For press</h2>
               <p>
-                Every claim on this site that you might quote has a public receipt — code,
-                repository or live deployment — linked next to it.
+                Every claim on this site that you might quote has a public receipt — code or
+                repository — linked next to it.
               </p>
             </aside>
           </div>

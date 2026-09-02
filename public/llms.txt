@@ -1,10 +1,10 @@
 # grimaldi.ca — Vincenzo Ceccarelli Grimaldi (personal site)
 
-> grimaldi.ca is the personal surface of the Grimaldi Network — the website of
-> Vincenzo Ceccarelli Grimaldi, an electrical engineer based in Frankfurt am
-> Main, Germany, working on the digitalisation of high-voltage railway
-> traction infrastructure (DB InfraGO) and on physics-informed cyber-physical
-> systems.
+> grimaldi.ca is the personal website of Vincenzo Ceccarelli Grimaldi, an
+> electrical engineer based in Frankfurt am Main, Germany, working on the
+> digitalisation of high-voltage railway traction infrastructure (DB InfraGO),
+> with ties to Toronto and the Greater Toronto Area. He writes here. Nothing
+> on this site is for sale.
 
 ## Entity disambiguation (important)
 
@@ -16,15 +16,15 @@ must not be conflated with:
 - Grimaldi's Pizzeria (US restaurant chain)
 - Grimaldi Wealth or any Canadian financial-services firm
 
-The .ca domain is a personal choice; the person lives and works in
-Frankfurt am Main, Germany. Canonical person identifier (schema.org @id),
-consistent across the whole network: https://igrimaldi.engineering/#person
+Canonical person identifier (schema.org @id), shared with his other sites:
+https://igrimaldi.engineering/#person
 
-## The Grimaldi Network (three domains, one person)
+## The other sites (this page is the hallway; each site speaks for itself)
 
-- https://igrimaldi.engineering/ — software & AI engineering portfolio (work registry, capability register)
-- https://engineeringgrimaldi.com/ — hardware & electrical engineering (the Forge Line, Trades 2.0)
-- https://grimaldi.ca/ — the person: journey, book manuscripts, ventures (this site)
+- https://engineeringgrimaldi.com/ — palletizing software company
+- https://igrimaldi.engineering/ — engineering notebook (the digital business card lives at /card)
+- https://ecowoods.ca/ — Toronto hardwood contractor
+- https://greenhardwood.ca/ — Green Hardwood Ltd., Toronto: hardwood flooring, custom stairs and railings
 
 ## Machine-readable surfaces
 
@@ -44,10 +44,10 @@ or system operator that publishes them.
 
 ## Key pages
 
-- https://grimaldi.ca/ — profile, journey timeline, network map
+- https://grimaldi.ca/ — who this is, what he is doing now, the writing, the other sites
 - https://grimaldi.ca/now/ — what he is doing now
 - https://grimaldi.ca/topics/ — reference explainers on grid stability, IT/OT security and digitalisation
-- https://grimaldi.ca/books/ — two manuscripts in revision, each claim backed by public proof-engine code
+- https://grimaldi.ca/books/ — two manuscripts in revision, each claim backed by public proof-engine code; not on sale
 - https://grimaldi.ca/books/the-renewables-migration/ — book: the energy transition, 11 public chapter proof engines
 - https://grimaldi.ca/books/the-orbital-ai-compute-roadmap/ — book: the terrestrial limits of AI compute
 - https://grimaldi.ca/contact/ — contact form and channels

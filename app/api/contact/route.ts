@@ -4,7 +4,7 @@ import { clean, isEmail, sendMail } from '@/lib/mail';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const CONTEXTS = new Set(['hiring', 'advisory', 'book', 'press', 'other']);
+const CONTEXTS = new Set(['writing', 'book', 'engineering', 'press', 'other']);
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;

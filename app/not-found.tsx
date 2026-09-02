@@ -8,18 +8,17 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main>
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section" style={{ minHeight: '48vh' }}>
           <span className="kicker">404</span>
           <h1 className="page-title">This page of the story doesn’t exist.</h1>
           <p className="intro">
             The address may have changed, or it never was. Everything real is one hop away.
           </p>
-          <div className="cta-row">
-            <a className="btn btn-dark" href="/">Back to the start</a>
-            <a className="btn btn-line" href="/now/">What I’m doing now</a>
-            <a className="btn btn-line" href="/contact/">Contact</a>
-          </div>
+          <p className="more">
+            <a href="/">Back to the start →</a> · <a href="/now/">What I’m doing now →</a> ·{' '}
+            <a href="/contact/">Contact →</a>
+          </p>
         </div>
       </div>
     </main>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import SubscribeForm from '@/components/SubscribeForm';
 import { breadcrumbs } from '@/lib/schema';
 import { allTopics, publishedTopics } from '@/content/topics';
 import { readingMinutes } from '@/content/types';
@@ -39,7 +40,7 @@ export default function TopicsPage() {
     <main>
       <JsonLd data={collection} />
       <JsonLd data={breadcrumbs([{ name: 'Topics', path: '/topics/' }])} />
-      <div className="sheet" style={{ marginTop: 0 }}>
+      <div className="sheet">
         <div className="section">
           <span className="kicker">Topics</span>
           <h1 className="page-title">The engineering, explained</h1>
@@ -78,6 +79,13 @@ export default function TopicsPage() {
               <a className="cta" href="/contact/">Tell me what to write about →</a>
             </div>
           )}
+
+          {/* One email when an essay ships. That is the whole promise. */}
+          <div className="subscribe" id="subscribe">
+            <h2 className="sub">One email when an essay ships</h2>
+            <p>No list, no newsletter, no noise — a single message when something new is published here.</p>
+            <SubscribeForm />
+          </div>
         </div>
       </div>
     </main>

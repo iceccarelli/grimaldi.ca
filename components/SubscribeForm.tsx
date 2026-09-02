@@ -1,28 +1,26 @@
 'use client';
 
 /**
- * WaitlistForm — email capture for the books and the first post.
+ * SubscribeForm — one email when an essay ships.
  *
- * Posts to this site's own /api/subscribe route with a list key, so the
- * Renewables Migration list and the Orbital Roadmap list stay distinguishable
- * from day one. Honeypot included. No newsletter vendor account required.
+ * Posts to this site's own /api/subscribe route. There is one list and one
+ * promise: a single message when something new is published here. Honeypot
+ * included; no newsletter vendor.
  */
 
 import { useState, type FormEvent } from 'react';
 import { SUBSCRIBE_ENDPOINT } from '@/lib/site';
 
-export default function WaitlistForm({
-  list = 'general',
-  placeholder,
-  button,
-  ok,
-  err,
+export default function SubscribeForm({
+  placeholder = 'you@example.com',
+  button = 'Tell me',
+  ok = 'Done — one email when something ships.',
+  err = 'That didn’t go through — try the contact page.',
 }: {
-  list?: 'renewables-migration' | 'orbital-roadmap' | 'general';
-  placeholder: string;
-  button: string;
-  ok: string;
-  err: string;
+  placeholder?: string;
+  button?: string;
+  ok?: string;
+  err?: string;
 }) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
@@ -37,7 +35,7 @@ export default function WaitlistForm({
         body: JSON.stringify({
           email: String(data.get('email') ?? ''),
           company: String(data.get('company') ?? ''),
-          list,
+          list: 'general',
         }),
       });
       setStatus(res.ok ? 'sent' : 'error');
@@ -46,15 +44,15 @@ export default function WaitlistForm({
     }
   }
 
-  if (status === 'sent') return <p className="wl-ok" role="status">{ok}</p>;
+  if (status === 'sent') return <p className="sub-ok" role="status">{ok}</p>;
 
   return (
-    <form className="wl-form" onSubmit={onSubmit}>
-      <input name="email" type="email" required placeholder={placeholder} autoComplete="email" aria-label={placeholder} />
+    <form className="sub-form" onSubmit={onSubmit}>
+      <input name="email" type="email" required placeholder={placeholder} autoComplete="email" aria-label="Email address" />
       <div className="hp" aria-hidden="true">
         <input name="company" type="text" tabIndex={-1} autoComplete="off" />
       </div>
-      <button className="btn btn-dark" type="submit" disabled={status === 'sending'}>
+      <button className="btn" type="submit" disabled={status === 'sending'}>
         {status === 'sending' ? '…' : button}
       </button>
       {status === 'error' && <span className="form-err" role="alert">{err}</span>}

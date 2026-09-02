@@ -1,10 +1,16 @@
 'use client';
 
 /**
- * Four-locale layer, same contract as igrimaldi.engineering: English is
- * canonical and baked into the prerendered HTML; ES/DE/ZH swap client-side.
- * Locale persists in the shared `vg-locale` key, so a visitor who chose
- * Deutsch on the portfolio lands here in Deutsch.
+ * Locale layer. English is canonical and baked into the prerendered HTML.
+ *
+ * The other tables in strings.json (es/de/zh) are kept — keys and all — but
+ * they describe an older version of this site, so they are OFF the visible
+ * switcher until every string in them is true again. Only locales listed in
+ * `visibleLocales` can be selected or auto-detected; a stored preference for
+ * a hidden locale falls back to English rather than showing stale copy.
+ *
+ * Locale persists in the shared `vg-locale` key, so a choice made on
+ * igrimaldi.engineering carries over once the same locale is visible here.
  */
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
@@ -19,6 +25,13 @@ export const locales: { code: Locale; native: string }[] = [
   { code: 'zh', native: '中文' },
 ];
 
+/** Locales whose every string is currently true. Add one back here only after re-reading its table. */
+const VISIBLE: readonly Locale[] = ['en'];
+export const visibleLocales = locales.filter((l) => VISIBLE.includes(l.code));
+
+const isVisible = (s: string | null | undefined): s is Locale =>
+  !!s && (VISIBLE as readonly string[]).includes(s);
+
 type Dict = Record<string, string>;
 const table = strings as Record<Locale, Dict>;
 
@@ -28,10 +41,10 @@ function detect(): Locale {
   if (typeof window === 'undefined') return 'en';
   try {
     const s = window.localStorage.getItem(STORAGE_KEY);
-    if (s === 'en' || s === 'es' || s === 'de' || s === 'zh') return s;
+    if (isVisible(s)) return s;
   } catch {}
   const n = (navigator.language || 'en').slice(0, 2);
-  return n === 'es' || n === 'de' || n === 'zh' ? (n as Locale) : 'en';
+  return isVisible(n) ? n : 'en';
 }
 
 const Ctx = createContext<{ locale: Locale; setLocale: (l: Locale) => void; t: (k: string) => string }>({
@@ -49,6 +62,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [locale]);
 
   const setLocale = useCallback((l: Locale) => {
+    if (!isVisible(l)) return;
     setLocaleState(l);
     try {
       window.localStorage.setItem(STORAGE_KEY, l);
