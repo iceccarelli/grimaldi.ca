@@ -91,7 +91,7 @@ export default function ResidualPlot() {
 
   return (
     <figure className="residual">
-      <svg ref={host} viewBox={`0 0 ${W} ${H}`} width="100%" height="auto" role="img"
+      <svg ref={host} viewBox={`0 0 ${W} ${H}`} role="img"
         aria-label="Illustrative 16.7 hertz reference waveform with a model trace, and the residual between them drawn underneath.">
         <line x1="0" y1={REF_Y} x2={W} y2={REF_Y} className="res-axis" />
         <line x1="0" y1={RES_Y} x2={W} y2={RES_Y} className="res-axis" />
