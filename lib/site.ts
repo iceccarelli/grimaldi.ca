@@ -27,23 +27,38 @@ export const PERSON = {
   ],
 } as const;
 
-export const SITE_TITLE = 'Vincenzo Ceccarelli Grimaldi — electrical engineer, Frankfurt';
+/**
+ * What this site is. grimaldi.ca is the control and integration surface of
+ * the Operations & Commercial Automation cluster (Agent 3): it displays the
+ * repository registry, the KPI system, the decision log and the cross-cluster
+ * contracts, and orchestrates nothing by itself — it sells nothing, it shows
+ * evidence. The operator's explainers and manuscripts stay on the site.
+ */
+export const CLUSTER = {
+  name: 'Operations & Commercial Automation',
+  short: 'Operations cluster',
+  agent: 'Agent 3',
+  command: 'Make money and build distribution.',
+  operator: 'Grimaldi Engineering',
+} as const;
+
+export const SITE_TITLE = `${CLUSTER.short} — control surface · ${PERSON.shortName}`;
 
 export const SITE_DESCRIPTION =
-  'Personal site of Vincenzo Ceccarelli Grimaldi, an electrical engineer in Frankfurt with ties to Toronto. Explainers on grids, power and compute, two book manuscripts in revision, and links to the other sites. Nothing for sale here.';
+  'Control and integration surface of the Operations & Commercial Automation cluster (Agent 3, Grimaldi Engineering): repository registry, KPI system, decision log, kill list, 90-day roadmap counted from customer evidence, and versioned cross-cluster contracts. Nothing is for sale here; every number is measured or marked not yet measured.';
 
 /**
- * The doors. This site is a hallway: each entry names another site and says
- * in a few words what a visitor will find there. Text links only — no tiles,
- * no product copy, nothing absorbed from the sites themselves.
+ * The doors. Each entry names another site in the network and says in a few
+ * words what a visitor will find there. Text links only — no tiles, no
+ * product copy, nothing absorbed from the sites themselves.
  */
 export const DOORS = [
-  { href: 'https://engineeringgrimaldi.com', label: 'engineeringgrimaldi.com', what: 'palletizing software company' },
+  { href: 'https://engineeringgrimaldi.com', label: 'engineeringgrimaldi.com', what: 'palletizing software company (Physical AI cluster)' },
   { href: 'https://igrimaldi.engineering', label: 'igrimaldi.engineering', what: 'engineering notebook' },
   {
     href: 'https://ecowoods.ca',
     label: 'ecowoods.ca',
-    what: 'Toronto hardwood contractor (its job-management app is the open ecowoods-app repository)',
+    what: 'Toronto hardwood contractor — the cluster’s commercial proving ground (open ecowoods-app repository)',
   },
 ] as const;
 

@@ -1,10 +1,12 @@
 /**
- * github.ts — live metadata for the public proof-engine repositories.
+ * github.ts — live metadata for public repositories: the proof engines and
+ * the Operations cluster registry.
  *
  * The eleven chapter repositories are the strongest verifiable claim on this
- * site. Rather than restating them in hand-written copy that goes stale, the
- * page reads GitHub at build/revalidation time, so pushing a better README
- * description to a proof engine improves grimaldi.ca with no site change.
+ * site, and the registry's last-push dates are the cluster's pulse. Rather
+ * than restating either in hand-written copy that goes stale, the pages read
+ * GitHub at build/revalidation time, so pushing a better README description
+ * to a repository improves grimaldi.ca with no site change.
  *
  * Failure policy: GitHub is a nice-to-have, never a dependency. If the API is
  * unreachable, rate-limited or slow, every repo degrades to its known-good
@@ -34,22 +36,42 @@ const OWNER = 'iceccarelli';
 const REPO = (n: number) => `Renewables_Migration_Chapter${n}_Proof_Engine`;
 export const CHAPTER_COUNT = 11;
 
-async function fetchOne(n: number): Promise<ProofEngine> {
-  const repo = REPO(n);
-  const base: ProofEngine = {
-    chapter: n,
-    repo,
-    url: `https://github.com/${OWNER}/${repo}`,
+/**
+ * Live metadata for any public repository, `owner/name`. Shared by the proof
+ * engines and the cluster registry. Same failure policy: null, never invented.
+ */
+export type RepoMeta = {
+  fullName: string;
+  url: string;
+  description: string | null;
+  language: string | null;
+  topics: string[];
+  /** Date of the last push, YYYY-MM-DD. */
+  updated: string | null;
+  stars: number | null;
+  openIssues: number | null;
+  license: string | null;
+  archived: boolean | null;
+  enriched: boolean;
+};
+
+export async function repoMeta(fullName: string): Promise<RepoMeta> {
+  const base: RepoMeta = {
+    fullName,
+    url: `https://github.com/${fullName}`,
     description: null,
     language: null,
     topics: [],
     updated: null,
     stars: null,
+    openIssues: null,
+    license: null,
+    archived: null,
     enriched: false,
   };
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${OWNER}/${repo}`, {
+    const res = await fetch(`https://api.github.com/repos/${fullName}`, {
       headers: {
         Accept: 'application/vnd.github+json',
         'User-Agent': 'grimaldi.ca',
@@ -61,6 +83,7 @@ async function fetchOne(n: number): Promise<ProofEngine> {
     });
     if (!res.ok) return base;
     const d = (await res.json()) as Record<string, unknown>;
+    const license = d.license as Record<string, unknown> | null | undefined;
     return {
       ...base,
       description: typeof d.description === 'string' ? d.description : null,
@@ -68,6 +91,9 @@ async function fetchOne(n: number): Promise<ProofEngine> {
       topics: Array.isArray(d.topics) ? (d.topics as string[]).slice(0, 6) : [],
       updated: typeof d.pushed_at === 'string' ? d.pushed_at.slice(0, 10) : null,
       stars: typeof d.stargazers_count === 'number' ? d.stargazers_count : null,
+      openIssues: typeof d.open_issues_count === 'number' ? d.open_issues_count : null,
+      license: license && typeof license.spdx_id === 'string' && license.spdx_id !== 'NOASSERTION' ? license.spdx_id : null,
+      archived: typeof d.archived === 'boolean' ? d.archived : null,
       enriched: true,
     };
   } catch {
@@ -75,6 +101,29 @@ async function fetchOne(n: number): Promise<ProofEngine> {
   }
 }
 
+async function fetchOne(n: number): Promise<ProofEngine> {
+  const repo = REPO(n);
+  const m = await repoMeta(`${OWNER}/${repo}`);
+  return {
+    chapter: n,
+    repo,
+    url: m.url,
+    description: m.description,
+    language: m.language,
+    topics: m.topics,
+    updated: m.updated,
+    stars: m.stars,
+    enriched: m.enriched,
+  };
+}
+
 export async function proofEngines(): Promise<ProofEngine[]> {
   return Promise.all(Array.from({ length: CHAPTER_COUNT }, (_, i) => fetchOne(i + 1)));
+}
+
+/** Metadata for every located registry repository, keyed by `owner/name`. */
+export async function registryMeta(fullNames: (string | null)[]): Promise<Record<string, RepoMeta>> {
+  const names = fullNames.filter((n): n is string => typeof n === 'string');
+  const metas = await Promise.all(names.map(repoMeta));
+  return Object.fromEntries(metas.map((m) => [m.fullName, m]));
 }

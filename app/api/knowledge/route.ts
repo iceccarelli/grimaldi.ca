@@ -1,6 +1,8 @@
 import { publishedTopics } from '@/content/topics';
 import { readingMinutes, wordCount } from '@/content/types';
-import { PERSON, SITE_URL } from '@/lib/site';
+import { operationsCluster, registry, REGISTRY_REVIEWED } from '@/content/cluster';
+import { countByStatus } from '@/lib/cluster';
+import { CLUSTER, PERSON, SITE_URL } from '@/lib/site';
 
 export const dynamic = 'force-static';
 
@@ -53,12 +55,25 @@ export function GET() {
       },
 
       sites: [
-        { domain: 'grimaldi.ca', role: 'the person: now, explainers, book manuscripts, links to the other sites; nothing for sale' },
+        { domain: 'grimaldi.ca', role: 'control and integration surface of the Operations & Commercial Automation cluster (Agent 3); also the operator’s explainers and book manuscripts; nothing for sale' },
         { domain: 'igrimaldi.engineering', role: 'engineering notebook' },
         { domain: 'engineeringgrimaldi.com', role: 'palletizing software company' },
         { domain: 'ecowoods.ca', role: 'Toronto hardwood contractor' },
         { domain: 'greenhardwood.ca', role: 'Green Hardwood Ltd., Toronto — hardwood flooring, custom stairs and railings' },
       ],
+
+      cluster: {
+        name: CLUSTER.name,
+        agent: CLUSTER.agent,
+        command: operationsCluster.command,
+        operator: CLUSTER.operator,
+        index: `${SITE_URL}/api/cluster/`,
+        registryReviewed: REGISTRY_REVIEWED,
+        registryCount: registry.length,
+        countByStatus: countByStatus(),
+        evidenceRule:
+          'Every KPI is measured and sourced or marked not yet measured; roadmap progress is counted from the logged evidence; repository metadata is fetched from GitHub, never hand-copied.',
+      },
 
       expertise: [
         'Digitalisation of high-voltage railway traction power assets',
@@ -109,6 +124,7 @@ export function GET() {
         json: `${SITE_URL}/feed.json`,
         sitemap: `${SITE_URL}/sitemap.xml`,
         llms: `${SITE_URL}/llms.txt`,
+        cluster: `${SITE_URL}/api/cluster/`,
       },
     },
     { headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' } },

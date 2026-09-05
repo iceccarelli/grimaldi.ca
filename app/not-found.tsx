@@ -16,8 +16,8 @@ export default function NotFound() {
             The address may have changed, or it never was. Everything real is one hop away.
           </p>
           <p className="more">
-            <a href="/">Back to the start →</a> · <a href="/now/">What I’m doing now →</a> ·{' '}
-            <a href="/contact/">Contact →</a>
+            <a href="/">Control room →</a> · <a href="/cluster/registry/">Registry →</a> ·{' '}
+            <a href="/about/">About →</a> · <a href="/contact/">Contact →</a>
           </p>
         </div>
       </div>

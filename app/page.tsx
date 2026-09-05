@@ -1,144 +1,274 @@
 import Image from 'next/image';
 import JsonLd from '@/components/JsonLd';
-import { personRef } from '@/lib/schema';
-import { DOORS, PERSON, SITE_URL } from '@/lib/site';
-import { NOW_UPDATED, nowItems } from '@/content/now';
+import ClusterNav from '@/components/cluster/ClusterNav';
+import KpiStrip from '@/components/cluster/KpiStrip';
+import ObjectiveBar from '@/components/cluster/ObjectiveBar';
+import StatusBadge from '@/components/cluster/StatusBadge';
+import { clusterDataset, collectionPage } from '@/lib/schema';
+import { CLUSTER, DOORS, PERSON, SITE_URL } from '@/lib/site';
+import {
+  byTier,
+  decisions,
+  killList,
+  kpis,
+  latestReport,
+  MANDATE_TITLE,
+  operationsCluster,
+  REGISTRY_REVIEWED,
+  registry,
+  roadmap,
+} from '@/content/cluster';
+import { countByStatus, roadmapProgress, unlocated, validationPeriod } from '@/lib/cluster';
 import { publishedTopics } from '@/content/topics';
 
-/**
- * Home — a person, readable in twenty seconds.
- *
- * Name, two sentences, what he is doing now, what he has written, where the
- * other sites are, how to reach him. Text links throughout: this page points
- * people at the right place, it does not sell them anything. Server component
- * — no client bundle for the words on the front door.
- */
-const profilePage = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfilePage',
-  '@id': `${SITE_URL}/#profile`,
-  url: `${SITE_URL}/`,
-  name: `${PERSON.legalName} — Personal`,
-  inLanguage: 'en',
-  mainEntity: personRef,
-};
+/** The validation-period clock must not freeze at build time: rebuilt twice a day. */
+export const revalidate = 43200;
 
+/**
+ * Home — the control room of the Operations & Commercial Automation cluster.
+ *
+ * What the CEO layer needs in twenty seconds: the command, the primary KPI,
+ * the state of the 90-day objective, the registry by status, the latest
+ * decision, the latest report, and where the code and the sites are. Every
+ * number is computed from typed content or fetched; none is typed as if
+ * measured. Server component — no client bundle for the front door.
+ */
 export default function Home() {
+  const progress = roadmapProgress();
+  const period = validationPeriod();
+  const counts = countByStatus();
+  const report = latestReport();
+  const latestDecision = [...decisions].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id))[0];
   const topics = publishedTopics();
-  const now = nowItems[0];
+  const core = byTier('core');
+  const verticals = byTier('vertical');
+  const primary = kpis.filter((k) => k.rank === 'primary');
+  const headline = kpis.filter((k) => ['mrr', 'pipeline', 'qualified-opportunities', 'conversion', 'retention', 'gross-margin'].includes(k.id));
+
+  const page = collectionPage({
+    path: '/',
+    name: `${CLUSTER.short} — control room`,
+    description:
+      'Control and integration surface of the Operations & Commercial Automation cluster: registry, KPIs, roadmap, decisions, contracts.',
+    parts: registry
+      .filter((r) => r.repo)
+      .map((r) => ({
+        '@type': 'SoftwareSourceCode',
+        name: r.name,
+        codeRepository: `https://github.com/${r.repo}`,
+        url: `${SITE_URL}/cluster/registry/${r.slug}/`,
+      })),
+  });
 
   return (
-    <main className="home">
-      <JsonLd data={profilePage} />
+    <main className="cr">
+      <JsonLd data={page} />
+      <JsonLd data={clusterDataset} />
 
-      {/* 1 + 2 — who this is */}
-      <header className="who">
-        <Image
-          className="who-photo"
-          src="/headshot.jpg"
-          alt=""
-          width={96}
-          height={96}
-          priority
-          unoptimized
-        />
-        <div>
-          <h1 className="name">{PERSON.legalName}</h1>
-          <p className="bio">
-            Electrical engineer in Frankfurt am Main, digitising high-voltage railway traction
-            assets for German rail; Canadian by connection, with ties to Toronto and the GTA.
-            I write here — about grids, power and where compute goes next — and nothing on this
-            page is for sale.
-          </p>
-        </div>
+      <header className="cr-head">
+        <span className="kicker">
+          {CLUSTER.agent} · {CLUSTER.name} · control surface
+        </span>
+        <h1 className="cr-cmd">{operationsCluster.command}</h1>
+        <p className="cr-lead">
+          This is where the Operations cluster is displayed and orchestrated: the repository
+          registry, the KPI system with revenue first, the workflow ranking, the 90-day objective
+          counted from logged customer conversations, the decision log and kill list, the
+          weekly CEO report, and the versioned contracts to the Energy and Physical AI clusters.
+          Nothing is for sale on this page. Every number is measured and sourced, or it says{' '}
+          <em>not yet measured</em>.
+        </p>
+        <p className="cr-meta">
+          <span>mandate: {MANDATE_TITLE}</span>
+          <span>registry reviewed {REGISTRY_REVIEWED}</span>
+          <span>
+            validation period {roadmap.start} → {roadmap.end} · {period.over ? 'over' : `${period.remaining} days left`}
+          </span>
+          <span>
+            machine index <a className="url" href="/api/cluster/">/api/cluster/</a>
+          </span>
+        </p>
       </header>
 
-      {/* 3 — now */}
-      <section className="row" aria-labelledby="h-now">
-        <h2 id="h-now">Now</h2>
-        <div>
-          <p>
-            <strong>{now.title}.</strong> {now.body}
-          </p>
-          <p className="more">
-            <a href="/now/">Everything I’m doing now →</a> <span className="dim">updated {NOW_UPDATED}</span>
-          </p>
-        </div>
+      <ClusterNav current="/" />
+
+      {/* Primary KPI */}
+      <section className="cr-section" aria-labelledby="h-kpi" style={{ marginTop: 0 }}>
+        <h2 id="h-kpi">Revenue first</h2>
+        <p className="intro">
+          The primary KPI, then the six the CEO report opens with. A value appears here only when
+          it has been measured from the named source.
+        </p>
+        <KpiStrip kpis={primary} />
+        <div style={{ height: '.8rem' }} />
+        <KpiStrip kpis={headline} compact />
+        <p className="more">
+          <a href="/cluster/kpi/">All fourteen KPIs, with definitions →</a>
+        </p>
       </section>
 
-      {/* 4 — writing and books, as text links */}
-      <section className="row" aria-labelledby="h-writing">
-        <h2 id="h-writing">Writing</h2>
-        <div>
-          {topics.length > 0 ? (
-            <ul className="plain">
-              {topics.slice(0, 4).map((t) => (
-                <li key={t.slug}>
-                  <a href={`/topics/${t.slug}/`}>{t.title}</a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Explainers are written and checked before they appear here.</p>
+      <div className="cr-grid cr-section">
+        {/* 90-day objective */}
+        <section className="cr-panel" aria-labelledby="h-obj">
+          <h2 id="h-obj">90-day objective</h2>
+          {progress.map((o) => <ObjectiveBar o={o} key={o.id} />)}
+          <p className="dim" style={{ fontSize: '.88rem' }}>
+            Counted from the evidence log. {period.elapsed} of {period.total} days elapsed.
+          </p>
+          <p className="more">
+            <a href="/cluster/roadmap/">Roadmap and evidence →</a>
+          </p>
+        </section>
+
+        {/* Registry by status */}
+        <section className="cr-panel" aria-labelledby="h-reg">
+          <h2 id="h-reg">Registry · {registry.length} entries</h2>
+          <div className="cr-table-wrap" style={{ border: 0, background: 'transparent', margin: 0 }}>
+            <table className="cr-table" style={{ minWidth: 0 }}>
+              <tbody>
+                {(Object.keys(counts) as (keyof typeof counts)[]).map((s) => (
+                  <tr key={s}>
+                    <td style={{ paddingLeft: 0 }}><StatusBadge status={s} /></td>
+                    <td className="num" style={{ paddingRight: 0 }}>{counts[s]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {unlocated().length > 0 && (
+            <p className="dim" style={{ fontSize: '.88rem', marginTop: '.6rem' }}>
+              {unlocated().length} name{unlocated().length === 1 ? '' : 's'} from the mandate not located in the
+              public inventory: {unlocated().map((r) => r.name).join(', ')}.
+            </p>
           )}
           <p className="more">
-            <a href="/topics/">All explainers →</a>
+            <a href="/cluster/registry/">Full registry →</a>
           </p>
-        </div>
-      </section>
+        </section>
 
-      <section className="row" aria-labelledby="h-books">
-        <h2 id="h-books">Books</h2>
-        <div>
-          <ul className="plain">
-            <li>
-              <a href="/books/the-renewables-migration/">The Renewables Migration</a>
-              <span className="dim"> — manuscript in revision, eleven public proof engines</span>
-            </li>
-            <li>
-              <a href="/books/the-orbital-ai-compute-roadmap/">The Orbital AI Compute Roadmap</a>
-              <span className="dim"> — manuscript in revision</span>
-            </li>
-          </ul>
-          <p className="more">
-            <a href="/books/">About both manuscripts →</a> <span className="dim">not on sale anywhere</span>
-          </p>
-        </div>
-      </section>
-
-      {/* 5 — doors to the other sites, as text */}
-      <section className="row" aria-labelledby="h-elsewhere">
-        <h2 id="h-elsewhere">Elsewhere</h2>
-        <div>
-          <ul className="doors">
-            {DOORS.map((d) => (
-              <li key={d.href}>
-                <a className="url" href={d.href} rel="noopener noreferrer">{d.label}</a>
-                <span> — {d.what}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="gh">
-            <a className="url" href="https://greenhardwood.ca" rel="noopener noreferrer">greenhardwood.ca</a> is Green
-            Hardwood Ltd., Franco Giacinto Oller Grimaldi’s hardwood flooring and custom stairs and
-            railing shop at 88 Sterling Road, Unit 6, Toronto ON M6R 2B2 — hardwood only, no vinyl.
-            Call (416) 847-3366 or write to{' '}
-            <a href="mailto:hello@greenhardwood.ca">hello@greenhardwood.ca</a>.
-          </p>
-        </div>
-      </section>
-
-      {/* 6 — contact */}
-      <section className="row" aria-labelledby="h-contact">
-        <h2 id="h-contact">Contact</h2>
-        <div>
+        {/* Latest decision + kill list */}
+        <section className="cr-panel" aria-labelledby="h-dec">
+          <h2 id="h-dec">Latest decision</h2>
           <p>
-            <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a> — or use the{' '}
-            <a href="/contact/">contact form</a>. I reply from Frankfurt, usually within two working
-            days.
+            <span className="cr-record-id">{latestDecision.id} · {latestDecision.date}</span>
+            <br />
+            <strong>{latestDecision.title}</strong>
           </p>
+          <p style={{ fontSize: '.92rem' }}>{latestDecision.decision}</p>
+          <p className="dim" style={{ fontSize: '.88rem' }}>
+            Kill list: {killList.length === 0 ? 'nothing frozen or killed yet.' : `${killList.length} entr${killList.length === 1 ? 'y' : 'ies'}.`}
+          </p>
+          <p className="more">
+            <a href="/cluster/decisions/">Decision log and kill list →</a>
+          </p>
+        </section>
+
+        {/* Latest report */}
+        <section className="cr-panel" aria-labelledby="h-rep">
+          <h2 id="h-rep">Weekly CEO report</h2>
+          {report ? (
+            <>
+              <p>
+                <span className="cr-record-id">{report.week} · filed {report.filed}</span>
+              </p>
+              <p style={{ fontSize: '.92rem' }}>
+                <strong>Top workflow:</strong> {report.topWorkflow ?? '—'}
+                <br />
+                <strong>Top failure:</strong> {report.topFailure ?? '—'}
+              </p>
+            </>
+          ) : (
+            <p className="dim" style={{ fontSize: '.92rem' }}>
+              No report filed yet. The template with the eighteen mandated fields is ready.
+            </p>
+          )}
+          <p className="more">
+            <a href="/cluster/reports/">Reports →</a>
+          </p>
+        </section>
+      </div>
+
+      {/* The code and the sites */}
+      <section className="cr-section" aria-labelledby="h-code">
+        <h2 id="h-code">Core and vertical applications</h2>
+        <p className="intro">
+          EcoWoods is the commercial proving ground; the Forge sites are vertical experiments;
+          Runway Fuel is a platform hypothesis until two independent customers require the same
+          workflow. Live repository metadata is on the registry page.
+        </p>
+        <div className="cr-table-wrap">
+          <table className="cr-table">
+            <caption>Registry — core and vertical tiers</caption>
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Role</th>
+                <th scope="col">Code</th>
+                <th scope="col">Site</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...core, ...verticals].map((r) => (
+                <tr key={r.slug}>
+                  <td><a href={`/cluster/registry/${r.slug}/`}>{r.name}</a></td>
+                  <td><StatusBadge status={r.status} /></td>
+                  <td>{r.role}</td>
+                  <td>
+                    {r.repo ? (
+                      <a className="url" href={`https://github.com/${r.repo}`} rel="noopener noreferrer">{r.repo.split('/')[1]}</a>
+                    ) : (
+                      <span className="dim">not located</span>
+                    )}
+                  </td>
+                  <td>
+                    {r.site ? (
+                      <a className="url" href={r.site} rel="noopener noreferrer">{r.site.replace('https://', '')}</a>
+                    ) : (
+                      <span className="dim">—</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
+
+      {/* Elsewhere in the network */}
+      <section className="cr-section" aria-labelledby="h-elsewhere">
+        <h2 id="h-elsewhere">Elsewhere in the network</h2>
+        <ul className="doors">
+          {DOORS.map((d) => (
+            <li key={d.href}>
+              <a className="url" href={d.href} rel="noopener noreferrer">{d.label}</a>
+              <span> — {d.what}</span>
+            </li>
+          ))}
+        </ul>
+        {topics.length > 0 && (
+          <p className="dim" style={{ fontSize: '.95rem' }}>
+            The operator’s explainers stay on this site:{' '}
+            {topics.slice(0, 3).map((t, i) => (
+              <span key={t.slug}>
+                {i > 0 && ' · '}
+                <a href={`/topics/${t.slug}/`}>{t.title}</a>
+              </span>
+            ))}
+            {' '}— <a href="/topics/">all explainers</a>, <a href="/books/">the books</a>.
+          </p>
+        )}
+      </section>
+
+      {/* Operator */}
+      <div className="cr-operator">
+        <Image src="/headshot.jpg" alt="" width={48} height={48} unoptimized />
+        <p>
+          Operated by <a href="/about/">{PERSON.legalName}</a>, electrical engineer in Frankfurt am
+          Main — the CEO layer above the three clusters. <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a> ·{' '}
+          <a href="/contact/">contact form</a>.
+        </p>
+      </div>
     </main>
   );
 }

@@ -46,6 +46,12 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      # The control room's evidence rule is load-bearing: a KPI with a value
+      # but no measurement date, an ARCHIVE without a kill-list entry, a
+      # scored workflow without evidence — each fails the build here.
+      - name: Verify cluster registry integrity
+        run: npm run verify:cluster
+
       - name: Build
         run: npm run build
 
@@ -59,6 +65,9 @@ jobs:
           test -f public/.well-known/security.txt
           test -f app/robots.ts
           test -f app/sitemap.ts
+          test -f content/cluster/registry.ts
+          test -f app/api/cluster/route.ts
+          grep -q "api/cluster" public/llms.txt
           python3 - <<'PY'
           from PIL import Image
           w, h = Image.open('public/og.png').size

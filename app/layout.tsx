@@ -28,15 +28,15 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: `${SITE_URL}/`,
-    siteName: PERSON.legalName,
-    type: 'profile',
+    siteName: 'grimaldi.ca — Operations cluster',
+    type: 'website',
     locale: 'en_US',
     images: [
       {
         url: `${SITE_URL}/og.png`,
         width: 1200,
         height: 630,
-        alt: `${PERSON.legalName} — ${PERSON.jobTitle}`,
+        alt: 'grimaldi.ca — control surface of the Operations & Commercial Automation cluster',
       },
     ],
   },
@@ -71,7 +71,7 @@ const person = {
   name: PERSON.legalName,
   alternateName: [PERSON.shortName, 'Vincenzo Ceccarelli'],
   url: 'https://igrimaldi.engineering/',
-  mainEntityOfPage: `${SITE_URL}/`,
+  mainEntityOfPage: `${SITE_URL}/about/`,
   image: `${SITE_URL}/headshot.jpg`,
   jobTitle: PERSON.jobTitle,
   disambiguatingDescription:

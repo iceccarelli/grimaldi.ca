@@ -1,7 +1,11 @@
 {
  "en": {
-  "brandTag": "Personal site",
+  "brandTag": "Operations cluster · control surface",
   "navA": "About",
+  "navCluster": "Cluster",
+  "navRegistry": "Registry",
+  "navKpi": "KPIs",
+  "navDecisions": "Decisions",
   "navW": "Now",
   "navN": "Network",
   "connect": "Contact",

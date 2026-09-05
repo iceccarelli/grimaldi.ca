@@ -1,14 +1,21 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { PERSON, FOOTER_SITES } from '@/lib/site';
+import { FOOTER_SITES } from '@/lib/site';
 import { visibleLocales, useI18n } from '@/lib/i18n';
 
-/** Primary navigation — four words. The same list renders at every width. */
+/**
+ * Primary navigation — the control room first, the operator's writing after.
+ * The same list renders at every width; the sub-sections of the control room
+ * live in ClusterNav on the cluster pages themselves.
+ */
 const NAV: { href: string; key: string }[] = [
-  { href: '/now/', key: 'navW' },
+  { href: '/cluster/', key: 'navCluster' },
+  { href: '/cluster/registry/', key: 'navRegistry' },
+  { href: '/cluster/kpi/', key: 'navKpi' },
+  { href: '/cluster/decisions/', key: 'navDecisions' },
   { href: '/topics/', key: 'navT' },
-  { href: '/books/', key: 'navB' },
+  { href: '/about/', key: 'navA' },
   { href: '/contact/', key: 'connect' },
 ];
 
@@ -21,7 +28,9 @@ export default function Chrome({ children }: { children: ReactNode }) {
 
       <header className="top">
         <nav className="top-in" aria-label={t('navPrimary')}>
-          <a className="brand" href="/">{PERSON.legalName}</a>
+          <a className="brand" href="/">
+            grimaldi.ca <span className="brand-tag">{t('brandTag')}</span>
+          </a>
           <div className="top-links">
             {NAV.map((item) => (
               <a key={item.href} href={item.href}>{t(item.key)}</a>

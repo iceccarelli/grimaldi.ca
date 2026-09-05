@@ -10,7 +10,7 @@
  *    they are manuscripts in revision — inventing those is entity fraud.
  */
 
-import { PERSON, SITE_URL } from './site';
+import { CLUSTER, PERSON, SITE_URL } from './site';
 
 export const personRef = { '@type': 'Person', '@id': PERSON.personId } as const;
 
@@ -18,15 +18,55 @@ export function jsonLdScript(data: unknown) {
   return { __html: JSON.stringify(data) };
 }
 
-/** Site-level node. Emitted once, on the homepage. */
+/** Site-level node. Emitted once, in the root layout. */
 export const webSite = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
-  name: `${PERSON.legalName} — Personal`,
+  name: `${CLUSTER.short} — control surface`,
+  alternateName: `${PERSON.legalName} — grimaldi.ca`,
+  description: `Control and integration surface of the ${CLUSTER.name} cluster.`,
   inLanguage: 'en',
   publisher: personRef,
+};
+
+/**
+ * A control-room page: a CollectionPage whose parts are the typed records it
+ * renders. Nothing is asserted beyond what the page shows.
+ */
+export function collectionPage(args: { path: string; name: string; description: string; parts?: unknown[] }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${SITE_URL}${args.path}#page`,
+    url: `${SITE_URL}${args.path}`,
+    name: args.name,
+    description: args.description,
+    inLanguage: 'en',
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    publisher: personRef,
+    ...(args.parts?.length ? { hasPart: args.parts } : {}),
+  };
+}
+
+/** The machine-readable cluster index, described as a Dataset so agents find it. */
+export const clusterDataset = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  '@id': `${SITE_URL}/api/cluster/#dataset`,
+  url: `${SITE_URL}/api/cluster/`,
+  name: `${CLUSTER.name} — cluster index`,
+  description:
+    'Machine-readable state of the Operations & Commercial Automation cluster: repository registry with statuses, KPI definitions and measurements, workflow ranking, decision log, kill list, 90-day roadmap progress, weekly CEO reports, watchlist, integration contracts and agent permission specifications.',
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  creator: personRef,
+  isAccessibleForFree: true,
+  distribution: [
+    { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/cluster/` },
+    { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/cluster/registry/` },
+    { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/cluster/kpi/` },
+  ],
 };
 
 /** Breadcrumbs: real hierarchy, matching the real URL structure. */

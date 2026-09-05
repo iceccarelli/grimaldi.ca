@@ -1,12 +1,14 @@
 {
   "name": "grimaldi-ca",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "verify:cluster": "node scripts/verify-cluster.mjs",
+    "verify": "npm run verify:cluster && npx tsc --noEmit"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

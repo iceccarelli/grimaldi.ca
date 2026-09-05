@@ -1,0 +1,156 @@
+/**
+ * kpis.ts — the KPI system (§15 of the mandate, plus the optimization targets of §10).
+ *
+ * Every value is null until a measurement exists. To record one, set `value`
+ * and `measuredAt` together and name the `source`. The control room renders
+ * null as "not yet measured"; it never renders it as 0.
+ */
+
+import type { Kpi } from './types';
+
+export const KPI_CURRENCY = 'CAD' as const; // the proving ground invoices in Toronto
+
+export const kpis: Kpi[] = [
+  {
+    id: 'revenue',
+    label: 'Revenue',
+    rank: 'primary',
+    unit: KPI_CURRENCY,
+    definition: 'Cash invoiced to external customers for software or software-enabled service in the period. The primary KPI; every other number exists to explain this one.',
+    value: null,
+    measuredAt: null,
+    source: 'Invoice ledger of the entity that bills the customer.',
+  },
+  {
+    id: 'mrr',
+    label: 'MRR',
+    rank: 'derived',
+    unit: KPI_CURRENCY,
+    definition: 'Monthly recurring revenue from active subscriptions at period end. Setup and implementation fees excluded.',
+    value: null,
+    measuredAt: null,
+    source: 'Billing system.',
+  },
+  {
+    id: 'arr',
+    label: 'ARR',
+    rank: 'derived',
+    unit: KPI_CURRENCY,
+    definition: 'MRR × 12.',
+    value: null,
+    measuredAt: null,
+    source: 'Derived from MRR.',
+  },
+  {
+    id: 'pipeline',
+    label: 'Pipeline',
+    rank: 'secondary',
+    unit: KPI_CURRENCY,
+    definition: 'Sum of the annual value of qualified opportunities with a named decision maker and a stated budget.',
+    value: null,
+    measuredAt: null,
+    source: 'Customer evidence log (content/cluster/evidence.ts).',
+  },
+  {
+    id: 'leads',
+    label: 'Leads',
+    rank: 'secondary',
+    unit: 'count',
+    definition: 'Inbound or outbound contacts with a real business in a candidate vertical in the period.',
+    value: null,
+    measuredAt: null,
+    source: 'Customer evidence log.',
+  },
+  {
+    id: 'qualified-opportunities',
+    label: 'Qualified opportunities',
+    rank: 'secondary',
+    unit: 'count',
+    definition: 'Leads with a stated pain, a named decision maker, a budget and an urgency other than "none".',
+    value: null,
+    measuredAt: null,
+    source: 'Customer evidence log.',
+  },
+  {
+    id: 'conversion',
+    label: 'Conversion',
+    rank: 'secondary',
+    unit: '%',
+    definition: 'Qualified opportunities that became a signed pilot or a paying customer, divided by qualified opportunities.',
+    value: null,
+    measuredAt: null,
+    source: 'Customer evidence log.',
+  },
+  {
+    id: 'churn',
+    label: 'Churn',
+    rank: 'secondary',
+    unit: '%',
+    definition: 'Paying customers lost in the period divided by paying customers at period start.',
+    value: null,
+    measuredAt: null,
+    source: 'Billing system.',
+  },
+  {
+    id: 'retention',
+    label: 'Retention',
+    rank: 'secondary',
+    unit: '%',
+    definition: '100 − churn, measured on the same cohort.',
+    value: null,
+    measuredAt: null,
+    source: 'Derived from churn.',
+  },
+  {
+    id: 'gross-margin',
+    label: 'Gross margin',
+    rank: 'secondary',
+    unit: '%',
+    definition: '(Revenue − cost of delivering it: hosting, AI inference, support labour, implementation labour) ÷ revenue.',
+    value: null,
+    measuredAt: null,
+    source: 'Ledger plus infrastructure invoices.',
+  },
+  {
+    id: 'time-saved',
+    label: 'Time saved',
+    rank: 'secondary',
+    unit: 'hours',
+    definition: 'Hours per month a customer no longer spends on the workflow the product replaced, measured with the customer, not estimated for them.',
+    value: null,
+    measuredAt: null,
+    source: 'Customer measurement during pilot.',
+  },
+  {
+    id: 'implementation-speed',
+    label: 'Implementation speed',
+    rank: 'secondary',
+    unit: 'days',
+    definition: 'Calendar days from signed pilot to first real job processed through the software.',
+    value: null,
+    measuredAt: null,
+    source: 'Pilot log.',
+  },
+  {
+    id: 'cac',
+    label: 'CAC',
+    rank: 'derived',
+    unit: KPI_CURRENCY,
+    definition: 'Sales and marketing cost in the period ÷ customers won in the period.',
+    value: null,
+    measuredAt: null,
+    source: 'Ledger.',
+  },
+  {
+    id: 'payback-period',
+    label: 'Payback period',
+    rank: 'derived',
+    unit: 'months',
+    definition: 'CAC ÷ (MRR per customer × gross margin).',
+    value: null,
+    measuredAt: null,
+    source: 'Derived.',
+  },
+];
+
+export const kpiById = (id: Kpi['id']): Kpi | undefined => kpis.find((k) => k.id === id);
