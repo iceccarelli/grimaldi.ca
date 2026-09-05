@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import ClusterHeader from '@/components/cluster/ClusterHeader';
 import StatusBadge from '@/components/cluster/StatusBadge';
 import { byTier, REGISTRY_REVIEWED, registry, type RegistryEntry } from '@/content/cluster';
-import { registryMeta, type RepoMeta } from '@/lib/github';
+import Sparkline from '@/components/viz/Sparkline';
+import { registryActivity, registryMeta, type CommitActivity, type RepoMeta } from '@/lib/github';
 import { LAYER_LABEL, MATURITY_LABEL, TIER_LABEL, unlocated } from '@/lib/cluster';
 import { SITE_URL } from '@/lib/site';
 
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/cluster/registry/' },
 };
 
-function RepoCard({ r, m }: { r: RegistryEntry; m: RepoMeta | undefined }) {
+function RepoCard({ r, m, a }: { r: RegistryEntry; m: RepoMeta | undefined; a: CommitActivity | null | undefined }) {
   return (
     <article className="cr-repo" aria-labelledby={`r-${r.slug}`}>
       <div className="cr-repo-head">
@@ -29,6 +30,12 @@ function RepoCard({ r, m }: { r: RegistryEntry; m: RepoMeta | undefined }) {
         <span>{LAYER_LABEL[r.layer]}</span>
         <span>{MATURITY_LABEL[r.maturity]}</span>
       </div>
+      {a && (
+        <div className="cr-repo-meta" style={{ alignItems: 'center' }}>
+          <Sparkline values={a.weeks} label={r.name} width={200} height={34} />
+          <span>{a.total} commits / 52 wks</span>
+        </div>
+      )}
       <div className="cr-repo-meta">
         {r.repo ? (
           <a className="url" href={`https://github.com/${r.repo}`} rel="noopener noreferrer">{r.repo}</a>
@@ -46,7 +53,10 @@ function RepoCard({ r, m }: { r: RegistryEntry; m: RepoMeta | undefined }) {
 }
 
 export default async function RegistryPage() {
-  const meta = await registryMeta(registry.map((r) => r.repo));
+  const [meta, activity] = await Promise.all([
+    registryMeta(registry.map((r) => r.repo)),
+    registryActivity(registry.map((r) => r.repo)),
+  ]);
   const enriched = Object.values(meta).filter((m) => m.enriched).length;
   const locatedCount = registry.filter((r) => r.repo).length;
 
@@ -85,7 +95,7 @@ export default async function RegistryPage() {
           <section className="cr-section" key={tier} aria-labelledby={`t-${tier}`} style={tier === 'core' ? { marginTop: 0 } : undefined}>
             <h2 id={`t-${tier}`}>{TIER_LABEL[tier]}{tier === 'vertical' ? 's' : ''} · {rows.length}</h2>
             <div className="cr-grid">
-              {rows.map((r) => <RepoCard r={r} m={r.repo ? meta[r.repo] : undefined} key={r.slug} />)}
+              {rows.map((r) => <RepoCard r={r} m={r.repo ? meta[r.repo] : undefined} a={r.repo ? activity[r.repo] : undefined} key={r.slug} />)}
             </div>
           </section>
         );

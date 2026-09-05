@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import ClusterHeader from '@/components/cluster/ClusterHeader';
 import StatusBadge from '@/components/cluster/StatusBadge';
+import ClusterMap from '@/components/viz/ClusterMap';
 import { clusters, constitution, registry, REPO_STATUSES } from '@/content/cluster';
 import { LAYER_LABEL } from '@/lib/cluster';
 
@@ -28,7 +29,8 @@ export default function ArchitecturePage() {
           Each agent owns a cluster and competes for resources on evidence. grimaldi.ca is the
           control surface of exactly one of them.
         </p>
-        <div className="cr-grid">
+        <ClusterMap />
+        <div className="cr-grid" style={{ marginTop: '1.2rem' }}>
           {clusters.map((c) => (
             <section className="cr-panel" key={c.id} aria-labelledby={`h-${c.id}`}>
               <h2 id={`h-${c.id}`}>{c.agent} · {c.name}</h2>

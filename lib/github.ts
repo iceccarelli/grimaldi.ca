@@ -121,6 +121,60 @@ export async function proofEngines(): Promise<ProofEngine[]> {
   return Promise.all(Array.from({ length: CHAPTER_COUNT }, (_, i) => fetchOne(i + 1)));
 }
 
+/**
+ * Weekly commit counts for the last 52 weeks — the repository's pulse.
+ *
+ * GitHub computes these statistics lazily and answers 202 with an empty body
+ * on the first request; the next revalidation gets the data. Until then, and
+ * whenever the API is unreachable, the answer is null and the sparkline is
+ * simply not drawn. A flat line of invented zeros would be a lie about a live
+ * repository; an absent line is the truth about an unreachable API.
+ */
+export type CommitActivity = {
+  fullName: string;
+  /** Oldest → newest, 52 entries, commits per week. */
+  weeks: number[];
+  total: number;
+  /** ISO date of the most recent week bucket start. */
+  latestWeek: string;
+};
+
+export async function commitActivity(fullName: string): Promise<CommitActivity | null> {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${fullName}/stats/commit_activity`, {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        'User-Agent': 'grimaldi.ca',
+        ...(process.env.GITHUB_TOKEN ? { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+      },
+      next: { revalidate: 43200 },
+    });
+    if (res.status !== 200) return null;
+    const d = (await res.json()) as unknown;
+    if (!Array.isArray(d) || d.length === 0) return null;
+    const rows = d
+      .filter((w): w is { week: number; total: number } => typeof w === 'object' && w !== null && typeof (w as { total?: unknown }).total === 'number' && typeof (w as { week?: unknown }).week === 'number')
+      .sort((a, b) => a.week - b.week)
+      .slice(-52);
+    if (rows.length === 0) return null;
+    return {
+      fullName,
+      weeks: rows.map((w) => w.total),
+      total: rows.reduce((n, w) => n + w.total, 0),
+      latestWeek: new Date(rows[rows.length - 1].week * 1000).toISOString().slice(0, 10),
+    };
+  } catch {
+    return null;
+  }
+}
+
+/** Commit activity for every located registry repository, keyed by `owner/name`. Missing = null. */
+export async function registryActivity(fullNames: (string | null)[]): Promise<Record<string, CommitActivity | null>> {
+  const names = fullNames.filter((n): n is string => typeof n === 'string');
+  const rows = await Promise.all(names.map(commitActivity));
+  return Object.fromEntries(names.map((n, i) => [n, rows[i]]));
+}
+
 /** Metadata for every located registry repository, keyed by `owner/name`. */
 export async function registryMeta(fullNames: (string | null)[]): Promise<Record<string, RepoMeta>> {
   const names = fullNames.filter((n): n is string => typeof n === 'string');

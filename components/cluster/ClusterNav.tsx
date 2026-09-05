@@ -5,6 +5,7 @@
  */
 export const CLUSTER_SECTIONS: { href: string; label: string; what: string }[] = [
   { href: '/cluster/', label: 'Architecture', what: 'the three clusters, the target architecture, the constitution' },
+  { href: '/cluster/map/', label: 'Map', what: 'the cluster in pictures — clusters, maturity, funnel, heatmap, pulse' },
   { href: '/cluster/mandate/', label: 'Mandate', what: 'the sixteen sections Agent 3 executes' },
   { href: '/cluster/registry/', label: 'Registry', what: 'every repository, its status, its gate' },
   { href: '/cluster/kpi/', label: 'KPIs', what: 'revenue first; measured or not yet measured' },

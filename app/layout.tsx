@@ -44,8 +44,19 @@ export const metadata: Metadata = {
     canonical: '/',
     types: {
       'application/rss+xml': `${SITE_URL}/feed.xml`,
-      'application/atom+xml': `${SITE_URL}/atom.xml`,
+      'application/atom+xml': [
+        { url: `${SITE_URL}/atom.xml`, title: 'Explainers' },
+        { url: `${SITE_URL}/api/cluster/feed.xml`, title: 'Cluster decisions, kill list, weekly reports' },
+      ],
       'application/feed+json': `${SITE_URL}/feed.json`,
+      'application/json': `${SITE_URL}/api/cluster/`,
+      'application/vnd.oai.openapi+json': `${SITE_URL}/openapi.json`,
+      'application/linkset+json': `${SITE_URL}/.well-known/api-catalog`,
+      'text/plain': [
+        { url: `${SITE_URL}/llms.txt`, title: 'llms.txt' },
+        { url: `${SITE_URL}/llms-full.txt`, title: 'llms-full.txt' },
+        { url: `${SITE_URL}/ai.txt`, title: 'ai.txt' },
+      ],
     },
   },
   twitter: {

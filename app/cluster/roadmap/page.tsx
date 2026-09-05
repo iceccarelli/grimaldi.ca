@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import ClusterHeader from '@/components/cluster/ClusterHeader';
-import ObjectiveBar from '@/components/cluster/ObjectiveBar';
+import Funnel from '@/components/viz/Funnel';
+import ObjectiveRing from '@/components/viz/ObjectiveRing';
+import PeriodTimeline from '@/components/viz/PeriodTimeline';
 import { evidence, roadmap, validatedEvidence } from '@/content/cluster';
 import { evidenceByVertical, roadmapProgress, validationPeriod } from '@/lib/cluster';
 
@@ -35,9 +37,13 @@ export default function RoadmapPage() {
       </ClusterHeader>
 
       <div className="cr-grid" style={{ alignItems: 'start' }}>
-        <section className="cr-panel" aria-labelledby="h-obj">
+        <section className="cr-panel" aria-labelledby="h-obj" style={{ gridColumn: '1 / -1' }}>
           <h2 id="h-obj">Objectives</h2>
-          {progress.map((o) => <ObjectiveBar o={o} key={o.id} />)}
+          <div className="viz-rings">
+            {progress.map((o) => <ObjectiveRing o={o} key={o.id} size={124} />)}
+          </div>
+          <Funnel stages={progress} />
+          <PeriodTimeline />
         </section>
         <section className="cr-panel" aria-labelledby="h-rule">
           <h2 id="h-rule">If missed</h2>

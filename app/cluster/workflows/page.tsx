@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ClusterHeader from '@/components/cluster/ClusterHeader';
+import ScoreHeatmap from '@/components/viz/ScoreHeatmap';
 import { rankedWorkflows, SCORE_DIMENSIONS, workflowRank, type ScoreDimension } from '@/content/cluster';
 
 export const metadata: Metadata = {
@@ -43,7 +44,9 @@ export default function WorkflowsPage() {
         </aside>
       )}
 
-      <div className="cr-table-wrap">
+      <ScoreHeatmap />
+
+      <div className="cr-table-wrap" style={{ marginTop: '1.4rem' }}>
         <table className="cr-table">
           <caption>Workflow ranking</caption>
           <thead>

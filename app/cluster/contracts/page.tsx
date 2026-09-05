@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import ClusterHeader from '@/components/cluster/ClusterHeader';
+import ClusterMap from '@/components/viz/ClusterMap';
+import ContractSequence from '@/components/viz/ContractSequence';
 import { clusters, contracts } from '@/content/cluster';
 
 export const metadata: Metadata = {
@@ -27,16 +29,9 @@ export default function ContractsPage() {
         </p>
       </ClusterHeader>
 
-      <div className="cr-arch" style={{ marginBottom: '2rem' }}>
-        <div className="cr-arch-row">
-          <div className="cr-arch-box">Energy Intelligence<small>detects an asset anomaly</small></div>
-          <div className="cr-arch-box cr-arch-box--os">Operations<small>creates an inspection work order — human approved</small></div>
-          <div className="cr-arch-box">Physical AI<small>performs the inspection under its own safety chain</small></div>
-          <div className="cr-arch-box">Energy Intelligence<small>receives the result on the asset</small></div>
-        </div>
-        <div className="cr-arch-flow">
-          OperationalEvent → WorkOrder → InspectionResult. Powerful — and none of the three systems requires the others to function.
-        </div>
+      <div className="viz-grid2" style={{ marginBottom: '1rem' }}>
+        <ClusterMap />
+        <ContractSequence />
       </div>
 
       {contracts.map((c) => (

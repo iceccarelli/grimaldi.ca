@@ -2,8 +2,12 @@ import Image from 'next/image';
 import JsonLd from '@/components/JsonLd';
 import ClusterNav from '@/components/cluster/ClusterNav';
 import KpiStrip from '@/components/cluster/KpiStrip';
-import ObjectiveBar from '@/components/cluster/ObjectiveBar';
 import StatusBadge from '@/components/cluster/StatusBadge';
+import ClusterMap from '@/components/viz/ClusterMap';
+import ObjectiveRing from '@/components/viz/ObjectiveRing';
+import PeriodTimeline from '@/components/viz/PeriodTimeline';
+import PulseBoard from '@/components/viz/PulseBoard';
+import StatusBars from '@/components/viz/StatusBars';
 import { clusterDataset, collectionPage } from '@/lib/schema';
 import { CLUSTER, DOORS, PERSON, SITE_URL } from '@/lib/site';
 import {
@@ -19,6 +23,7 @@ import {
   roadmap,
 } from '@/content/cluster';
 import { countByStatus, roadmapProgress, unlocated, validationPeriod } from '@/lib/cluster';
+import { registryActivity } from '@/lib/github';
 import { publishedTopics } from '@/content/topics';
 
 /** The validation-period clock must not freeze at build time: rebuilt twice a day. */
@@ -33,7 +38,8 @@ export const revalidate = 43200;
  * number is computed from typed content or fetched; none is typed as if
  * measured. Server component — no client bundle for the front door.
  */
-export default function Home() {
+export default async function Home() {
+  const activity = await registryActivity(registry.map((r) => r.repo));
   const progress = roadmapProgress();
   const period = validationPeriod();
   const counts = countByStatus();
@@ -109,9 +115,12 @@ export default function Home() {
 
       <div className="cr-grid cr-section">
         {/* 90-day objective */}
-        <section className="cr-panel" aria-labelledby="h-obj">
+        <section className="cr-panel" aria-labelledby="h-obj" style={{ gridColumn: '1 / -1' }}>
           <h2 id="h-obj">90-day objective</h2>
-          {progress.map((o) => <ObjectiveBar o={o} key={o.id} />)}
+          <div className="viz-rings">
+            {progress.map((o) => <ObjectiveRing o={o} key={o.id} size={124} />)}
+          </div>
+          <PeriodTimeline />
           <p className="dim" style={{ fontSize: '.88rem' }}>
             Counted from the evidence log. {period.elapsed} of {period.total} days elapsed.
           </p>
@@ -123,18 +132,7 @@ export default function Home() {
         {/* Registry by status */}
         <section className="cr-panel" aria-labelledby="h-reg">
           <h2 id="h-reg">Registry · {registry.length} entries</h2>
-          <div className="cr-table-wrap" style={{ border: 0, background: 'transparent', margin: 0 }}>
-            <table className="cr-table" style={{ minWidth: 0 }}>
-              <tbody>
-                {(Object.keys(counts) as (keyof typeof counts)[]).map((s) => (
-                  <tr key={s}>
-                    <td style={{ paddingLeft: 0 }}><StatusBadge status={s} /></td>
-                    <td className="num" style={{ paddingRight: 0 }}>{counts[s]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <StatusBars counts={counts} />
           {unlocated().length > 0 && (
             <p className="dim" style={{ fontSize: '.88rem', marginTop: '.6rem' }}>
               {unlocated().length} name{unlocated().length === 1 ? '' : 's'} from the mandate not located in the
@@ -233,6 +231,31 @@ export default function Home() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      {/* Pulse */}
+      <section className="cr-section" aria-labelledby="h-pulse">
+        <h2 id="h-pulse">Pulse · where the hours went</h2>
+        <p className="intro">
+          Fifty-two weeks of commits per located repository, read live from GitHub and rebuilt twice
+          a day. Activity is not outcome — revenue is — but the operator should see both.
+        </p>
+        <div className="cr-table-wrap">
+          <PulseBoard entries={[...core, ...verticals, ...registry.filter((r) => r.tier === 'related' && r.repo)]} activity={activity} />
+        </div>
+      </section>
+
+      {/* Map */}
+      <section className="cr-section" aria-labelledby="h-map">
+        <h2 id="h-map">The three clusters</h2>
+        <p className="intro">
+          This site controls one of three. The others are counterparties, reached only through
+          versioned contracts — never a shared database.
+        </p>
+        <ClusterMap />
+        <p className="more">
+          <a href="/cluster/map/">The full map: architecture, maturity, contracts →</a>
+        </p>
       </section>
 
       {/* Elsewhere in the network */}

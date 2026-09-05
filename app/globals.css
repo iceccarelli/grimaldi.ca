@@ -21,13 +21,60 @@
   --max-wide: 1080px;
   --r: 10px;
   --kill: #8B2E2E;
+  --warn: #8F6410;
+  --input-bg: #FFFFFF;
+  --btn-hover: #274d42;
+
+  /* Data-ink. Categorical slots validated (CVD ΔE ≥ 8, normal ≥ 15, ≥ 3:1 on the
+     panel) with the dataviz validator: 1 = Operations (this cluster),
+     2 = Energy Intelligence, 3 = Physical AI. One sequential hue (slot 1),
+     five steps light → dark, for the scoring heatmap. */
+  --viz-1: #178A62;
+  --viz-2: #2a78d6;
+  --viz-3: #c2571f;
+  --viz-track: #E4DDD2;
+  --viz-seq-1: #CFE8DD;
+  --viz-seq-2: #9FD1BC;
+  --viz-seq-3: #6BB79A;
+  --viz-seq-4: #3E9A78;
+  --viz-seq-5: #178A62;
+  --viz-oncolor: #F3F7F5;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
   --sans: 'IBM Plex Sans', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
+/* Dark theme — the control room at night. Same tokens, re-stepped: the
+   categorical slots were validated separately against the dark panel. Links,
+   muted text and badges all clear 4.5:1 on #151312 / #1B1917. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #151312;
+    --ink: #EDE8E0;
+    --muted: #A39C91;
+    --line: #34302B;
+    --panel: #1B1917;
+    --pine: #5FB597;
+    --pine-ink: #0F1A16;
+    --kill: #E07A7A;
+    --warn: #D9A441;
+    --input-bg: #201D1A;
+    --btn-hover: #79C6AB;
+    --viz-1: #2AA078;
+    --viz-2: #4489e2;
+    --viz-3: #d96a33;
+    --viz-track: #34302B;
+    --viz-seq-1: #1F3A30;
+    --viz-seq-2: #235F4A;
+    --viz-seq-3: #27805E;
+    --viz-seq-4: #2AA078;
+    --viz-seq-5: #4FC79A;
+    --viz-oncolor: #0F1A16;
+  }
+}
+
 * { box-sizing: border-box; }
-html { color-scheme: light; }
+html { color-scheme: light dark; }
 body {
   margin: 0;
   font-family: var(--sans);
@@ -39,7 +86,7 @@ body {
 }
 a { color: var(--pine); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
 a:hover { color: var(--ink); }
-::selection { background: rgba(47, 93, 80, 0.18); }
+::selection { background: color-mix(in srgb, var(--pine) 22%, transparent); }
 img { max-width: 100%; }
 .url { font-family: var(--mono); font-size: .94em; }
 .dim { color: var(--muted); }
@@ -60,7 +107,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* ── Header ─────────────────────────────────────────────────────────── */
 .top { border-bottom: 1px solid var(--line); background: var(--paper); }
 .top-in {
-  max-width: var(--max); margin: 0 auto; padding: 1rem 1.25rem;
+  max-width: var(--max-wide); margin: 0 auto; padding: 1rem 1.25rem;
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem 1.5rem; flex-wrap: wrap;
 }
 .brand { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); text-decoration: none; letter-spacing: .005em; }
@@ -112,7 +159,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
   font: inherit; font-size: .95rem; font-weight: 600; text-decoration: none;
   background: var(--pine); color: var(--pine-ink); border: 1px solid var(--pine); cursor: pointer;
 }
-.btn:hover { background: #274d42; color: var(--pine-ink); }
+.btn:hover { background: var(--btn-hover); color: var(--pine-ink); }
 .btn:disabled { opacity: .6; cursor: default; }
 
 /* Now */
@@ -199,7 +246,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
 .contact-form label { display: flex; flex-direction: column; gap: .35rem; font-size: .88rem; font-weight: 600; }
 .contact-form input, .contact-form select, .contact-form textarea {
   border: 1px solid var(--line); border-radius: var(--r); padding: .6rem .8rem;
-  font: inherit; font-size: .95rem; font-weight: 400; color: var(--ink); background: #fff; resize: vertical;
+  font: inherit; font-size: .95rem; font-weight: 400; color: var(--ink); background: var(--input-bg); resize: vertical;
 }
 .contact-form button { align-self: flex-start; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -217,7 +264,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
 
 /* ── Footer ─────────────────────────────────────────────────────────── */
 .foot { border-top: 1px solid var(--line); margin-top: 2rem; }
-.foot-in { max-width: var(--max); margin: 0 auto; padding: 1.75rem 1.25rem 2.25rem; font-size: .92rem; }
+.foot-in { max-width: var(--max-wide); margin: 0 auto; padding: 1.75rem 1.25rem 2.25rem; font-size: .92rem; }
 .foot p { margin: 0 0 .5rem; }
 .foot-sites a { font-family: var(--mono); font-size: .9em; color: var(--ink); text-decoration: none; }
 .foot-sites a:hover { text-decoration: underline; }
@@ -344,6 +391,71 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
   .cr-facts dd { margin-bottom: .6rem; }
   .cr-repo-head { flex-direction: column; }
 }
+
+/* ── Data visualization (inline SVG, zero JavaScript) ───────────────
+   Marks carry the series colour; text always wears text tokens. Grid and
+   axes are hairline and recessive. Every figure has a role="img" label, a
+   <title> per mark for native hover, and a figcaption legend. */
+.viz { display: block; max-width: 100%; height: auto; overflow: visible; }
+.viz-fig { margin: 1rem 0 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* Wide diagrams keep their text legible on a phone: they scroll sideways inside
+   the figure instead of shrinking to a 5px font. The page never scrolls sideways. */
+.viz--wide { min-width: 640px; }
+.viz-funnel { min-width: 460px; }
+.viz-fig figcaption, .viz-ring-fig figcaption { font-size: .82rem; color: var(--muted); margin-top: .5rem; line-height: 1.45; }
+.viz-line { fill: none; stroke: var(--viz-1); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.viz-area { fill: var(--viz-1); fill-opacity: .10; }
+.viz-dot { fill: var(--viz-1); }
+.viz-ring { fill: var(--panel); }
+.viz-hollow { fill: var(--panel); stroke: var(--viz-1); stroke-width: 2; }
+.viz-fill { fill: var(--viz-1); }
+.viz-fill--kill { fill: var(--kill); }
+.viz-track, .viz-track-fill { stroke: var(--viz-track); fill: var(--viz-track); }
+.viz-track { fill: none; }
+.viz-arc { stroke: var(--viz-1); }
+.viz-grid { stroke: var(--line); stroke-width: 1; }
+.viz-baseline { stroke: var(--muted); stroke-width: 1.5; }
+.viz-marker { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; }
+.viz-edge { stroke: var(--muted); stroke-width: 1.5; }
+.viz-arrowhead { fill: var(--muted); }
+.viz-box { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
+.viz-box--here { stroke: var(--viz-1); stroke-width: 2; }
+.viz-accent.viz-slot-1 { fill: var(--viz-1); }
+.viz-accent.viz-slot-2 { fill: var(--viz-2); }
+.viz-accent.viz-slot-3 { fill: var(--viz-3); }
+.viz-gate { fill: var(--viz-1); stroke: var(--panel); stroke-width: 2; }
+.viz-cell { stroke: var(--panel); stroke-width: 1; }
+.viz-cell--empty { fill: url(#viz-hatch); stroke: var(--line); stroke-width: 1; }
+.viz-hatch-line { stroke: var(--line); stroke-width: 1.2; }
+.viz-seq-1 { fill: var(--viz-seq-1); }
+.viz-seq-2 { fill: var(--viz-seq-2); }
+.viz-seq-3 { fill: var(--viz-seq-3); }
+.viz-seq-4 { fill: var(--viz-seq-4); }
+.viz-seq-5 { fill: var(--viz-seq-5); }
+.viz-label { font-family: var(--sans); font-size: 11.5px; fill: var(--muted); }
+.viz-label--row { font-size: 12.5px; fill: var(--ink); }
+.viz-label--ink { fill: var(--ink); }
+.viz-label--strong { font-weight: 600; font-size: 12.5px; }
+.viz-label--faint { fill: var(--muted); opacity: .7; }
+.viz-label--mono { font-family: var(--mono); font-size: 11px; }
+.viz-num { font-family: var(--sans); font-size: 12.5px; font-weight: 600; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.viz-num--hero { font-size: 30px; font-weight: 600; }
+.viz-num--cell { font-size: 11px; }
+.viz-num--oncolor { fill: var(--viz-oncolor); }
+.viz-key { display: inline-block; width: 10px; height: 10px; border-radius: 999px; vertical-align: -1px; margin-right: .15rem; }
+.viz-key--dot { background: var(--viz-1); }
+.viz-key--hollow { border: 2px solid var(--viz-1); }
+.viz-key--ringed { border: 2px solid var(--viz-1); box-shadow: inset 0 0 0 2px var(--panel), inset 0 0 0 5px var(--viz-1); }
+.viz-key--slot1 { background: var(--viz-1); }
+.viz-key--slot2 { background: var(--viz-2); }
+.viz-key--slot3 { background: var(--viz-3); }
+.viz-rings { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .6rem; margin: .4rem 0 0; }
+.viz-ring-fig { margin: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.viz-ring-fig figcaption { margin-top: .2rem; font-size: .85rem; color: var(--ink); }
+.viz-spark { vertical-align: middle; }
+.viz-pulse-table { min-width: 560px; }
+.viz-nodata { font-size: .82rem; font-style: italic; }
+.viz-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem 2rem; align-items: start; }
 
 /* ── Small screens ──────────────────────────────────────────────────── */
 @media (max-width: 560px) {

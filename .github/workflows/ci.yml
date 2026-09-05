@@ -59,7 +59,12 @@ jobs:
       - name: Assert crawl + identity surfaces exist
         run: |
           set -e
-          test -f public/llms.txt
+          test -f app/llms.txt/route.ts
+          test -f app/llms-full.txt/route.ts
+          test -f app/ai.txt/route.ts
+          test -f app/openapi.json/route.ts
+          test -f app/.well-known/api-catalog/route.ts
+          test ! -f public/llms.txt   # a static file here would shadow the generated route
           test -f public/og.png
           test -f public/favicon.ico
           test -f public/.well-known/security.txt
@@ -67,7 +72,7 @@ jobs:
           test -f app/sitemap.ts
           test -f content/cluster/registry.ts
           test -f app/api/cluster/route.ts
-          grep -q "api/cluster" public/llms.txt
+          grep -q "api/cluster" lib/llms.ts
           python3 - <<'PY'
           from PIL import Image
           w, h = Image.open('public/og.png').size

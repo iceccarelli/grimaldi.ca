@@ -5,7 +5,8 @@ import ClusterNav from '@/components/cluster/ClusterNav';
 import StatusBadge from '@/components/cluster/StatusBadge';
 import { breadcrumbs, personRef } from '@/lib/schema';
 import { registry, registryBySlug, decisions } from '@/content/cluster';
-import { repoMeta } from '@/lib/github';
+import Sparkline from '@/components/viz/Sparkline';
+import { commitActivity, repoMeta } from '@/lib/github';
 import { LAYER_LABEL, MATURITY_LABEL, TIER_LABEL } from '@/lib/cluster';
 import { SITE_URL } from '@/lib/site';
 
@@ -31,7 +32,7 @@ export function generateMetadata({ params }: Params): Metadata {
 export default async function RegistryEntryPage({ params }: Params) {
   const r = registryBySlug(params.slug);
   if (!r) notFound();
-  const m = r.repo ? await repoMeta(r.repo) : null;
+  const [m, a] = r.repo ? await Promise.all([repoMeta(r.repo), commitActivity(r.repo)]) : [null, null];
   const related = decisions.filter((d) => d.decision.includes(r.name) || d.context.includes(r.name) || d.title.includes(r.name));
 
   const node = r.repo
@@ -104,6 +105,15 @@ export default async function RegistryEntryPage({ params }: Params) {
               <span className="dim">nothing in the registry</span>
             )}
           </dd>
+          {a && (
+            <>
+              <dt>Pulse · 52 weeks</dt>
+              <dd>
+                <Sparkline values={a.weeks} label={r.name} width={320} height={48} />
+                <span className="dim" style={{ fontSize: '.88rem' }}>{a.total} commits · {a.weeks[a.weeks.length - 1]} in the week of {a.latestWeek} · activity, not outcome</span>
+              </dd>
+            </>
+          )}
           {m && (
             <>
               <dt>Live from GitHub</dt>
