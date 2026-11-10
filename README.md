@@ -120,6 +120,4 @@ Built for lightning-fast performance, type safety, and clean aesthetics:
 
 Code: [MIT](https://www.google.com/search?q=LICENSE) • Content: All rights reserved unless otherwise noted.
 
-*Designed and engineered with precision.*
-
-```
+*Designed and engineered to be with precision.*
