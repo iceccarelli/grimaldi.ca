@@ -1,13 +1,13 @@
 import type { MetadataRoute } from 'next';
-import { CLUSTER, SITE_DESCRIPTION } from '@/lib/site';
+import { SITE_DESCRIPTION } from '@/lib/site';
 
 export const dynamic = 'force-static';
 
-/** Web app manifest — lets the control room be installed as a standalone window. */
+/** Web app manifest for the personal engineering surface. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `grimaldi.ca — ${CLUSTER.short} control room`,
-    short_name: 'Ops control room',
+    name: 'grimaldi.ca — Personal engineering surface',
+    short_name: 'grimaldi.ca',
     description: SITE_DESCRIPTION,
     start_url: '/',
     display: 'standalone',

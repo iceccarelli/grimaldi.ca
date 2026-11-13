@@ -28,15 +28,13 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: `${SITE_URL}/`,
-    siteName: 'grimaldi.ca — Operations cluster',
+    siteName: 'grimaldi.ca — Personal engineering surface',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: `${SITE_URL}/og.png`,
-        width: 1200,
-        height: 630,
-        alt: 'grimaldi.ca — control surface of the Operations & Commercial Automation cluster',
+        url: `${SITE_URL}/images/personal/01-personal-engineering-workspace.jpg`,
+        alt: 'Personal engineering workspace — electrical systems, infrastructure and software',
       },
     ],
   },
@@ -63,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: [`${SITE_URL}/og.png`],
+    images: [`${SITE_URL}/images/personal/01-personal-engineering-workspace.jpg`],
   },
 };
 
