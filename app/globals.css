@@ -468,3 +468,333 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+
+/* ── Personal engineering surface ───────────────────────────────────── */
+.personal-shell {
+  width: min(1120px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 4.8rem) 0 5rem;
+}
+.personal-hero {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding: .5rem 0 clamp(3rem, 6vw, 5.5rem);
+}
+.personal-kicker {
+  display: block;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+.personal-title {
+  max-width: 10ch;
+  margin: .85rem 0 1rem;
+  font-family: var(--serif);
+  font-size: clamp(2.7rem, 5.4vw, 4.8rem);
+  font-weight: 500;
+  letter-spacing: -.045em;
+  line-height: .99;
+}
+.personal-role {
+  margin: 0 0 1rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.personal-lead {
+  max-width: 54ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.04rem;
+  line-height: 1.75;
+}
+.personal-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .9rem 1.25rem;
+  margin-top: 1.7rem;
+}
+.personal-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  min-height: 48px;
+  padding: .72rem 1rem;
+  border: 1px solid var(--pine);
+  border-radius: 5px;
+  background: var(--pine);
+  color: var(--pine-ink);
+  font-size: .92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+.personal-button:hover {
+  border-color: var(--btn-hover);
+  background: var(--btn-hover);
+  color: var(--pine-ink);
+  transform: translateY(-1px);
+}
+.personal-text-link {
+  font-size: .92rem;
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.personal-location {
+  margin: 1.3rem 0 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .78rem;
+  letter-spacing: .02em;
+}
+.personal-hero-visual { min-width: 0; }
+.plate {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel);
+}
+.plate-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  background: var(--line);
+}
+.plate-media img {
+  object-fit: cover;
+  transition: transform .35s ease;
+}
+.plate:hover .plate-media img { transform: scale(1.025); }
+.plate--feature .plate-media { aspect-ratio: 1.48 / 1; }
+.plate-caption {
+  display: grid;
+  gap: .32rem;
+  padding: .95rem 1rem 1.05rem;
+}
+.plate-code {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .07em;
+}
+.plate-title {
+  color: var(--ink);
+  font-size: .98rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.plate-note {
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.55;
+}
+.personal-section {
+  margin-top: clamp(2.5rem, 5vw, 4.2rem);
+  padding-top: clamp(1.7rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+.personal-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.35rem;
+}
+.personal-section-heading h2,
+.personal-info-panel h2,
+.personal-contact h2 {
+  margin: .42rem 0 0;
+  font-family: var(--serif);
+  font-size: clamp(1.65rem, 3vw, 2.3rem);
+  font-weight: 500;
+  letter-spacing: -.025em;
+  line-height: 1.15;
+}
+.personal-section-heading > a {
+  flex: none;
+  padding-bottom: .2rem;
+  font-size: .86rem;
+  font-weight: 600;
+}
+.personal-section-heading--stack {
+  display: grid;
+  justify-content: stretch;
+  gap: .65rem;
+}
+.personal-section-heading--stack p {
+  max-width: 66ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: .96rem;
+}
+.venture-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .85rem;
+}
+.venture-card {
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.25rem 1.3rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.venture-card:hover {
+  border-color: var(--pine);
+  color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgb(28 25 23 / 7%);
+}
+.venture-index {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .06em;
+}
+.venture-card h3 {
+  margin: 1.2rem 0 .45rem;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -.015em;
+}
+.venture-card p {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: .91rem;
+  line-height: 1.55;
+}
+.venture-destination {
+  margin-top: auto;
+  padding-top: 1.3rem;
+  color: var(--pine);
+  font-family: var(--mono);
+  font-size: .76rem;
+}
+.personal-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  align-items: start;
+}
+.personal-gallery .plate { height: 100%; }
+.personal-lower {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.personal-info-panel {
+  padding: 1.4rem 1.45rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.personal-info-panel h2 { margin-bottom: .85rem; }
+.personal-info-panel > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .94rem;
+  line-height: 1.7;
+}
+.personal-topic-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.personal-topic-list li { padding: .2rem 0; }
+.personal-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem 1rem;
+  margin-top: 1.1rem;
+  font-size: .87rem;
+  font-weight: 600;
+}
+.personal-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.2rem);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.personal-contact > div:first-child { max-width: 58ch; }
+.personal-contact h2 { margin-bottom: .55rem; }
+.personal-contact p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .93rem;
+}
+.personal-contact-links {
+  display: grid;
+  min-width: 190px;
+  gap: .55rem;
+  font-size: .9rem;
+  font-weight: 600;
+}
+.personal-shell a:focus-visible {
+  outline: 3px solid var(--pine);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+@media (max-width: 900px) {
+  .personal-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .personal-copy { max-width: 68ch; }
+  .personal-hero-visual { width: min(100%, 760px); }
+  .venture-grid { grid-template-columns: 1fr 1fr; }
+  .venture-card:last-child { grid-column: 1 / -1; min-height: 190px; }
+  .personal-contact { align-items: flex-start; flex-direction: column; }
+  .personal-contact-links { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+}
+@media (max-width: 680px) {
+  .personal-shell { width: min(100% - 2rem, 560px); padding-top: 2rem; }
+  .personal-title { max-width: 11ch; font-size: clamp(2.55rem, 12vw, 4rem); }
+  .personal-section-heading { align-items: flex-start; flex-direction: column; gap: .65rem; }
+  .venture-grid,
+  .personal-gallery,
+  .personal-lower { grid-template-columns: 1fr 1fr; }
+  .venture-card { min-height: 218px; padding: 1rem; }
+  .venture-card:last-child { grid-column: auto; min-height: 218px; }
+  .plate-caption { padding: .8rem; }
+  .plate-title { font-size: .91rem; }
+  .plate-note { font-size: .8rem; }
+  .personal-contact { padding: 1.25rem; }
+}
+@media (max-width: 440px) {
+  .personal-gallery { grid-template-columns: 1fr; }
+  .personal-lower { grid-template-columns: 1fr; }
+  .personal-actions { align-items: flex-start; flex-direction: column; }
+  .personal-contact-links { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plate-media img,
+  .venture-card,
+  .personal-button { transition: none; }
+  .plate:hover .plate-media img,
+  .venture-card:hover,
+  .personal-button:hover { transform: none; }
+}

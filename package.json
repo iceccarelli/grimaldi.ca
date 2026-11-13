@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "verify:cluster": "node scripts/verify-cluster.mjs",
-    "verify": "npm run verify:cluster && npx tsc --noEmit"
+    "verify": "npm run verify:cluster && npm run verify:images && npx tsc --noEmit",
+    "verify:images": "node scripts/verify-images.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
