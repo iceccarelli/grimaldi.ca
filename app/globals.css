@@ -200,7 +200,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
   padding: 1.25rem 1.35rem; color: var(--ink); text-decoration: none;
 }
 .topic-row:hover { border-color: var(--pine); }
-.topic-row h3 { margin: 0 0 .3rem; font-size: 1.12rem; }
+.topic-row h2 { margin: 0 0 .3rem; font-size: 1.12rem; }
 .topic-row p { margin: 0 0 .6rem; font-size: .95rem; }
 .topic-meta { flex: none; font-size: .82rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .topic-chips { display: flex; flex-wrap: wrap; gap: .4rem; }
@@ -210,7 +210,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
 .topic-standfirst { font-size: 1.2rem; line-height: 1.55; margin: .6rem 0 1.4rem; }
 .topic-draft { border-left: 3px solid var(--muted); background: var(--panel); padding: .9rem 1.1rem; border-radius: 0 var(--r) var(--r) 0; margin: 0 0 1.6rem; font-size: .95rem; }
 .topic-body { margin-top: 1.5rem; }
-.topic-body h3 { font-size: 1.3rem; margin: 2.2rem 0 .6rem; }
+.topic-body h2 { font-size: 1.3rem; margin: 2.2rem 0 .6rem; }
 .topic-body p { margin: 0 0 1.1rem; }
 .topic-body ul { padding-left: 1.2rem; margin: 0 0 1.2rem; }
 .topic-body li { margin-bottom: .5rem; }
@@ -221,7 +221,7 @@ h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; margin: 1.2
 .topic-figure th, .topic-figure td { text-align: left; vertical-align: top; padding: .65rem .8rem; border-bottom: 1px solid var(--line); }
 .topic-figure th { width: 34%; font-weight: 600; }
 .topic-glossary, .topic-sources, .topic-related { margin-top: 2.6rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
-.topic-glossary h3, .topic-sources h3, .topic-related h3 { margin: 0 0 .8rem; }
+.topic-glossary h2, .topic-sources h2, .topic-related h2 { margin: 0 0 .8rem; }
 .topic-glossary dl { margin: 0; }
 .topic-glossary dt { font-weight: 600; margin-top: .8rem; }
 .topic-glossary dd { margin: .2rem 0 0; font-size: .95rem; }
