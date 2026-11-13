@@ -35,7 +35,7 @@ export function generateMetadata({ params }: Params): Metadata {
 function renderBlock(block: Block, i: number) {
   switch (block.kind) {
     case 'h':
-      return <h3 key={i}>{block.text}</h3>;
+      return <h2 key={i}>{block.text}</h2>;
     case 'p':
       return <p key={i}>{block.text}</p>;
     case 'list':
@@ -136,7 +136,7 @@ export default function TopicPage({ params }: Params) {
 
           {topic.glossary?.length ? (
             <section className="topic-glossary">
-              <h3>Terms</h3>
+              <h2>Terms</h2>
               <dl>
                 {topic.glossary.map((g) => (
                   <div key={g.term}>
@@ -149,7 +149,7 @@ export default function TopicPage({ params }: Params) {
           ) : null}
 
           <section className="topic-sources">
-            <h3>Sources</h3>
+            <h2>Sources</h2>
             <ol>
               {topic.sources.map((s, i) => (
                 <li key={i}>
@@ -162,7 +162,7 @@ export default function TopicPage({ params }: Params) {
 
           {topic.related?.length ? (
             <nav className="topic-related" aria-label="Related">
-              <h3>Related</h3>
+              <h2>Related</h2>
               {topic.related.map((r) => <a key={r.href} href={r.href}>{r.label} →</a>)}
             </nav>
           ) : null}

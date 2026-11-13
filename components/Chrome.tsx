@@ -5,17 +5,15 @@ import { FOOTER_SITES } from '@/lib/site';
 import { visibleLocales, useI18n } from '@/lib/i18n';
 
 /**
- * Primary navigation — the control room first, the operator's writing after.
- * The same list renders at every width; the sub-sections of the control room
- * live in ClusterNav on the cluster pages themselves.
+ * Personal navigation first. The operational registry and KPI detail remain
+ * one level below the Cluster entry, keeping the global bar clear.
  */
 const NAV: { href: string; key: string }[] = [
-  { href: '/cluster/', key: 'navCluster' },
-  { href: '/cluster/registry/', key: 'navRegistry' },
-  { href: '/cluster/kpi/', key: 'navKpi' },
-  { href: '/cluster/decisions/', key: 'navDecisions' },
+  { href: '/now/', key: 'navW' },
   { href: '/topics/', key: 'navT' },
+  { href: '/books/', key: 'navB' },
   { href: '/about/', key: 'navA' },
+  { href: '/cluster/', key: 'navCluster' },
   { href: '/contact/', key: 'connect' },
 ];
 

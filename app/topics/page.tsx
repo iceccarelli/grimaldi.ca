@@ -55,7 +55,7 @@ export default function TopicsPage() {
               {published.map((t) => (
                 <a className="topic-row" key={t.slug} href={`/topics/${t.slug}/`}>
                   <div>
-                    <h3>{t.title}</h3>
+                    <h2>{t.title}</h2>
                     <p>{t.description}</p>
                     <div className="topic-chips">
                       {t.subjects.slice(0, 3).map((s) => <span key={s}>{s}</span>)}

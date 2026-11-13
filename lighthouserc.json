@@ -18,7 +18,7 @@
         "categories:accessibility": [
           "error",
           {
-            "minScore": 1.0
+            "minScore": 1
           }
         ],
         "categories:seo": [
@@ -42,19 +42,19 @@
         "target-size": [
           "error",
           {
-            "minScore": 1.0
+            "minScore": 1
           }
         ],
         "color-contrast": [
           "error",
           {
-            "minScore": 1.0
+            "minScore": 1
           }
         ],
         "heading-order": [
           "error",
           {
-            "minScore": 1.0
+            "minScore": 1
           }
         ],
         "cumulative-layout-shift": [

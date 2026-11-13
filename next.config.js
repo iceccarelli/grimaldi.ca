@@ -15,5 +15,4 @@ module.exports = {
   trailingSlash: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  images: { unoptimized: true },
 };

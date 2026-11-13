@@ -1,297 +1,235 @@
-import Image from 'next/image';
 import JsonLd from '@/components/JsonLd';
-import ClusterNav from '@/components/cluster/ClusterNav';
-import KpiStrip from '@/components/cluster/KpiStrip';
-import StatusBadge from '@/components/cluster/StatusBadge';
-import ClusterMap from '@/components/viz/ClusterMap';
-import ObjectiveRing from '@/components/viz/ObjectiveRing';
-import PeriodTimeline from '@/components/viz/PeriodTimeline';
-import PulseBoard from '@/components/viz/PulseBoard';
-import StatusBars from '@/components/viz/StatusBars';
-import { clusterDataset, collectionPage } from '@/lib/schema';
-import { CLUSTER, DOORS, PERSON, SITE_URL } from '@/lib/site';
-import {
-  byTier,
-  decisions,
-  killList,
-  kpis,
-  latestReport,
-  MANDATE_TITLE,
-  operationsCluster,
-  REGISTRY_REVIEWED,
-  registry,
-  roadmap,
-} from '@/content/cluster';
-import { countByStatus, roadmapProgress, unlocated, validationPeriod } from '@/lib/cluster';
-import { registryActivity } from '@/lib/github';
+import Plate, { type PlateProps } from '@/components/Plate';
 import { publishedTopics } from '@/content/topics';
+import { NOW_UPDATED, nowItems } from '@/content/now';
+import {
+  CLUSTER,
+  ENGINEERING_URL,
+  LINKEDIN,
+  NEURALBRIDGE_URL,
+  PERSON,
+  PORTFOLIO_URL,
+  SITE_TITLE,
+  SITE_URL,
+  TIME_TO_POWER_URL,
+} from '@/lib/site';
+import { personRef } from '@/lib/schema';
 
-/** The validation-period clock must not freeze at build time: rebuilt twice a day. */
-export const revalidate = 43200;
+export const revalidate = 3600;
 
-/**
- * Home — the control room of the Operations & Commercial Automation cluster.
- *
- * What the CEO layer needs in twenty seconds: the command, the primary KPI,
- * the state of the 90-day objective, the registry by status, the latest
- * decision, the latest report, and where the code and the sites are. Every
- * number is computed from typed content or fetched; none is typed as if
- * measured. Server component — no client bundle for the front door.
- */
-export default async function Home() {
-  const activity = await registryActivity(registry.map((r) => r.repo));
-  const progress = roadmapProgress();
-  const period = validationPeriod();
-  const counts = countByStatus();
-  const report = latestReport();
-  const latestDecision = [...decisions].sort((a, b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id))[0];
+const homePage = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': SITE_URL + '/#home',
+  url: SITE_URL + '/',
+  name: SITE_TITLE,
+  mainEntity: personRef,
+  inLanguage: 'en',
+};
+
+const visualPlates: PlateProps[] = [
+  {
+    src: '/images/personal/02-podcast-recording-setup.jpg',
+    alt: 'Podcast recording and technical discussion setup',
+    code: 'PERS 02 · DIALOGUE & EXPLAINERS',
+    title: 'Technical conversations',
+    caption: 'Discussing power systems, grid inertia and software-defined automation.',
+  },
+  {
+    src: '/images/personal/03-ecowoods-hardwood-craftsmanship.jpg',
+    alt: 'Hardwood craftsmanship and material detail',
+    code: 'PERS 03 · CRAFT & MATERIALS',
+    title: 'Physical craft',
+    caption: 'Precision woodworking and material fabrication alongside digital engineering.',
+  },
+  {
+    src: '/images/personal/04-broader-engineering-ambitions.jpg',
+    alt: 'Conceptual image representing broader engineering ambitions',
+    code: 'PERS 04 · SYSTEMS & SCALE',
+    title: 'Systems thinking',
+    caption: 'Connecting physical infrastructure, electrical systems and software.',
+  },
+  {
+    src: '/images/personal/05-writing-explainers.jpg',
+    alt: 'Technical writing and research workspace',
+    code: 'PERS 05 · TECHNICAL WRITING',
+    title: 'Research into clear ideas',
+    caption: 'Turning complex engineering principles into structured technical explainers.',
+  },
+  {
+    src: '/images/personal/06-plastilonas-side-engineering.jpg',
+    alt: 'Mechanical and automation prototyping workspace',
+    code: 'PERS 06 · PROTOTYPING',
+    title: 'Practical prototyping',
+    caption: 'Mechanical, automation and hands-on engineering experiments.',
+  },
+  {
+    src: '/images/personal/07-toronto-frankfurt-dual-life.jpg',
+    alt: 'Toronto and Frankfurt visual context',
+    code: 'PERS 07 · TRANSATLANTIC CONTEXT',
+    title: 'Two technical contexts',
+    caption: 'European infrastructure experience and North American connections.',
+  },
+  {
+    src: '/images/personal/08-selected-projects.jpg',
+    alt: 'Selected electrical engineering and automation project materials',
+    code: 'PERS 08 · PROJECT ARCHIVE',
+    title: 'Selected projects',
+    caption: 'A curated view across electrical engineering, automation and software.',
+  },
+  {
+    src: '/images/personal/09-human-aspirations-engineer.jpg',
+    alt: 'Conceptual image about people, engineering and infrastructure',
+    code: 'PERS 09 · PURPOSE',
+    title: 'Engineering with purpose',
+    caption: 'Keeping technical precision connected to real-world infrastructure needs.',
+  },
+  {
+    src: '/images/personal/10-contact-connection.jpg',
+    alt: 'Professional collaboration and contact setting',
+    code: 'PERS 10 · COLLABORATION',
+    title: 'Open collaboration',
+    caption: 'A direct channel for engineering, research and venture conversations.',
+  },
+];
+
+export default function Home() {
   const topics = publishedTopics();
-  const core = byTier('core');
-  const verticals = byTier('vertical');
-  const primary = kpis.filter((k) => k.rank === 'primary');
-  const headline = kpis.filter((k) => ['mrr', 'pipeline', 'qualified-opportunities', 'conversion', 'retention', 'gross-margin'].includes(k.id));
-
-  const page = collectionPage({
-    path: '/',
-    name: `${CLUSTER.short} — control room`,
-    description:
-      'Control and integration surface of the Operations & Commercial Automation cluster: registry, KPIs, roadmap, decisions, contracts.',
-    parts: registry
-      .filter((r) => r.repo)
-      .map((r) => ({
-        '@type': 'SoftwareSourceCode',
-        name: r.name,
-        codeRepository: `https://github.com/${r.repo}`,
-        url: `${SITE_URL}/cluster/registry/${r.slug}/`,
-      })),
-  });
+  const current = nowItems[0];
 
   return (
-    <main className="cr">
-      <JsonLd data={page} />
-      <JsonLd data={clusterDataset} />
+    <main className="personal-shell">
+      <JsonLd data={homePage} />
 
-      <header className="cr-head">
-        <span className="kicker">
-          {CLUSTER.agent} · {CLUSTER.name} · control surface
-        </span>
-        <h1 className="cr-cmd">{operationsCluster.command}</h1>
-        <p className="cr-lead">
-          This is where the Operations cluster is displayed and orchestrated: the repository
-          registry, the KPI system with revenue first, the workflow ranking, the 90-day objective
-          counted from logged customer conversations, the decision log and kill list, the
-          weekly CEO report, and the versioned contracts to the Energy and Physical AI clusters.
-          Nothing is for sale on this page. Every number is measured and sourced, or it says{' '}
-          <em>not yet measured</em>.
-        </p>
-        <p className="cr-meta">
-          <span>mandate: {MANDATE_TITLE}</span>
-          <span>registry reviewed {REGISTRY_REVIEWED}</span>
-          <span>
-            validation period {roadmap.start} → {roadmap.end} · {period.over ? 'over' : `${period.remaining} days left`}
-          </span>
-          <span>
-            machine index <a className="url" href="/api/cluster/">/api/cluster/</a>
-          </span>
-        </p>
+      <header className="personal-hero">
+        <div className="personal-copy">
+          <span className="personal-kicker">PERSONAL & PROFESSIONAL DOMAIN</span>
+          <h1 className="personal-title">{PERSON.legalName}</h1>
+          <p className="personal-role">{PERSON.jobTitle}</p>
+          <p className="personal-lead">
+            An independent engineering practice connecting electrical power systems,
+            critical infrastructure, industrial machines and software. This is the
+            human layer behind the projects, research and ventures.
+          </p>
+          <div className="personal-actions">
+            <a className="personal-button" href={ENGINEERING_URL} rel="noopener noreferrer">
+              Explore engineering ventures <span aria-hidden="true">↗</span>
+            </a>
+            <a className="personal-text-link" href={PORTFOLIO_URL} rel="noopener noreferrer">
+              Technical portfolio <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <p className="personal-location">{PERSON.city} · {PERSON.country}</p>
+        </div>
+
+        <div className="personal-hero-visual">
+          <Plate
+            src="/images/personal/01-personal-engineering-workspace.jpg"
+            alt="Personal engineering workspace with technical references and equipment"
+            code="FIELD NOTES · 01"
+            title="Engineering practice"
+            caption="Electrical systems, infrastructure and software — approached as one connected discipline."
+            priority
+            className="plate--feature"
+            sizes="(max-width: 880px) 100vw, 54vw"
+          />
+        </div>
       </header>
 
-      <ClusterNav current="/" />
-
-      {/* Primary KPI */}
-      <section className="cr-section" aria-labelledby="h-kpi" style={{ marginTop: 0 }}>
-        <h2 id="h-kpi">Revenue first</h2>
-        <p className="intro">
-          The primary KPI, then the six the CEO report opens with. A value appears here only when
-          it has been measured from the named source.
-        </p>
-        <KpiStrip kpis={primary} />
-        <div style={{ height: '.8rem' }} />
-        <KpiStrip kpis={headline} compact />
-        <p className="more">
-          <a href="/cluster/kpi/">All fourteen KPIs, with definitions →</a>
-        </p>
-      </section>
-
-      <div className="cr-grid cr-section">
-        {/* 90-day objective */}
-        <section className="cr-panel" aria-labelledby="h-obj" style={{ gridColumn: '1 / -1' }}>
-          <h2 id="h-obj">90-day objective</h2>
-          <div className="viz-rings">
-            {progress.map((o) => <ObjectiveRing o={o} key={o.id} size={124} />)}
+      <section className="personal-section" aria-labelledby="venture-heading">
+        <div className="personal-section-heading">
+          <div>
+            <span className="personal-kicker">VENTURE NETWORK</span>
+            <h2 id="venture-heading">Engineering ideas, built into useful systems</h2>
           </div>
-          <PeriodTimeline />
-          <p className="dim" style={{ fontSize: '.88rem' }}>
-            Counted from the evidence log. {period.elapsed} of {period.total} days elapsed.
-          </p>
-          <p className="more">
-            <a href="/cluster/roadmap/">Roadmap and evidence →</a>
-          </p>
-        </section>
+          <a href={ENGINEERING_URL} rel="noopener noreferrer">Company hub · engineeringgrimaldi.com ↗</a>
+        </div>
 
-        {/* Registry by status */}
-        <section className="cr-panel" aria-labelledby="h-reg">
-          <h2 id="h-reg">Registry · {registry.length} entries</h2>
-          <StatusBars counts={counts} />
-          {unlocated().length > 0 && (
-            <p className="dim" style={{ fontSize: '.88rem', marginTop: '.6rem' }}>
-              {unlocated().length} name{unlocated().length === 1 ? '' : 's'} from the mandate not located in the
-              public inventory: {unlocated().map((r) => r.name).join(', ')}.
-            </p>
-          )}
-          <p className="more">
-            <a href="/cluster/registry/">Full registry →</a>
-          </p>
-        </section>
+        <div className="venture-grid">
+          <a className="venture-card" href={TIME_TO_POWER_URL} rel="noopener noreferrer">
+            <span className="venture-index">01 / POWER & CAPACITY</span>
+            <h3>Time to Power</h3>
+            <p>Power-capacity intelligence for existing AI data-centre halls.</p>
+            <span className="venture-destination">timetopower.ai ↗</span>
+          </a>
+          <a className="venture-card" href={NEURALBRIDGE_URL} rel="noopener noreferrer">
+            <span className="venture-index">02 / INDUSTRIAL ASSURANCE</span>
+            <h3>NeuralBridge</h3>
+            <p>Evidence and assurance infrastructure for industrial machines and autonomous systems.</p>
+            <span className="venture-destination">neuralbridge.io ↗</span>
+          </a>
+          <a className="venture-card" href={PORTFOLIO_URL} rel="noopener noreferrer">
+            <span className="venture-index">03 / ELECTRICAL ENGINEERING</span>
+            <h3>Technical portfolio</h3>
+            <p>High-voltage grids, railway traction, electrical machines and physics-informed methods.</p>
+            <span className="venture-destination">igrimaldi.engineering ↗</span>
+          </a>
+        </div>
+      </section>
 
-        {/* Latest decision + kill list */}
-        <section className="cr-panel" aria-labelledby="h-dec">
-          <h2 id="h-dec">Latest decision</h2>
+      <section className="personal-section" aria-labelledby="gallery-heading">
+        <div className="personal-section-heading personal-section-heading--stack">
+          <div>
+            <span className="personal-kicker">SELECTED VISUAL NOTES</span>
+            <h2 id="gallery-heading">The work behind the work</h2>
+          </div>
           <p>
-            <span className="cr-record-id">{latestDecision.id} · {latestDecision.date}</span>
-            <br />
-            <strong>{latestDecision.title}</strong>
+            Engineering is practical as well as analytical: research, technical conversations,
+            prototypes, materials and the people who use the systems.
           </p>
-          <p style={{ fontSize: '.92rem' }}>{latestDecision.decision}</p>
-          <p className="dim" style={{ fontSize: '.88rem' }}>
-            Kill list: {killList.length === 0 ? 'nothing frozen or killed yet.' : `${killList.length} entr${killList.length === 1 ? 'y' : 'ies'}.`}
-          </p>
-          <p className="more">
-            <a href="/cluster/decisions/">Decision log and kill list →</a>
-          </p>
-        </section>
-
-        {/* Latest report */}
-        <section className="cr-panel" aria-labelledby="h-rep">
-          <h2 id="h-rep">Weekly CEO report</h2>
-          {report ? (
-            <>
-              <p>
-                <span className="cr-record-id">{report.week} · filed {report.filed}</span>
-              </p>
-              <p style={{ fontSize: '.92rem' }}>
-                <strong>Top workflow:</strong> {report.topWorkflow ?? '—'}
-                <br />
-                <strong>Top failure:</strong> {report.topFailure ?? '—'}
-              </p>
-            </>
-          ) : (
-            <p className="dim" style={{ fontSize: '.92rem' }}>
-              No report filed yet. The template with the eighteen mandated fields is ready.
-            </p>
-          )}
-          <p className="more">
-            <a href="/cluster/reports/">Reports →</a>
-          </p>
-        </section>
-      </div>
-
-      {/* The code and the sites */}
-      <section className="cr-section" aria-labelledby="h-code">
-        <h2 id="h-code">Core and vertical applications</h2>
-        <p className="intro">
-          EcoWoods is the commercial proving ground; the Forge sites are vertical experiments;
-          Runway Fuel is a platform hypothesis until two independent customers require the same
-          workflow. Live repository metadata is on the registry page.
-        </p>
-        <div className="cr-table-wrap">
-          <table className="cr-table">
-            <caption>Registry — core and vertical tiers</caption>
-            <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Role</th>
-                <th scope="col">Code</th>
-                <th scope="col">Site</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[...core, ...verticals].map((r) => (
-                <tr key={r.slug}>
-                  <td><a href={`/cluster/registry/${r.slug}/`}>{r.name}</a></td>
-                  <td><StatusBadge status={r.status} /></td>
-                  <td>{r.role}</td>
-                  <td>
-                    {r.repo ? (
-                      <a className="url" href={`https://github.com/${r.repo}`} rel="noopener noreferrer">{r.repo.split('/')[1]}</a>
-                    ) : (
-                      <span className="dim">not located</span>
-                    )}
-                  </td>
-                  <td>
-                    {r.site ? (
-                      <a className="url" href={r.site} rel="noopener noreferrer">{r.site.replace('https://', '')}</a>
-                    ) : (
-                      <span className="dim">—</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
-      </section>
-
-      {/* Pulse */}
-      <section className="cr-section" aria-labelledby="h-pulse">
-        <h2 id="h-pulse">Pulse · where the hours went</h2>
-        <p className="intro">
-          Fifty-two weeks of commits per located repository, read live from GitHub and rebuilt twice
-          a day. Activity is not outcome — revenue is — but the operator should see both.
-        </p>
-        <div className="cr-table-wrap">
-          <PulseBoard entries={[...core, ...verticals, ...registry.filter((r) => r.tier === 'related' && r.repo)]} activity={activity} />
-        </div>
-      </section>
-
-      {/* Map */}
-      <section className="cr-section" aria-labelledby="h-map">
-        <h2 id="h-map">The three clusters</h2>
-        <p className="intro">
-          This site controls one of three. The others are counterparties, reached only through
-          versioned contracts — never a shared database.
-        </p>
-        <ClusterMap />
-        <p className="more">
-          <a href="/cluster/map/">The full map: architecture, maturity, contracts →</a>
-        </p>
-      </section>
-
-      {/* Elsewhere in the network */}
-      <section className="cr-section" aria-labelledby="h-elsewhere">
-        <h2 id="h-elsewhere">Elsewhere in the network</h2>
-        <ul className="doors">
-          {DOORS.map((d) => (
-            <li key={d.href}>
-              <a className="url" href={d.href} rel="noopener noreferrer">{d.label}</a>
-              <span> — {d.what}</span>
-            </li>
+        <div className="personal-gallery">
+          {visualPlates.map((plate) => (
+            <Plate key={plate.src} {...plate} />
           ))}
-        </ul>
-        {topics.length > 0 && (
-          <p className="dim" style={{ fontSize: '.95rem' }}>
-            The operator’s explainers stay on this site:{' '}
-            {topics.slice(0, 3).map((t, i) => (
-              <span key={t.slug}>
-                {i > 0 && ' · '}
-                <a href={`/topics/${t.slug}/`}>{t.title}</a>
-              </span>
-            ))}
-            {' '}— <a href="/topics/">all explainers</a>, <a href="/books/">the books</a>.
-          </p>
-        )}
+        </div>
       </section>
 
-      {/* Operator */}
-      <div className="cr-operator">
-        <Image src="/headshot.jpg" alt="" width={48} height={48} unoptimized />
-        <p>
-          Operated by <a href="/about/">{PERSON.legalName}</a>, electrical engineer in Frankfurt am
-          Main — the CEO layer above the three clusters. <a href={`mailto:${PERSON.email}`}>{PERSON.email}</a> ·{' '}
-          <a href="/contact/">contact form</a>.
-        </p>
-      </div>
+      <section className="personal-lower">
+        <article className="personal-info-panel" aria-labelledby="now-heading">
+          <span className="personal-kicker">CURRENT FOCUS · UPDATED {NOW_UPDATED.toUpperCase()}</span>
+          <h2 id="now-heading">{current.title}</h2>
+          <p>{current.body}</p>
+          <div className="personal-inline-links">
+            <a href="/now/">What I’m working on now →</a>
+            <a href="/about/">Professional background →</a>
+          </div>
+        </article>
+
+        <article className="personal-info-panel" aria-labelledby="writing-heading">
+          <span className="personal-kicker">WRITING & RESEARCH</span>
+          <h2 id="writing-heading">Technical ideas, explained carefully</h2>
+          {topics.length > 0 ? (
+            <ul className="personal-topic-list">
+              {topics.slice(0, 3).map((topic) => (
+                <li key={topic.slug}>
+                  <a href={'/topics/' + topic.slug + '/'}>{topic.title}</a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Technical explainers are published after their claims and references are checked.</p>
+          )}
+          <div className="personal-inline-links">
+            <a href="/topics/">All explainers →</a>
+            <a href="/books/">Books and manuscripts →</a>
+          </div>
+        </article>
+      </section>
+
+      <section className="personal-contact" aria-labelledby="contact-heading">
+        <div>
+          <span className="personal-kicker">DIRECT CONTACT</span>
+          <h2 id="contact-heading">A good conversation starts with a clear problem.</h2>
+          <p>For engineering, research, press or venture enquiries, use the direct channels below.</p>
+        </div>
+        <div className="personal-contact-links">
+          <a href={'mailto:' + PERSON.email}>Email Vincenzo ↗</a>
+          <a href={LINKEDIN} rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="/contact/">Contact form ↗</a>
+          <a href="/cluster/">{CLUSTER.short} control room ↗</a>
+        </div>
+      </section>
     </main>
   );
 }

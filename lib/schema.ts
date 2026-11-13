@@ -10,7 +10,7 @@
  *    they are manuscripts in revision — inventing those is entity fraud.
  */
 
-import { CLUSTER, PERSON, SITE_URL } from './site';
+import { CLUSTER, PERSON, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from './site';
 
 export const personRef = { '@type': 'Person', '@id': PERSON.personId } as const;
 
@@ -24,9 +24,9 @@ export const webSite = {
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
-  name: `${CLUSTER.short} — control surface`,
-  alternateName: `${PERSON.legalName} — grimaldi.ca`,
-  description: `Control and integration surface of the ${CLUSTER.name} cluster.`,
+  name: SITE_TITLE,
+  alternateName: `${CLUSTER.short} — grimaldi.ca`,
+  description: SITE_DESCRIPTION,
   inLanguage: 'en',
   publisher: personRef,
 };

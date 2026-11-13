@@ -9,8 +9,18 @@
 
 export const SITE_URL = 'https://grimaldi.ca';
 
+/** First-party destinations in the engineering network. */
+export const ENGINEERING_URL = 'https://engineeringgrimaldi.com';
+export const PORTFOLIO_URL = 'https://igrimaldi.engineering';
+export const TIME_TO_POWER_URL = 'https://timetopower.ai';
+export const NEURALBRIDGE_URL = 'https://neuralbridge.io';
+export const GITHUB = 'https://github.com/iceccarelli';
+export const LINKEDIN = 'https://www.linkedin.com/in/vincenzo-ceccarelli-grimaldi-2912b42a0';
+
 export const PERSON = {
   legalName: 'Vincenzo Ceccarelli Grimaldi',
+  name: 'Vincenzo Ceccarelli Grimaldi',
+  location: 'Frankfurt am Main, Germany',
   shortName: 'Vincenzo Grimaldi',
   jobTitle: 'Electrical Engineer — Grid Digitalisation & Physics-Informed Cyber-Physical Systems',
   city: 'Frankfurt am Main',
@@ -42,10 +52,13 @@ export const CLUSTER = {
   operator: 'Grimaldi Engineering',
 } as const;
 
-export const SITE_TITLE = `${CLUSTER.short} — control surface · ${PERSON.shortName}`;
+export const SITE_NAME = PERSON.legalName;
+export const PERSON_NAME = PERSON.legalName;
+
+export const SITE_TITLE = `${PERSON.legalName} — Personal & Professional Hub`;
 
 export const SITE_DESCRIPTION =
-  'Control and integration surface of the Operations & Commercial Automation cluster (Agent 3, Grimaldi Engineering): repository registry, KPI system, decision log, kill list, 90-day roadmap counted from customer evidence, and versioned cross-cluster contracts. Nothing is for sale here; every number is measured or marked not yet measured.';
+  'Personal engineering surface of Vincenzo Ceccarelli Grimaldi: electrical engineering, grid digitalisation, physics-informed cyber-physical systems, technical writing, selected projects and founder-led ventures.';
 
 /**
  * The doors. Each entry names another site in the network and says in a few
